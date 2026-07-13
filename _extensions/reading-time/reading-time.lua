@@ -21,7 +21,7 @@ local DIFFICULTY_MULTIPLIERS = {
 -- but we need a project-wide file. We detect the project root by looking
 -- for _quarto.yml going up from CWD.
 local function find_project_root()
-  local path = io.popen("pwd"):read("*l") or "."
+  local path = pandoc.system.get_working_directory() or "."
   for i = 1, 10 do
     local f = io.open(path .. "/_quarto.yml", "r")
     if f then f:close(); return path end
@@ -170,6 +170,20 @@ local function get_order_from_file(filepath)
   return tonumber(order) or 9999
 end
 
+-- Cross-platform replacement for shelling out to `find`: lists .qmd files
+-- in the current directory (non-recursive), excluding index.qmd.
+local function list_sibling_qmd_files()
+  local ok, entries = pcall(pandoc.system.list_directory, ".")
+  if not ok or not entries then return {} end
+  local files = {}
+  for _, name in ipairs(entries) do
+    if name:match("%.qmd$") and name ~= "index.qmd" then
+      files[#files + 1] = name
+    end
+  end
+  return files
+end
+
 local function compute_progress_bar(current_basename)
   if not current_basename or current_basename == "index" then return nil end
 
@@ -177,14 +191,11 @@ local function compute_progress_bar(current_basename)
   if not data[current_basename] then return nil end
 
   -- Scan sibling .qmd files for order info
-  local handle = io.popen('find . -maxdepth 1 -name "*.qmd" -not -name "index.qmd" 2>/dev/null')
-  if not handle then return nil end
-  local result = handle:read("*all")
-  handle:close()
-  if not result or result == "" then return nil end
+  local files = list_sibling_qmd_files()
+  if #files == 0 then return nil end
 
   local pages = {}
-  for filepath in result:gmatch("[^\n]+") do
+  for _, filepath in ipairs(files) do
     local fname = filepath:match("([^/]+)%.qmd$")
     if fname and data[fname] then
       local order = get_order_from_file(filepath)
@@ -232,15 +243,12 @@ end
 -- ============ Section total for index pages (reads from JSON) ============
 
 local function compute_section_total()
-  local handle = io.popen('find . -maxdepth 1 -name "*.qmd" -not -name "index.qmd" 2>/dev/null')
-  if not handle then return 0 end
-  local result = handle:read("*all")
-  handle:close()
-  if not result or result == "" then return 0 end
+  local files = list_sibling_qmd_files()
+  if #files == 0 then return 0 end
 
   local data = read_json()
   local total = 0
-  for filepath in result:gmatch("[^\n]+") do
+  for _, filepath in ipairs(files) do
     local fname = filepath:match("([^/]+)%.qmd$")
     if fname and data[fname] then
       total = total + data[fname]
@@ -333,7 +341,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   -- Save to shared JSON (single source of truth)
   -- Only save if we are in a subdirectory (not at project root)
-  local cwd = io.popen("pwd"):read("*l") or ""
+  local cwd = pandoc.system.get_working_directory() or ""
   if cwd ~= PROJECT_ROOT then
     save_reading_time(basename, minutes)
   end
