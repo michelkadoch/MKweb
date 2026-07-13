@@ -1,6 +1,6 @@
 ---
 title: "Welcome"
-description: "Course notes and writing by Professor Lastname."
+description: "Course notes and writing by Michel Kadoch."
 listing:
   - id: listing-home
     contents: notes
@@ -12,11 +12,6 @@ listing:
 
 Welcome to my website. This is the home page.
 
-To read my notes, click **Notes** in the menu at the top, or pick one below.
-
-Everything here is written in plain text files that end in `.qmd`. To change
-this page, open `index.qmd` and edit the words. To add a new note, see the
-[Notes](notes/index.qmd) page.
 
 ## Recent Notes
 

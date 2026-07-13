@@ -18,14 +18,14 @@
     "href": "notes/example-with-a-plot.html#a-simple-chart",
     "title": "A Note With a Plot",
     "section": "A Simple Chart",
-    "text": "A Simple Chart\nThe code below draws a sine wave. Change the numbers and the words, then render the site to see it update.\n\n%config InlineBackend.figure_formats = ['svg']\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 10, 200)\ny = np.sin(x)\n\nfig, ax = plt.subplots(figsize=(7, 4))\nax.plot(x, y, color=\"#22176F\", linewidth=2)\nax.set_title(\"A simple sine wave\", color=\"gray\")\nax.set_xlabel(\"x\")\nax.set_ylabel(\"sin(x)\")\nax.grid(linestyle=\"--\", alpha=0.4)\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nThe line that begins with #| is a setting for the code block. Here #| echo: true means the reader can see the Python code above the chart. If you would rather show only the chart and hide the code, change it to #| echo: false.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (12 of 12 min)"
+    "text": "A Simple Chart\nThe code below draws a sine wave. Change the numbers and the words, then render the site to see it update.\n\n%config InlineBackend.figure_formats = ['svg']\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 10, 200)\ny = np.sin(x)\n\nfig, ax = plt.subplots(figsize=(7, 4))\nax.plot(x, y, color=\"#22176F\", linewidth=2)\nax.set_title(\"A simple sine wave\", color=\"gray\")\nax.set_xlabel(\"x\")\nax.set_ylabel(\"sin(x)\")\nax.grid(linestyle=\"--\", alpha=0.4)\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nThe line that begins with #| is a setting for the code block. Here #| echo: true means the reader can see the Python code above the chart. If you would rather show only the chart and hide the code, change it to #| echo: false.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (17 of 17 min)"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Welcome",
     "section": "",
-    "text": "Welcome to my website. This is the home page.\nTo read my notes, click Notes in the menu at the top, or pick one below.\nEverything here is written in plain text files that end in .qmd. To change this page, open index.qmd and edit the words. To add a new note, see the Notes page."
+    "text": "Welcome to my website. This is the home page."
   },
   {
     "objectID": "index.html#recent-notes",
@@ -39,7 +39,7 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "Write a short paragraph about yourself here. Who you are, what you teach or research, and how people can reach you.\nTo edit this page, open about.qmd and change the words."
+    "text": "Write a short paragraph about yourself here. Who you are, what you teach or research, and how people can reach you.\nTo edit this page, open about.qmd and change the words.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (2 of 2 min)"
   },
   {
     "objectID": "notes/first-note.html",
