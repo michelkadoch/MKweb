@@ -1,45 +1,17 @@
 [
   {
-    "objectID": "notes/index.html",
-    "href": "notes/index.html",
-    "title": "Notes",
+    "objectID": "ele649/index.html",
+    "href": "ele649/index.html",
+    "title": "ELE649",
     "section": "",
-    "text": "Every note in this folder appears below automatically, newest first. To add a new one, copy first-note.qmd, give it a new file name, and change the title and words inside. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\n\nA Note With a Plot\n\n\nAn example note that runs a little Python to draw a chart. Copy this file when you want a page with a figure.\n\n\n\n\n\nJan 2, 2026\n\n1 min\n\n\n\n\n\n\nMy First Note\n\n\nAn example page showing headings, lists, math, and a callout. Copy this file to start a new note.\n\n\n\n\n\nJan 1, 2026\n\n1 min\n\n\n\n\nNo matching items"
+    "text": "Every page in this folder appears below automatically, newest first. To add a new one, create a new .qmd file in this folder with a title, description, and date in the front matter. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "notes/example-with-a-plot.html",
-    "href": "notes/example-with-a-plot.html",
-    "title": "A Note With a Plot",
+    "objectID": "mgr820/avant-propos.html",
+    "href": "mgr820/avant-propos.html",
+    "title": "Avant-propos",
     "section": "",
-    "text": "This note is like the first example, but it also runs a small piece of Python to draw a chart. Copy this file when you want a page with a figure in it.\nFor the chart to appear, the private Python space must be installed. The setup-windows.ps1 script does that for you the first time."
-  },
-  {
-    "objectID": "notes/example-with-a-plot.html#a-simple-chart",
-    "href": "notes/example-with-a-plot.html#a-simple-chart",
-    "title": "A Note With a Plot",
-    "section": "A Simple Chart",
-    "text": "A Simple Chart\nThe code below draws a sine wave. Change the numbers and the words, then render the site to see it update.\n\n%config InlineBackend.figure_formats = ['svg']\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 10, 200)\ny = np.sin(x)\n\nfig, ax = plt.subplots(figsize=(7, 4))\nax.plot(x, y, color=\"#22176F\", linewidth=2)\nax.set_title(\"A simple sine wave\", color=\"gray\")\nax.set_xlabel(\"x\")\nax.set_ylabel(\"sin(x)\")\nax.grid(linestyle=\"--\", alpha=0.4)\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nThe line that begins with #| is a setting for the code block. Here #| echo: true means the reader can see the Python code above the chart. If you would rather show only the chart and hide the code, change it to #| echo: false.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (17 of 17 min)"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Welcome",
-    "section": "",
-    "text": "Welcome to my website. This is the home page."
-  },
-  {
-    "objectID": "index.html#recent-notes",
-    "href": "index.html#recent-notes",
-    "title": "Welcome",
-    "section": "Recent Notes",
-    "text": "Recent Notes\nThe list below fills in automatically from the notes/ folder.\n\n\n\n\n\nNotes\n\n\nAll notes and articles.\n\n\n\n\n\n\n\n\n\n\nA Note With a Plot\n\n\nAn example note that runs a little Python to draw a chart. Copy this file when you want a page with a figure.\n\n\n\n\n\nJan 2, 2026\n\n\n\n\n\n\n\nMy First Note\n\n\nAn example page showing headings, lists, math, and a callout. Copy this file to start a new note.\n\n\n\n\n\nJan 1, 2026\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "Write a short paragraph about yourself here. Who you are, what you teach or research, and how people can reach you.\nTo edit this page, open about.qmd and change the words.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (2 of 2 min)"
+    "text": "Les ouvrages consacrés aux réseaux de télécommunications occupent une place essentielle dans la formation des étudiants en génie, en informatique et en télécommunications, ainsi que dans le perfectionnement des professionnels appelés à concevoir, exploiter ou faire évoluer des infrastructures numériques complexes. Dans un domaine marqué par une évolution rapide des technologies, des architectures et des usages, la nécessité d’un exposé rigoureux, structuré et accessible demeure plus que jamais d’actualité.\nLe présent ouvrage répond à cette exigence avec une ambition claire : offrir une présentation ordonnée des fondements et des prolongements des réseaux modernes, en articulant les notions théoriques et les réalités de terrain. Le lecteur y trouvera une progression soigneusement construite, allant des concepts de base aux technologies plus avancées, dans une perspective à la fois pédagogique, analytique et appliquée.\nL’intérêt particulier de ce livre réside dans sa capacité à relier les principes fondamentaux aux environnements de communication contemporains. Les réseaux de données, les architectures IP, les mécanismes de transmission, les modèles de référence, les technologies d’opérateurs, les centres de données et les infrastructures virtualisées y sont abordés avec une volonté constante de clarté et de cohérence. Cette démarche permet non seulement d’acquérir des connaissances, mais aussi de développer une compréhension durable des logiques qui structurent les réseaux actuels.\nDestiné en priorité aux étudiants de niveau universitaire ou aux étudiants en formation d’ingénierie, cet ouvrage constitue également une ressource précieuse pour les praticiens souhaitant consolider leurs acquis ou actualiser leur expertise. Les explications, les exemples et les exercices ont été conçus pour favoriser l’appropriation progressive des notions étudiées et soutenir l’autonomie de l’apprentissage.\nOn appréciera enfin la qualité de l’approche retenue, qui allie précision terminologique, rigueur conceptuelle et souci constant de la transmission. En cela, cet ouvrage s’inscrit pleinement dans la tradition des manuels universitaires de référence : il ne se contente pas de décrire des technologies; il en éclaire les fondements, les relations et les enjeux.\nJe vous souhaite une lecture féconde et stimulante.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (4 of 4 min)"
   },
   {
     "objectID": "notes/first-note.html",
@@ -82,5 +54,54 @@
     "title": "My First Note",
     "section": "Review Questions",
     "text": "Review Questions\n1. How do you start a new note on this website?\n\n\n\n\n\n\nTipAnswer\n\n\n\n\n\nCopy this file, give it a new file name inside the notes/ folder, and change the title and text. It appears on the Notes page automatically after rendering.\n\n\n\n\n\n\n  Progress\n  \n    \n  \n  29% completed (5 of 17 min)"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Write a short paragraph about yourself here. Who you are, what you teach or research, and how people can reach you.\nTo edit this page, open about.qmd and change the words.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (2 of 2 min)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome",
+    "section": "",
+    "text": "Welcome to my website. This is the home page."
+  },
+  {
+    "objectID": "index.html#recent-notes",
+    "href": "index.html#recent-notes",
+    "title": "Welcome",
+    "section": "Recent Notes",
+    "text": "Recent Notes\nThe list below fills in automatically from the notes/ folder.\n\n\n\n\n\nNotes\n\n\nAll notes and articles.\n\n\n\n\n\n\n\n\n\n\nA Note With a Plot\n\n\nAn example note that runs a little Python to draw a chart. Copy this file when you want a page with a figure.\n\n\n\n\n\nJan 2, 2026\n\n\n\n\n\n\n\nMy First Note\n\n\nAn example page showing headings, lists, math, and a callout. Copy this file to start a new note.\n\n\n\n\n\nJan 1, 2026\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "notes/example-with-a-plot.html",
+    "href": "notes/example-with-a-plot.html",
+    "title": "A Note With a Plot",
+    "section": "",
+    "text": "This note is like the first example, but it also runs a small piece of Python to draw a chart. Copy this file when you want a page with a figure in it.\nFor the chart to appear, the private Python space must be installed. The setup-windows.ps1 script does that for you the first time."
+  },
+  {
+    "objectID": "notes/example-with-a-plot.html#a-simple-chart",
+    "href": "notes/example-with-a-plot.html#a-simple-chart",
+    "title": "A Note With a Plot",
+    "section": "A Simple Chart",
+    "text": "A Simple Chart\nThe code below draws a sine wave. Change the numbers and the words, then render the site to see it update.\n\n%config InlineBackend.figure_formats = ['svg']\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 10, 200)\ny = np.sin(x)\n\nfig, ax = plt.subplots(figsize=(7, 4))\nax.plot(x, y, color=\"#22176F\", linewidth=2)\nax.set_title(\"A simple sine wave\", color=\"gray\")\nax.set_xlabel(\"x\")\nax.set_ylabel(\"sin(x)\")\nax.grid(linestyle=\"--\", alpha=0.4)\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nThe line that begins with #| is a setting for the code block. Here #| echo: true means the reader can see the Python code above the chart. If you would rather show only the chart and hide the code, change it to #| echo: false.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (17 of 17 min)"
+  },
+  {
+    "objectID": "notes/index.html",
+    "href": "notes/index.html",
+    "title": "Notes",
+    "section": "",
+    "text": "Every note in this folder appears below automatically, newest first. To add a new one, copy first-note.qmd, give it a new file name, and change the title and words inside. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\n\nA Note With a Plot\n\n\nAn example note that runs a little Python to draw a chart. Copy this file when you want a page with a figure.\n\n\n\n\n\nJan 2, 2026\n\n1 min\n\n\n\n\n\n\nMy First Note\n\n\nAn example page showing headings, lists, math, and a callout. Copy this file to start a new note.\n\n\n\n\n\nJan 1, 2026\n\n1 min\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "mgr820/index.html",
+    "href": "mgr820/index.html",
+    "title": "MGR820",
+    "section": "",
+    "text": "Every page in this folder appears below automatically, newest first. To add a new one, create a new .qmd file in this folder with a title, description, and date in the front matter. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\n\nAvant-propos\n\n\nAvant-propos du manuel sur les réseaux de télécommunications, présentant ses objectifs pédagogiques et son public visé.\n\n\n\n\n\nJul 13, 2026\n\n2 min\n\n\n\n\nNo matching items"
   }
 ]

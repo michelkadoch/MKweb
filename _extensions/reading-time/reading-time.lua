@@ -63,13 +63,9 @@ end
 
 local function find_source_file(basename)
   local search_paths = {
-    "math/calculus/" .. basename .. ".qmd",
-    "math/linear-algebra/" .. basename .. ".qmd",
-    "math/probability-statistics/" .. basename .. ".qmd",
-    "networking/ccde-written/" .. basename .. ".qmd",
-    "ai/agentic/" .. basename .. ".qmd",
-    "ai/deep-learning/" .. basename .. ".qmd",
-    "ai/machine-learning/" .. basename .. ".qmd",
+    "notes/" .. basename .. ".qmd",
+    "mgr820/" .. basename .. ".qmd",
+    "ele649/" .. basename .. ".qmd",
     basename .. ".qmd",
   }
   for _, path in ipairs(search_paths) do

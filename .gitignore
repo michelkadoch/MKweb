@@ -25,6 +25,10 @@
 # Directories that should be tracked
 !notes/
 !notes/**
+!mgr820/
+!mgr820/**
+!ele649/
+!ele649/**
 !media/
 !media/**
 !_extensions/

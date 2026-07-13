@@ -8,6 +8,8 @@ project:
     - "index.qmd"
     - "about.qmd"
     - "notes/*.qmd"
+    - "mgr820/*.qmd"
+    - "ele649/*.qmd"
 
   # Client-side scripts served as static files (dark/light toggle, resume-reading,
   # scoped search, review-question renumbering). Same behaviour as the source site.
@@ -32,8 +34,10 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: notes/index.qmd
-        text: Notes
+      - href: mgr820/index.qmd
+        text: MGR820
+      - href: ele649/index.qmd
+        text: ELE649
       - href: about.qmd
         text: About
     right: []

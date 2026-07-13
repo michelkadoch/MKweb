@@ -1,11 +1,13 @@
 ---
 inclusion: fileMatch
-fileMatchPattern: "notes/*.qmd"
+fileMatchPattern: "*/*.qmd"
 ---
 
-# Writing a Note Page
+# Writing a Note or Course Page
 
-Rules for writing or editing a `.qmd` file in the `notes/` folder.
+Rules for writing or editing a `.qmd` file inside a top-level content folder
+(`notes/`, `mgr820/`, `ele649/`, or any future course folder added the same
+way).
 
 ## Front Matter
 
@@ -20,10 +22,11 @@ categories: [topic-tag]
 ---
 ```
 
-- `title` is what shows at the top of the page and in the Notes list.
-- `description` is required (used for search engines and the Notes list).
-- `date` controls the order on the Notes page (newest first). Use today's date.
-- `categories` is optional. It groups related notes with clickable tags.
+- `title` is what shows at the top of the page and in the folder's listing.
+- `description` is required (used for search engines and the listing).
+- `date` controls the order on the folder's index page (newest first). Use
+  today's date.
+- `categories` is optional. It groups related pages with clickable tags.
 
 ## Structure
 

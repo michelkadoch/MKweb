@@ -1,0 +1,48 @@
+---
+title: "Avant-propos"
+description: "Avant-propos du manuel sur les réseaux de télécommunications, présentant ses objectifs pédagogiques et son public visé."
+date: "2026-07-13"
+categories: [avant-propos]
+---
+
+Les ouvrages consacrés aux réseaux de télécommunications occupent une
+place essentielle dans la formation des étudiants en génie, en
+informatique et en télécommunications, ainsi que dans le
+perfectionnement des professionnels appelés à concevoir, exploiter ou
+faire évoluer des infrastructures numériques complexes. Dans un domaine
+marqué par une évolution rapide des technologies, des architectures et
+des usages, la nécessité d'un exposé rigoureux, structuré et accessible
+demeure plus que jamais d'actualité.
+
+Le présent ouvrage répond à cette exigence avec une ambition claire :
+offrir une présentation ordonnée des fondements et des prolongements des
+réseaux modernes, en articulant les notions théoriques et les réalités
+de terrain. Le lecteur y trouvera une progression soigneusement
+construite, allant des concepts de base aux technologies plus avancées,
+dans une perspective à la fois pédagogique, analytique et appliquée.
+
+L'intérêt particulier de ce livre réside dans sa capacité à relier les
+principes fondamentaux aux environnements de communication
+contemporains. Les réseaux de données, les architectures IP, les
+mécanismes de transmission, les modèles de référence, les technologies
+d'opérateurs, les centres de données et les infrastructures virtualisées
+y sont abordés avec une volonté constante de clarté et de cohérence.
+Cette démarche permet non seulement d'acquérir des connaissances, mais
+aussi de développer une compréhension durable des logiques qui
+structurent les réseaux actuels.
+
+Destiné en priorité aux étudiants de niveau universitaire ou aux
+étudiants en formation d'ingénierie, cet ouvrage constitue également une
+ressource précieuse pour les praticiens souhaitant consolider leurs
+acquis ou actualiser leur expertise. Les explications, les exemples et
+les exercices ont été conçus pour favoriser l'appropriation progressive
+des notions étudiées et soutenir l'autonomie de l'apprentissage.
+
+On appréciera enfin la qualité de l'approche retenue, qui allie
+précision terminologique, rigueur conceptuelle et souci constant de la
+transmission. En cela, cet ouvrage s'inscrit pleinement dans la
+tradition des manuels universitaires de référence : il ne se contente
+pas de décrire des technologies; il en éclaire les fondements, les
+relations et les enjeux.
+
+Je vous souhaite une lecture féconde et stimulante.

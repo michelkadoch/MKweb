@@ -4,10 +4,9 @@
   // Define search scopes based on site sections
   var SCOPES = [
     { label: 'All',           prefix: '' },
-    { label: 'Math',          prefix: 'math/' },
-    { label: 'AI',            prefix: 'ai/' },
-    { label: 'Networking',    prefix: 'networking/' },
-    { label: 'Tools',         prefix: 'tools/' }
+    { label: 'MGR820',        prefix: 'mgr820/' },
+    { label: 'ELE649',        prefix: 'ele649/' },
+    { label: 'Notes',         prefix: 'notes/' }
   ];
 
   // Active scopes — empty array means "All" (no filtering)

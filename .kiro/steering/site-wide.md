@@ -43,10 +43,19 @@ site will not show the change.
 
 ## Adding and Removing Pages
 
-- Notes live in the `notes/` folder. To add a note, copy an existing `.qmd`
-  file, rename it, and edit it. It appears on the Notes page automatically
-  because that page uses a Quarto `listing:`. No `_quarto.yml` edit is needed.
-- Only edit `_quarto.yml` to change the top menu, the site title, or the theme.
+- Content lives in top-level folders, one per course or topic: `notes/`,
+  `mgr820/`, `ele649/`. Each folder has its own `index.qmd` with a Quarto
+  `listing:` that lists that folder's pages automatically, newest first.
+- To add a page to an existing folder, copy an existing `.qmd` file in that
+  folder, rename it, and edit it. It appears on that folder's index page
+  automatically after rendering. No `_quarto.yml` edit is needed.
+- To add a whole new top-level course/topic folder: create the folder with its
+  own `index.qmd` (copy the pattern from `notes/index.qmd`), add
+  `"<folder>/*.qmd"` to `project.render` in `_quarto.yml`, add a navbar entry
+  pointing to `<folder>/index.qmd`, and whitelist the folder in `.gitignore`
+  (`!<folder>/` and `!<folder>/**`), matching the existing `notes/` entries.
+- Only edit `_quarto.yml` to change the top menu, the site title, the theme,
+  or the render list.
 
 ## Page Metadata (SEO)
 
