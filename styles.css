@@ -4,10 +4,10 @@
 
 /* --- Bootstrap Color Overrides --- */
 :root {
-  --bs-primary: #22176F;
-  --bs-primary-rgb: 34, 23, 111;
-  --bs-link-color: #22176F;
-  --bs-link-hover-color: #160f4a;
+  --bs-primary: #166534;
+  --bs-primary-rgb: 22, 101, 52;
+  --bs-link-color: #166534;
+  --bs-link-hover-color: #14532D;
 }
 
 /* --- Google Fonts --- */
@@ -23,7 +23,7 @@ body {
 }
 
 h1, h2, h3, h4 {
-  color: #22176F;
+  color: #166534;
   font-weight: 600;
   font-family: "Nunito", sans-serif;
 }
@@ -36,17 +36,17 @@ h2 {
 
 /* --- Links --- */
 a {
-  color: #22176F !important;
+  color: #166534 !important;
 }
 
 a:hover {
-  color: #160f4a !important;
+  color: #14532D !important;
   text-decoration: underline;
 }
 
 /* --- Navigation --- */
 .navbar {
-  background-color: #22176F !important;
+  background-color: #166534 !important;
 }
 
 .navbar-brand {
@@ -55,7 +55,7 @@ a:hover {
 }
 
 .navbar-brand:hover {
-  color: #c5c0f0 !important;
+  color: #bbf7d0 !important;
 }
 
 .navbar-nav .nav-link {
@@ -63,63 +63,63 @@ a:hover {
 }
 
 .navbar-nav .nav-link:hover {
-  color: #c5c0f0 !important;
+  color: #bbf7d0 !important;
 }
 
 .navbar-nav .dropdown-menu {
   background-color: #ffffff;
-  border: 1px solid #22176F;
+  border: 1px solid #166534;
 }
 
 .navbar-nav .dropdown-item {
-  color: #22176F !important;
+  color: #166534 !important;
 }
 
 .navbar-nav .dropdown-item:hover {
-  background-color: #f0f0fb !important;
-  color: #160f4a !important;
+  background-color: #f0fdf4 !important;
+  color: #14532D !important;
 }
 
 /* Navbar items are left-aligned via _quarto.yml (navbar: left) */
 
 /* --- Sidebar --- */
 .sidebar, .sidebar-navigation {
-  background-color: #f8f8fd !important;
-  border-right: 1px solid #e0e0f3;
+  background-color: #f6fdf9 !important;
+  border-right: 1px solid #d1fae5;
 }
 
 .sidebar-title {
-  color: #22176F !important;
+  color: #166534 !important;
   font-weight: 600;
-  background-color: #f0f0fb !important;
+  background-color: #f0fdf4 !important;
   padding: 0.75rem 1rem;
   margin-bottom: 0;
-  border-bottom: 1px solid #e0e0f3;
+  border-bottom: 1px solid #d1fae5;
 }
 
 .sidebar-item a {
-  color: #22176F !important;
+  color: #166534 !important;
   padding: 0.5rem 1rem;
   display: block;
   text-decoration: none;
 }
 
 .sidebar-item a:hover {
-  color: #160f4a !important;
-  background-color: #f0f0fb !important;
+  color: #14532D !important;
+  background-color: #f0fdf4 !important;
 }
 
 .sidebar-item.active > a {
-  color: #160f4a !important;
-  background-color: #e8e8f5 !important;
+  color: #14532D !important;
+  background-color: #dcfce7 !important;
   font-weight: 600;
 }
 
 a.sidebar-link.active {
-  color: #160f4a !important;
-  background-color: #e8e8f5 !important;
+  color: #14532D !important;
+  background-color: #dcfce7 !important;
   font-weight: 600;
-  border-left: 3px solid #22176F;
+  border-left: 3px solid #166534;
 }
 
 .sidebar-item-container {
@@ -128,13 +128,13 @@ a.sidebar-link.active {
 
 /* --- Buttons --- */
 .btn-primary {
-  background-color: #22176F !important;
-  border-color: #22176F !important;
+  background-color: #166534 !important;
+  border-color: #166534 !important;
 }
 
 .btn-primary:hover {
-  background-color: #160f4a !important;
-  border-color: #160f4a !important;
+  background-color: #14532D !important;
+  border-color: #14532D !important;
 }
 
 /* --- TOC (Right Sidebar) --- */
@@ -150,7 +150,7 @@ a.sidebar-link.active {
 }
 
 #TOC a:hover {
-  color: #22176F !important;
+  color: #166534 !important;
 }
 
 .toc-right {
@@ -180,8 +180,8 @@ code {
 
 :not(pre) > code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  background-color: #f0f0fb;
-  color: #22176F;
+  background-color: #f0fdf4;
+  color: #166534;
   padding: 0.15em 0.4em;
   border-radius: 3px;
   border: 1px solid #e3e8ef;
@@ -196,10 +196,10 @@ pre code {
 
 /* --- Blockquotes (citations) --- */
 blockquote {
-  border-left: 4px solid #22176F;
+  border-left: 4px solid #166534;
   padding-left: 1rem;
   color: #555;
-  background-color: #f0f0fb;
+  background-color: #f0fdf4;
   border-radius: 0 4px 4px 0;
   padding: 0.75rem 1rem;
   margin: 1.5rem 0;
@@ -211,7 +211,7 @@ table {
 }
 
 thead {
-  background-color: #22176F !important;
+  background-color: #166534 !important;
   color: #ffffff !important;
 }
 
@@ -222,17 +222,17 @@ thead {
 }
 
 .callout-note {
-  border-left: 4px solid #22176F;
+  border-left: 4px solid #166534;
 }
 
 .callout-tip {
-  border-left: 4px solid #22176F;
-  background-color: #f0f0fb;
+  border-left: 4px solid #166534;
+  background-color: #f0fdf4;
 }
 
 .callout-tip .callout-title {
-  background-color: #e8e8f5;
-  color: #22176F;
+  background-color: #dcfce7;
+  color: #166534;
 }
 
 .callout-tip .callout-icon::before {
@@ -240,19 +240,19 @@ thead {
 }
 
 .callout-tip .callout-title-container {
-  color: #22176F;
+  color: #166534;
   font-weight: 600;
 }
 
 /* --- Footer --- */
 .nav-footer {
-  background-color: #22176F !important;
-  color: #c5c0f0 !important;
+  background-color: #166534 !important;
+  color: #bbf7d0 !important;
   font-size: 0.85rem;
 }
 
 .nav-footer a {
-  color: #c5c0f0 !important;
+  color: #bbf7d0 !important;
 }
 
 .nav-footer a:hover {
@@ -274,7 +274,7 @@ thead {
   margin: 0 auto;
 }
 .quarto-title-banner {
-  background-color: #22176F !important;
+  background-color: #166534 !important;
   color: #ffffff !important;
 }
 
@@ -284,21 +284,21 @@ thead {
 }
 
 .page-navigation a {
-  color: #22176F !important;
+  color: #166534 !important;
 }
 
 .page-navigation a:hover {
-  color: #160f4a !important;
+  color: #14532D !important;
 }
 
 /* --- AI-Generated Content Disclaimer --- */
 .ai-generated-badge {
   display: block;
-  background-color: #f0f0fb;
-  color: #22176F;
+  background-color: #f0fdf4;
+  color: #166534;
   font-size: 0.85rem;
   padding: 0.6rem 1rem;
-  border-left: 4px solid #22176F;
+  border-left: 4px solid #166534;
   border-radius: 0 4px 4px 0;
   margin-top: -0.5rem;
   margin-bottom: 1.5rem;
@@ -306,8 +306,8 @@ thead {
 
 .needs-review-pill {
   display: inline-block;
-  background-color: #e0e0f3;
-  color: #22176F;
+  background-color: #d1fae5;
+  color: #166534;
   font-size: 0.72rem;
   font-weight: 700;
   padding: 2px 8px;
@@ -1102,13 +1102,13 @@ thead {
 }
 
 .search-scope-pill:hover {
-  border-color: #22176F;
-  color: #22176F;
+  border-color: #166534;
+  color: #166534;
 }
 
 .search-scope-pill.active {
-  background: #22176F;
-  border-color: #22176F;
+  background: #166534;
+  border-color: #166534;
   color: #fff;
 }
 
