@@ -18,15 +18,26 @@ Every note starts with a front-matter block between two `---` lines:
 title: "The Page Title"
 description: "One plain sentence about what the page covers."
 date: "YYYY-MM-DD"
+order: 1
+difficulty: 1
 categories: [topic-tag]
 ---
 ```
 
 - `title` is what shows at the top of the page and in the folder's listing.
 - `description` is required (used for search engines and the listing).
-- `date` controls the order on the folder's index page (newest first). Use
-  today's date.
+- `date` is required. Use today's date (the date the page was written).
+- `order` is required for `mgr820/` and `ele649/` pages. It is a whole number
+  (1, 2, 3, ...) that sets the page's position in that folder's listing and
+  in the sidebar progress bar. Lower numbers come first. Leave gaps (10, 20,
+  30) if you want room to insert pages later without renumbering everything.
+- `difficulty` is required for `mgr820/` and `ele649/` pages. A whole number
+  from 1 (easiest) to 5 (hardest). It scales the estimated reading time and
+  shows as a filled-dot indicator on the page.
 - `categories` is optional. It groups related pages with clickable tags.
+
+`notes/` pages do not use `order`/`difficulty` yet; that folder's listing
+still sorts by `date desc`.
 
 ## Structure
 

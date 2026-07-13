@@ -4,12 +4,12 @@ description: "Notes and materials for MGR820."
 listing:
   contents: "*.qmd"
   type: default
-  sort: "date desc"
+  sort: "order"
   categories: true
   fields: [title, description, date, reading-time]
 ---
 
-Every page in this folder appears below automatically, newest first. To add a
+Every page in this folder appears below automatically, in `order`. To add a
 new one, create a new `.qmd` file in this folder with a title, description,
-and date in the front matter. It will show up here the next time the site is
-rendered.
+date, order, and difficulty in the front matter. It will show up here the
+next time the site is rendered.

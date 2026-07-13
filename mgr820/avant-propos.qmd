@@ -1,5 +1,7 @@
 ---
 title: "Avant-propos"
+order: 1
+difficulty: 1
 description: "Avant-propos du manuel sur les réseaux de télécommunications, présentant ses objectifs pédagogiques et son public visé."
 date: "2026-07-13"
 categories: [avant-propos]

@@ -32,8 +32,6 @@ website:
   # favicon: media/favicon.ico
   navbar:
     left:
-      - href: index.qmd
-        text: Home
       - href: mgr820/index.qmd
         text: MGR820
       - href: ele649/index.qmd
