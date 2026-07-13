@@ -19,8 +19,8 @@ project:
 
 website:
   # ---- CHANGE THESE TWO LINES TO YOUR OWN ----
-  title: "Professor Lastname's Notes"
-  description: "Course notes and writing by Professor Lastname."
+  title: "Michel Kadoch's Notes"
+  description: "Course notes and writing by Michel Kadoch."
   site-url: https://your-domain.pages.dev   # your Cloudflare Pages URL
   # --------------------------------------------
   open-graph: true

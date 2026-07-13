@@ -1,6 +1,6 @@
 ---
 title: "About"
-description: "About Professor Lastname."
+description: "About Michel Kadoch."
 ---
 
 Write a short paragraph about yourself here. Who you are, what you teach or
