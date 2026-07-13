@@ -53,3 +53,10 @@
 **/*.quarto_ipynb
 /.luarc.json
 tmp.txt
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
