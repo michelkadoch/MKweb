@@ -1,6 +1,6 @@
 ---
 title: "Révision du chapitre 9 : le protocole IP"
-order: 3
+order: 2
 difficulty: 3
 description: "Adressage IPv4 par classes, adresses spéciales et privées, sous-réseaux et masques, en-tête IP, fragmentation, CIDR, VLSM et introduction à IPv6."
 date: "2026-11-20"

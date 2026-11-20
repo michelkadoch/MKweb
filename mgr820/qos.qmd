@@ -1,6 +1,6 @@
 ---
 title: "Qualité de service : IntServ, DiffServ et Best Effort"
-order: 2
+order: 3
 difficulty: 2
 description: "Les trois modèles de qualité de service dans les réseaux IP, le contrôle d'admission, le marquage DSCP et les classes EF, AF et Best Effort."
 date: "2026-11-20"
