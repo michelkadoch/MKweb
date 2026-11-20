@@ -4,11 +4,10 @@
     "items": []
   },
   {
-    "listing": "/index.html",
+    "listing": "/mgr820/index.html",
     "items": [
-      "/notes/index.html",
-      "/notes/example-with-a-plot.html",
-      "/notes/first-note.html"
+      "/mgr820/avant-propos.html",
+      "/mgr820/qos.html"
     ]
   },
   {
@@ -19,9 +18,11 @@
     ]
   },
   {
-    "listing": "/mgr820/index.html",
+    "listing": "/index.html",
     "items": [
-      "/mgr820/avant-propos.html"
+      "/notes/index.html",
+      "/notes/example-with-a-plot.html",
+      "/notes/first-note.html"
     ]
   }
 ]

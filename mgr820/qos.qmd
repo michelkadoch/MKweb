@@ -1,0 +1,237 @@
+---
+title: "Qualité de service : IntServ, DiffServ et Best Effort"
+order: 2
+difficulty: 2
+description: "Les trois modèles de qualité de service dans les réseaux IP, le contrôle d'admission, le marquage DSCP et les classes EF, AF et Best Effort."
+date: "2026-11-20"
+categories: [qos, diffserv]
+---
+
+## Vidéo du cours
+
+{{< video https://youtu.be/H0fN5VOjg9k >}}
+
+## Pourquoi la qualité de service ?
+
+Certaines applications ont besoin de ressources précises du réseau. Ces
+besoins s'expriment selon quatre paramètres :
+
+- la **bande passante** ;
+- le **délai** (latence) ;
+- la **gigue** (variation du délai) ;
+- la **perte de paquets**.
+
+Un protocole de qualité de service (QoS) sert d'abord à **reconnaître**
+ces besoins, puis à les faire respecter. Il existe trois approches :
+
+| Modèle | Unité traitée | Principe |
+|---|---|---|
+| **IntServ** (services intégrés) | Chaque flux, c'est-à-dire chaque appel | Réservation de ressources par appel |
+| **DiffServ** (services différenciés) | Chaque *classe* de trafic | Tous les flux d'une même classe reçoivent le même traitement |
+| **Best Effort** | Aucune | Pas de QoS : les paquets passent quand ils peuvent, avec des délais, et sont supprimés au besoin |
+
+IntServ et DiffServ sont deux protocoles distincts. C'est **DiffServ** qui
+a été retenu en pratique. Best Effort correspond simplement à l'absence de
+protocole de qualité de service.
+
+## Les services intégrés (IntServ)
+
+IntServ traite **chaque appel séparément** et lui accorde exactement ce dont
+il a besoin. Le modèle repose sur trois principes :
+
+1. Le réseau est contrôlé et soumis à un **mécanisme de contrôle
+   d'admission**.
+2. Des **mécanismes de réservation de ressources** sont nécessaires.
+3. Il offre un service garanti, comparable à celui d'un réseau à
+   commutation de circuits, à l'aide du protocole **RSVP** (*Resource
+   Reservation Protocol*).
+
+### Le contrôle d'admission
+
+Les appels déjà en cours sont prioritaires : **on n'interrompt jamais un
+appel en cours**. Lorsque le réseau montre des signes de congestion, on
+contrôle plutôt les **nouveaux** appels qui veulent entrer, et on peut les
+refuser.
+
+::: {.callout-note}
+## Exemple de la téléphonie
+Il serait inacceptable que l'opérateur coupe votre appel au milieu d'une
+conversation. En revanche, entendre la tonalité « occupé » quand on essaie
+d'appeler est ennuyeux, mais acceptable. C'est le principe du contrôle
+d'admission : protéger les communications en cours en refusant, au besoin,
+les nouvelles.
+:::
+
+Le contrôle d'admission déclenche les réservations de ressources. Un appel
+peut par exemple demander une certaine bande passante en kb/s et un délai
+maximal de 200 ms, et le réseau doit réserver ces ressources avec RSVP.
+
+### La limite d'IntServ : la mise à l'échelle
+
+IntServ est très efficace pour chaque appel, mais il a deux défauts majeurs :
+
+- **Les ressources réservées sont perdues pour les autres.** La bande
+  passante réservée à un appel n'est plus disponible pour personne
+  d'autre, ce qui aggrave la congestion à mesure que les appels
+  s'accumulent.
+- **Il ne passe pas à l'échelle** (*scalability*). Réserver des ressources
+  pour un appel, puis pour un autre, fonctionne. Avec des centaines
+  d'appels simultanés, il devient impossible de suivre toutes ces
+  réservations : plus il y a d'appels, moins le service est efficace.
+
+Il fallait donc un système plus léger : c'est le rôle de DiffServ.
+
+## Les services différenciés (DiffServ)
+
+DiffServ élimine les contraintes d'IntServ : **aucune réservation de
+ressources par appel**. On n'identifie même pas le type de service (voix,
+vidéo, données). On identifie seulement son **besoin** : « J'ai besoin de
+telle bande passante et d'un délai minimal, donc j'appartiens à telle
+catégorie. »
+
+- Au lieu de séparer les flux, DiffServ définit des **classes de service**
+  dans lesquelles plusieurs flux sont **agrégés**.
+- Tous les flux d'une même classe reçoivent **le même service**.
+- Les routeurs traitent des **paquets** et non des flux, et **ne
+  conservent aucun état** par appel.
+
+Comme on traite des groupes et non des appels individuels, la mise à
+l'échelle n'est plus un problème : un grand nombre d'appels simultanés est
+traité de la même façon. Le principe rappelle celui qu'on a vu avec MPLS.
+
+### Architecture : routeurs de bordure et routeurs de cœur
+
+DiffServ est une architecture définie par l'**IETF**. Elle repose sur deux
+types de routeurs :
+
+- **Les routeurs de bordure** (à l'entrée du réseau) **classifient** chaque
+  paquet, c'est-à-dire déterminent sa classe selon ses besoins, puis le
+  **marquent**.
+- **Les routeurs de cœur** se contentent de **lire** ce marquage pour
+  acheminer le paquet. Ils ne le modifient pas.
+
+### Le champ DSCP dans l'en-tête IP
+
+Le marquage utilise **6 bits** de l'en-tête IPv4 (20 octets). Ces bits
+se trouvent dans l'octet **Type of Service** (ToS), le troisième champ de
+l'en-tête : ce sont les 6 premiers bits, appelés **DSCP** (*Differentiated
+Services Code Point*).
+
+- Avec 6 bits, les valeurs vont de **0 à 63**.
+- Le DSCP reste **compatible** avec l'ancienne utilisation du champ ToS.
+
+::: {.callout-tip}
+## Les 2 bits restants
+Le cours les présente comme non définis par DiffServ. Depuis la RFC 3168,
+ils servent à l'**ECN** (*Explicit Congestion Notification*).
+:::
+
+### Du ToS d'origine au DSCP
+
+**Première génération (ToS d'origine) :**
+
+- 3 bits de **précédence** indiquent si le paquet est prioritaire ;
+- 4 bits indiquent le critère important : **D** (délai), **T** (débit),
+  **R** (fiabilité) ou **C** (coût). Un seul critère pouvait être choisi à
+  la fois : si D valait 1, les autres valaient automatiquement 0 ;
+- le dernier bit valait toujours 0.
+
+**Deuxième génération (DiffServ) :** on utilise les 6 premiers bits pour
+coder une classe. La valeur 0 correspond au Best Effort. D'autres valeurs
+(8, 16, 24, 32, etc.) correspondent à différentes classes.
+
+### Fonctionnement à l'entrée du réseau
+
+1. Les paquets arrivent au routeur de bordure.
+2. Il les **classifie** selon le type de trafic et leurs besoins.
+3. Il les **marque** avec le code DSCP de leur classe.
+4. Au besoin, un **conditionnement du trafic** s'applique : *traffic
+   shaping* (lissage), *traffic policing* (limitation), ou les deux.
+
+::: {.callout-important}
+## DiffServ classifie et marque, c'est tout
+La gestion de la congestion (lissage, limitation, suppression de paquets,
+files d'attente) relève d'**autres protocoles**, étudiés dans une deuxième
+partie. Ces protocoles s'appuient sur le marquage DiffServ pour décider
+quels paquets passent en premier et lesquels supprimer.
+:::
+
+## Les classes de service DiffServ
+
+Chaque classe est définie selon les quatre paramètres de QoS (bande
+passante, délai, gigue, perte), puis associée à un code DSCP.
+
+| Classe | Niveau | Exemple de trafic | DSCP |
+|---|---|---|---|
+| **EF** (*Expedited Forwarding*) | Premium (« platine ») | Voix | 46 |
+| **AF** (*Assured Forwarding*), « Or » | Priorité élevée | Applications critiques (ERP, Bourse) | 26 |
+| **AF**, « Argent » | Priorité moyenne | Telnet, SMTP, transfert de fichiers | 18, 20 |
+| **AF**, « Bronze » | Priorité plus faible | Trafic Web | 10 |
+| **Best Effort** | Le plus bas, aucune garantie | Tout le reste | 0 |
+
+- **EF** est la classe la plus haute. Chaque datagramme de voix premium est
+  marqué DSCP 46 dans le champ ToS, puis circule ainsi dans le réseau.
+- **Best Effort** n'a aucune priorité : en cas de congestion, ce sont ces
+  paquets qu'on supprime en premier.
+
+### Assured Forwarding (AF)
+
+Le service AF offre une **communication fiable**, même en présence de
+congestion, mais il **tolère une certaine dégradation** de la qualité de
+service.
+
+- Il comporte **quatre sous-classes**.
+- Chaque sous-classe a **trois priorités de suppression** : faible, moyenne
+  et élevée.
+- En cas de congestion prolongée, on **supprime des paquets** en tenant
+  compte de ces priorités. Cette suppression, ainsi que la gestion des
+  files d'attente et la suppression aléatoire de paquets, est effectuée
+  par d'autres mécanismes, en se basant sur le marquage.
+
+## Le contrat de niveau de service (SLA)
+
+Le **SLA** (*Service Level Agreement*) est le contrat conclu avec le
+fournisseur de services. Il décrit votre trafic et ses besoins, et le
+fournisseur s'en sert pour attribuer une priorité à votre trafic et le
+traiter en conséquence. Le SLA est défini par l'opérateur, selon les
+besoins du client.
+
+::: {.callout-note}
+## Exemple : données et téléphonie IP à la maison
+À la maison, le modem-routeur transporte tout le trafic de l'ordinateur,
+comme une vidéoconférence. Tant que la bande passante suffit et qu'il n'y a
+pas de congestion, tout passe bien.
+
+Le téléphone résidentiel en téléphonie IP utilise le même réseau IP, mais
+il entre par un **port différent** de celui des données. Il fait l'objet
+d'un **service distinct**, payé séparément. Il en va de même pour le
+cellulaire : son accès IP est séparé de celui des données de la maison.
+
+Pourquoi un accès séparé ? **À cause du marquage.** L'accès identifie ce
+trafic comme de la voix et le marque dans une classe prioritaire. La voix
+obtient alors une latence très faible, par exemple au plus 150 ms de bout
+en bout partout dans le monde, sans pénaliser les données.
+:::
+
+Même pour l'accès Internet, il existe plusieurs classes, par exemple 3 Gb/s
+ou 400 Mb/s. C'est le SLA qui définit comment votre trafic sera traité.
+
+## Questions de révision
+
+**1. Quelle est la différence fondamentale entre IntServ et DiffServ quant à l'unité de trafic traitée ?**
+
+**1. Pourquoi le contrôle d'admission refuse-t-il les nouveaux appels plutôt que d'interrompre les appels en cours ?**
+
+**1. Quel protocole IntServ utilise-t-il pour réserver les ressources, et pourquoi ce modèle ne passe-t-il pas à l'échelle ?**
+
+**1. Quel est le rôle des routeurs de bordure et celui des routeurs de cœur dans DiffServ ?**
+
+**1. Combien de bits occupe le DSCP, dans quel champ de l'en-tête IP se trouve-t-il, et combien de valeurs permet-il ?**
+
+**1. Quelle valeur DSCP est associée à la classe EF, et quel type de trafic utilise cette classe ?**
+
+**1. Combien de sous-classes et de priorités de suppression compte la classe AF ?**
+
+**1. DiffServ gère-t-il lui-même la suppression des paquets en cas de congestion ? Expliquez.**
+
+**1. Qu'est-ce qu'un SLA, et pourquoi la téléphonie IP résidentielle passe-t-elle par un accès distinct de celui des données ?**

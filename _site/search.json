@@ -7,11 +7,53 @@
     "text": "Every page in this folder appears below automatically, in order. To add a new one, create a new .qmd file in this folder with a title, description, date, order, and difficulty in the front matter. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "mgr820/avant-propos.html",
-    "href": "mgr820/avant-propos.html",
-    "title": "Avant-propos",
+    "objectID": "mgr820/index.html",
+    "href": "mgr820/index.html",
+    "title": "MGR820",
     "section": "",
-    "text": "Les ouvrages consacrés aux réseaux de télécommunications occupent une place essentielle dans la formation des étudiants en génie, en informatique et en télécommunications, ainsi que dans le perfectionnement des professionnels appelés à concevoir, exploiter ou faire évoluer des infrastructures numériques complexes. Dans un domaine marqué par une évolution rapide des technologies, des architectures et des usages, la nécessité d’un exposé rigoureux, structuré et accessible demeure plus que jamais d’actualité.\nLe présent ouvrage répond à cette exigence avec une ambition claire : offrir une présentation ordonnée des fondements et des prolongements des réseaux modernes, en articulant les notions théoriques et les réalités de terrain. Le lecteur y trouvera une progression soigneusement construite, allant des concepts de base aux technologies plus avancées, dans une perspective à la fois pédagogique, analytique et appliquée.\nL’intérêt particulier de ce livre réside dans sa capacité à relier les principes fondamentaux aux environnements de communication contemporains. Les réseaux de données, les architectures IP, les mécanismes de transmission, les modèles de référence, les technologies d’opérateurs, les centres de données et les infrastructures virtualisées y sont abordés avec une volonté constante de clarté et de cohérence. Cette démarche permet non seulement d’acquérir des connaissances, mais aussi de développer une compréhension durable des logiques qui structurent les réseaux actuels.\nDestiné en priorité aux étudiants de niveau universitaire ou aux étudiants en formation d’ingénierie, cet ouvrage constitue également une ressource précieuse pour les praticiens souhaitant consolider leurs acquis ou actualiser leur expertise. Les explications, les exemples et les exercices ont été conçus pour favoriser l’appropriation progressive des notions étudiées et soutenir l’autonomie de l’apprentissage.\nOn appréciera enfin la qualité de l’approche retenue, qui allie précision terminologique, rigueur conceptuelle et souci constant de la transmission. En cela, cet ouvrage s’inscrit pleinement dans la tradition des manuels universitaires de référence : il ne se contente pas de décrire des technologies; il en éclaire les fondements, les relations et les enjeux.\nJe vous souhaite une lecture féconde et stimulante.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (3 of 3 min)"
+    "text": "Every page in this folder appears below automatically, in order. To add a new one, create a new .qmd file in this folder with a title, description, date, order, and difficulty in the front matter. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\n\nAvant-propos\n\n\n\nAvant-propos du manuel sur les réseaux de télécommunications, présentant ses objectifs pédagogiques et son public visé.\n\n\n\n\n\n\nJul 13, 2026\n\n2 min\n\n\n\n\n\n\nQualité de service : IntServ, DiffServ et Best Effort\n\n\n\nLes trois modèles de qualité de service dans les réseaux IP, le contrôle d’admission, le marquage DSCP et les classes EF, AF et Best Effort.\n\n\n\n\n\n\nNov 20, 2026\n\n8 min\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "notes/index.html",
+    "href": "notes/index.html",
+    "title": "Notes",
+    "section": "",
+    "text": "Every note in this folder appears below automatically, newest first. To add a new one, copy first-note.qmd, give it a new file name, and change the title and words inside. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\n\nA Note With a Plot\n\n\n\nAn example note that runs a little Python to draw a chart. Copy this file when you want a page with a figure.\n\n\n\n\n\n\nJan 2, 2026\n\n1 min\n\n\n\n\n\n\nMy First Note\n\n\n\nAn example page showing headings, lists, math, and a callout. Copy this file to start a new note.\n\n\n\n\n\n\nJan 1, 2026\n\n1 min\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "notes/example-with-a-plot.html",
+    "href": "notes/example-with-a-plot.html",
+    "title": "A Note With a Plot",
+    "section": "",
+    "text": "This note is like the first example, but it also runs a small piece of Python to draw a chart. Copy this file when you want a page with a figure in it.\nFor the chart to appear, the private Python space must be installed. The setup-windows.ps1 script does that for you the first time."
+  },
+  {
+    "objectID": "notes/example-with-a-plot.html#a-simple-chart",
+    "href": "notes/example-with-a-plot.html#a-simple-chart",
+    "title": "A Note With a Plot",
+    "section": "A Simple Chart",
+    "text": "A Simple Chart\nThe code below draws a sine wave. Change the numbers and the words, then render the site to see it update.\n\n%config InlineBackend.figure_formats = ['svg']\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 10, 200)\ny = np.sin(x)\n\nfig, ax = plt.subplots(figsize=(7, 4))\nax.plot(x, y, color=\"#22176F\", linewidth=2)\nax.set_title(\"A simple sine wave\", color=\"gray\")\nax.set_xlabel(\"x\")\nax.set_ylabel(\"sin(x)\")\nax.grid(linestyle=\"--\", alpha=0.4)\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nThe line that begins with #| is a setting for the code block. Here #| echo: true means the reader can see the Python code above the chart. If you would rather show only the chart and hide the code, change it to #| echo: false.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (17 of 17 min)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome",
+    "section": "",
+    "text": "Welcome to my website. This is the home page."
+  },
+  {
+    "objectID": "index.html#recent-notes",
+    "href": "index.html#recent-notes",
+    "title": "Welcome",
+    "section": "Recent Notes",
+    "text": "Recent Notes\nThe list below fills in automatically from the notes/ folder.\n\n\n\n\n\nNotes\n\n\n\nAll notes and articles.\n\n\n\n\n\n\n\n\n\n\nA Note With a Plot\n\n\n\nAn example note that runs a little Python to draw a chart. Copy this file when you want a page with a figure.\n\n\n\n\n\n\nJan 2, 2026\n\n\n\n\n\n\n\nMy First Note\n\n\n\nAn example page showing headings, lists, math, and a callout. Copy this file to start a new note.\n\n\n\n\n\n\nJan 1, 2026\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Write a short paragraph about yourself here. Who you are, what you teach or research, and how people can reach you.\nTo edit this page, open about.qmd and change the words.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (2 of 2 min)"
   },
   {
     "objectID": "notes/first-note.html",
@@ -56,52 +98,52 @@
     "text": "Review Questions\n1. How do you start a new note on this website?\n\n\n\n\n\n\nTipAnswer\n\n\n\n\n\nCopy this file, give it a new file name inside the notes/ folder, and change the title and text. It appears on the Notes page automatically after rendering.\n\n\n\n\n\n\n  Progress\n  \n    \n  \n  29% completed (5 of 17 min)"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "mgr820/avant-propos.html",
+    "href": "mgr820/avant-propos.html",
+    "title": "Avant-propos",
     "section": "",
-    "text": "Write a short paragraph about yourself here. Who you are, what you teach or research, and how people can reach you.\nTo edit this page, open about.qmd and change the words.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (2 of 2 min)"
+    "text": "Les ouvrages consacrés aux réseaux de télécommunications occupent une place essentielle dans la formation des étudiants en génie, en informatique et en télécommunications, ainsi que dans le perfectionnement des professionnels appelés à concevoir, exploiter ou faire évoluer des infrastructures numériques complexes. Dans un domaine marqué par une évolution rapide des technologies, des architectures et des usages, la nécessité d’un exposé rigoureux, structuré et accessible demeure plus que jamais d’actualité.\nLe présent ouvrage répond à cette exigence avec une ambition claire : offrir une présentation ordonnée des fondements et des prolongements des réseaux modernes, en articulant les notions théoriques et les réalités de terrain. Le lecteur y trouvera une progression soigneusement construite, allant des concepts de base aux technologies plus avancées, dans une perspective à la fois pédagogique, analytique et appliquée.\nL’intérêt particulier de ce livre réside dans sa capacité à relier les principes fondamentaux aux environnements de communication contemporains. Les réseaux de données, les architectures IP, les mécanismes de transmission, les modèles de référence, les technologies d’opérateurs, les centres de données et les infrastructures virtualisées y sont abordés avec une volonté constante de clarté et de cohérence. Cette démarche permet non seulement d’acquérir des connaissances, mais aussi de développer une compréhension durable des logiques qui structurent les réseaux actuels.\nDestiné en priorité aux étudiants de niveau universitaire ou aux étudiants en formation d’ingénierie, cet ouvrage constitue également une ressource précieuse pour les praticiens souhaitant consolider leurs acquis ou actualiser leur expertise. Les explications, les exemples et les exercices ont été conçus pour favoriser l’appropriation progressive des notions étudiées et soutenir l’autonomie de l’apprentissage.\nOn appréciera enfin la qualité de l’approche retenue, qui allie précision terminologique, rigueur conceptuelle et souci constant de la transmission. En cela, cet ouvrage s’inscrit pleinement dans la tradition des manuels universitaires de référence : il ne se contente pas de décrire des technologies; il en éclaire les fondements, les relations et les enjeux.\nJe vous souhaite une lecture féconde et stimulante.\n\n\n\n  Progress\n  \n    \n  \n  20% completed (3 of 15 min)"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Welcome",
-    "section": "",
-    "text": "Welcome to my website. This is the home page."
+    "objectID": "mgr820/qos.html#pourquoi-la-qualité-de-service",
+    "href": "mgr820/qos.html#pourquoi-la-qualité-de-service",
+    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
+    "section": "Pourquoi la qualité de service ?",
+    "text": "Pourquoi la qualité de service ?\nCertaines applications ont besoin de ressources précises du réseau. Ces besoins s’expriment selon quatre paramètres :\n\nla bande passante ;\nle délai (latence) ;\nla gigue (variation du délai) ;\nla perte de paquets.\n\nUn protocole de qualité de service (QoS) sert d’abord à reconnaître ces besoins, puis à les faire respecter. Il existe trois approches :\n\n\n\n\n\n\n\n\nModèle\nUnité traitée\nPrincipe\n\n\n\n\nIntServ (services intégrés)\nChaque flux, c’est-à-dire chaque appel\nRéservation de ressources par appel\n\n\nDiffServ (services différenciés)\nChaque classe de trafic\nTous les flux d’une même classe reçoivent le même traitement\n\n\nBest Effort\nAucune\nPas de QoS : les paquets passent quand ils peuvent, avec des délais, et sont supprimés au besoin\n\n\n\nIntServ et DiffServ sont deux protocoles distincts. C’est DiffServ qui a été retenu en pratique. Best Effort correspond simplement à l’absence de protocole de qualité de service."
   },
   {
-    "objectID": "index.html#recent-notes",
-    "href": "index.html#recent-notes",
-    "title": "Welcome",
-    "section": "Recent Notes",
-    "text": "Recent Notes\nThe list below fills in automatically from the notes/ folder.\n\n\n\n\n\nNotes\n\n\nAll notes and articles.\n\n\n\n\n\n\n\n\n\n\nA Note With a Plot\n\n\nAn example note that runs a little Python to draw a chart. Copy this file when you want a page with a figure.\n\n\n\n\n\nJan 2, 2026\n\n\n\n\n\n\n\nMy First Note\n\n\nAn example page showing headings, lists, math, and a callout. Copy this file to start a new note.\n\n\n\n\n\nJan 1, 2026\n\n\n\n\n\nNo matching items"
+    "objectID": "mgr820/qos.html#les-services-intégrés-intserv",
+    "href": "mgr820/qos.html#les-services-intégrés-intserv",
+    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
+    "section": "Les services intégrés (IntServ)",
+    "text": "Les services intégrés (IntServ)\nIntServ traite chaque appel séparément et lui accorde exactement ce dont il a besoin. Le modèle repose sur trois principes :\n\nLe réseau est contrôlé et soumis à un mécanisme de contrôle d’admission.\nDes mécanismes de réservation de ressources sont nécessaires.\nIl offre un service garanti, comparable à celui d’un réseau à commutation de circuits, à l’aide du protocole RSVP (Resource Reservation Protocol).\n\n\nLe contrôle d’admission\nLes appels déjà en cours sont prioritaires : on n’interrompt jamais un appel en cours. Lorsque le réseau montre des signes de congestion, on contrôle plutôt les nouveaux appels qui veulent entrer, et on peut les refuser.\n\n\n\n\n\n\nNoteExemple de la téléphonie\n\n\n\nIl serait inacceptable que l’opérateur coupe votre appel au milieu d’une conversation. En revanche, entendre la tonalité « occupé » quand on essaie d’appeler est ennuyeux, mais acceptable. C’est le principe du contrôle d’admission : protéger les communications en cours en refusant, au besoin, les nouvelles.\n\n\nLe contrôle d’admission déclenche les réservations de ressources. Un appel peut par exemple demander une certaine bande passante en kb/s et un délai maximal de 200 ms, et le réseau doit réserver ces ressources avec RSVP.\n\n\nLa limite d’IntServ : la mise à l’échelle\nIntServ est très efficace pour chaque appel, mais il a deux défauts majeurs :\n\nLes ressources réservées sont perdues pour les autres. La bande passante réservée à un appel n’est plus disponible pour personne d’autre, ce qui aggrave la congestion à mesure que les appels s’accumulent.\nIl ne passe pas à l’échelle (scalability). Réserver des ressources pour un appel, puis pour un autre, fonctionne. Avec des centaines d’appels simultanés, il devient impossible de suivre toutes ces réservations : plus il y a d’appels, moins le service est efficace.\n\nIl fallait donc un système plus léger : c’est le rôle de DiffServ."
   },
   {
-    "objectID": "notes/example-with-a-plot.html",
-    "href": "notes/example-with-a-plot.html",
-    "title": "A Note With a Plot",
-    "section": "",
-    "text": "This note is like the first example, but it also runs a small piece of Python to draw a chart. Copy this file when you want a page with a figure in it.\nFor the chart to appear, the private Python space must be installed. The setup-windows.ps1 script does that for you the first time."
+    "objectID": "mgr820/qos.html#les-services-différenciés-diffserv",
+    "href": "mgr820/qos.html#les-services-différenciés-diffserv",
+    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
+    "section": "Les services différenciés (DiffServ)",
+    "text": "Les services différenciés (DiffServ)\nDiffServ élimine les contraintes d’IntServ : aucune réservation de ressources par appel. On n’identifie même pas le type de service (voix, vidéo, données). On identifie seulement son besoin : « J’ai besoin de telle bande passante et d’un délai minimal, donc j’appartiens à telle catégorie. »\n\nAu lieu de séparer les flux, DiffServ définit des classes de service dans lesquelles plusieurs flux sont agrégés.\nTous les flux d’une même classe reçoivent le même service.\nLes routeurs traitent des paquets et non des flux, et ne conservent aucun état par appel.\n\nComme on traite des groupes et non des appels individuels, la mise à l’échelle n’est plus un problème : un grand nombre d’appels simultanés est traité de la même façon. Le principe rappelle celui qu’on a vu avec MPLS.\n\nArchitecture : routeurs de bordure et routeurs de cœur\nDiffServ est une architecture définie par l’IETF. Elle repose sur deux types de routeurs :\n\nLes routeurs de bordure (à l’entrée du réseau) classifient chaque paquet, c’est-à-dire déterminent sa classe selon ses besoins, puis le marquent.\nLes routeurs de cœur se contentent de lire ce marquage pour acheminer le paquet. Ils ne le modifient pas.\n\n\n\nLe champ DSCP dans l’en-tête IP\nLe marquage utilise 6 bits de l’en-tête IPv4 (20 octets). Ces bits se trouvent dans l’octet Type of Service (ToS), le troisième champ de l’en-tête : ce sont les 6 premiers bits, appelés DSCP (Differentiated Services Code Point).\n\nAvec 6 bits, les valeurs vont de 0 à 63.\nLe DSCP reste compatible avec l’ancienne utilisation du champ ToS.\n\n\n\n\n\n\n\nTipLes 2 bits restants\n\n\n\nLe cours les présente comme non définis par DiffServ. Depuis la RFC 3168, ils servent à l’ECN (Explicit Congestion Notification).\n\n\n\n\nDu ToS d’origine au DSCP\nPremière génération (ToS d’origine) :\n\n3 bits de précédence indiquent si le paquet est prioritaire ;\n4 bits indiquent le critère important : D (délai), T (débit), R (fiabilité) ou C (coût). Un seul critère pouvait être choisi à la fois : si D valait 1, les autres valaient automatiquement 0 ;\nle dernier bit valait toujours 0.\n\nDeuxième génération (DiffServ) : on utilise les 6 premiers bits pour coder une classe. La valeur 0 correspond au Best Effort. D’autres valeurs (8, 16, 24, 32, etc.) correspondent à différentes classes.\n\n\nFonctionnement à l’entrée du réseau\n\nLes paquets arrivent au routeur de bordure.\nIl les classifie selon le type de trafic et leurs besoins.\nIl les marque avec le code DSCP de leur classe.\nAu besoin, un conditionnement du trafic s’applique : traffic shaping (lissage), traffic policing (limitation), ou les deux.\n\n\n\n\n\n\n\nImportantDiffServ classifie et marque, c’est tout\n\n\n\nLa gestion de la congestion (lissage, limitation, suppression de paquets, files d’attente) relève d’autres protocoles, étudiés dans une deuxième partie. Ces protocoles s’appuient sur le marquage DiffServ pour décider quels paquets passent en premier et lesquels supprimer."
   },
   {
-    "objectID": "notes/example-with-a-plot.html#a-simple-chart",
-    "href": "notes/example-with-a-plot.html#a-simple-chart",
-    "title": "A Note With a Plot",
-    "section": "A Simple Chart",
-    "text": "A Simple Chart\nThe code below draws a sine wave. Change the numbers and the words, then render the site to see it update.\n\n%config InlineBackend.figure_formats = ['svg']\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 10, 200)\ny = np.sin(x)\n\nfig, ax = plt.subplots(figsize=(7, 4))\nax.plot(x, y, color=\"#22176F\", linewidth=2)\nax.set_title(\"A simple sine wave\", color=\"gray\")\nax.set_xlabel(\"x\")\nax.set_ylabel(\"sin(x)\")\nax.grid(linestyle=\"--\", alpha=0.4)\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nThe line that begins with #| is a setting for the code block. Here #| echo: true means the reader can see the Python code above the chart. If you would rather show only the chart and hide the code, change it to #| echo: false.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (17 of 17 min)"
+    "objectID": "mgr820/qos.html#les-classes-de-service-diffserv",
+    "href": "mgr820/qos.html#les-classes-de-service-diffserv",
+    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
+    "section": "Les classes de service DiffServ",
+    "text": "Les classes de service DiffServ\nChaque classe est définie selon les quatre paramètres de QoS (bande passante, délai, gigue, perte), puis associée à un code DSCP.\n\n\n\n\n\n\n\n\n\nClasse\nNiveau\nExemple de trafic\nDSCP\n\n\n\n\nEF (Expedited Forwarding)\nPremium (« platine »)\nVoix\n46\n\n\nAF (Assured Forwarding), « Or »\nPriorité élevée\nApplications critiques (ERP, Bourse)\n26\n\n\nAF, « Argent »\nPriorité moyenne\nTelnet, SMTP, transfert de fichiers\n18, 20\n\n\nAF, « Bronze »\nPriorité plus faible\nTrafic Web\n10\n\n\nBest Effort\nLe plus bas, aucune garantie\nTout le reste\n0\n\n\n\n\nEF est la classe la plus haute. Chaque datagramme de voix premium est marqué DSCP 46 dans le champ ToS, puis circule ainsi dans le réseau.\nBest Effort n’a aucune priorité : en cas de congestion, ce sont ces paquets qu’on supprime en premier.\n\n\nAssured Forwarding (AF)\nLe service AF offre une communication fiable, même en présence de congestion, mais il tolère une certaine dégradation de la qualité de service.\n\nIl comporte quatre sous-classes.\nChaque sous-classe a trois priorités de suppression : faible, moyenne et élevée.\nEn cas de congestion prolongée, on supprime des paquets en tenant compte de ces priorités. Cette suppression, ainsi que la gestion des files d’attente et la suppression aléatoire de paquets, est effectuée par d’autres mécanismes, en se basant sur le marquage."
   },
   {
-    "objectID": "notes/index.html",
-    "href": "notes/index.html",
-    "title": "Notes",
-    "section": "",
-    "text": "Every note in this folder appears below automatically, newest first. To add a new one, copy first-note.qmd, give it a new file name, and change the title and words inside. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\n\nA Note With a Plot\n\n\nAn example note that runs a little Python to draw a chart. Copy this file when you want a page with a figure.\n\n\n\n\n\nJan 2, 2026\n\n1 min\n\n\n\n\n\n\nMy First Note\n\n\nAn example page showing headings, lists, math, and a callout. Copy this file to start a new note.\n\n\n\n\n\nJan 1, 2026\n\n1 min\n\n\n\n\nNo matching items"
+    "objectID": "mgr820/qos.html#le-contrat-de-niveau-de-service-sla",
+    "href": "mgr820/qos.html#le-contrat-de-niveau-de-service-sla",
+    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
+    "section": "Le contrat de niveau de service (SLA)",
+    "text": "Le contrat de niveau de service (SLA)\nLe SLA (Service Level Agreement) est le contrat conclu avec le fournisseur de services. Il décrit votre trafic et ses besoins, et le fournisseur s’en sert pour attribuer une priorité à votre trafic et le traiter en conséquence. Le SLA est défini par l’opérateur, selon les besoins du client.\n\n\n\n\n\n\nNoteExemple : données et téléphonie IP à la maison\n\n\n\nÀ la maison, le modem-routeur transporte tout le trafic de l’ordinateur, comme une vidéoconférence. Tant que la bande passante suffit et qu’il n’y a pas de congestion, tout passe bien.\nLe téléphone résidentiel en téléphonie IP utilise le même réseau IP, mais il entre par un port différent de celui des données. Il fait l’objet d’un service distinct, payé séparément. Il en va de même pour le cellulaire : son accès IP est séparé de celui des données de la maison.\nPourquoi un accès séparé ? À cause du marquage. L’accès identifie ce trafic comme de la voix et le marque dans une classe prioritaire. La voix obtient alors une latence très faible, par exemple au plus 150 ms de bout en bout partout dans le monde, sans pénaliser les données.\n\n\nMême pour l’accès Internet, il existe plusieurs classes, par exemple 3 Gb/s ou 400 Mb/s. C’est le SLA qui définit comment votre trafic sera traité."
   },
   {
-    "objectID": "mgr820/index.html",
-    "href": "mgr820/index.html",
-    "title": "MGR820",
-    "section": "",
-    "text": "Every page in this folder appears below automatically, in order. To add a new one, create a new .qmd file in this folder with a title, description, date, order, and difficulty in the front matter. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\n\nAvant-propos\n\n\nAvant-propos du manuel sur les réseaux de télécommunications, présentant ses objectifs pédagogiques et son public visé.\n\n\n\n\n\nJul 13, 2026\n\n2 min\n\n\n\n\nNo matching items"
+    "objectID": "mgr820/qos.html#questions-de-révision",
+    "href": "mgr820/qos.html#questions-de-révision",
+    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
+    "section": "Questions de révision",
+    "text": "Questions de révision\n1. Quelle est la différence fondamentale entre IntServ et DiffServ quant à l’unité de trafic traitée ?\n1. Pourquoi le contrôle d’admission refuse-t-il les nouveaux appels plutôt que d’interrompre les appels en cours ?\n1. Quel protocole IntServ utilise-t-il pour réserver les ressources, et pourquoi ce modèle ne passe-t-il pas à l’échelle ?\n1. Quel est le rôle des routeurs de bordure et celui des routeurs de cœur dans DiffServ ?\n1. Combien de bits occupe le DSCP, dans quel champ de l’en-tête IP se trouve-t-il, et combien de valeurs permet-il ?\n1. Quelle valeur DSCP est associée à la classe EF, et quel type de trafic utilise cette classe ?\n1. Combien de sous-classes et de priorités de suppression compte la classe AF ?\n1. DiffServ gère-t-il lui-même la suppression des paquets en cas de congestion ? Expliquez.\n1. Qu’est-ce qu’un SLA, et pourquoi la téléphonie IP résidentielle passe-t-elle par un accès distinct de celui des données ?\n\n\n\n  Progress\n  \n    \n  \n  100% completed (15 of 15 min)"
   }
 ]
