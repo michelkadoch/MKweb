@@ -1,150 +1,94 @@
 [
   {
-    "objectID": "ele649/index.html",
-    "href": "ele649/index.html",
-    "title": "ELE649",
+    "objectID": "ele649/revision-chapitre03-csma.html",
+    "href": "ele649/revision-chapitre03-csma.html",
+    "title": "Révision du chapitre 3 : CSMA/CD et Ethernet",
     "section": "",
-    "text": "Every page in this folder appears below automatically, in order. To add a new one, create a new .qmd file in this folder with a title, description, date, order, and difficulty in the front matter. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Cette capsule révise le protocole CSMA/CD (Carrier Sense Multiple Access with Collision Detection), la méthode d’accès au support de l’Ethernet d’origine. Les notes ci-dessous suivent l’ordre de la vidéo et refont chaque calcul pas à pas."
   },
   {
-    "objectID": "mgr820/qos.html#pourquoi-la-qualité-de-service",
-    "href": "mgr820/qos.html#pourquoi-la-qualité-de-service",
-    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
-    "section": "Pourquoi la qualité de service ?",
-    "text": "Pourquoi la qualité de service ?\nCertaines applications ont besoin de ressources précises du réseau. Ces besoins s’expriment selon quatre paramètres :\n\nla bande passante ;\nle délai (latence) ;\nla gigue (variation du délai) ;\nla perte de paquets.\n\nUn protocole de qualité de service (QoS) sert d’abord à reconnaître ces besoins, puis à les faire respecter. Il existe trois approches :\n\n\n\n\n\n\n\n\nModèle\nUnité traitée\nPrincipe\n\n\n\n\nIntServ (services intégrés)\nChaque flux, c’est-à-dire chaque appel\nRéservation de ressources par appel\n\n\nDiffServ (services différenciés)\nChaque classe de trafic\nTous les flux d’une même classe reçoivent le même traitement\n\n\nBest Effort\nAucune\nPas de QoS : les paquets passent quand ils peuvent, avec des délais, et sont supprimés au besoin\n\n\n\nIntServ et DiffServ sont deux protocoles distincts. C’est DiffServ qui a été retenu en pratique. Best Effort correspond simplement à l’absence de protocole de qualité de service."
-  },
-  {
-    "objectID": "mgr820/qos.html#les-services-intégrés-intserv",
-    "href": "mgr820/qos.html#les-services-intégrés-intserv",
-    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
-    "section": "Les services intégrés (IntServ)",
-    "text": "Les services intégrés (IntServ)\nIntServ traite chaque appel séparément et lui accorde exactement ce dont il a besoin. Le modèle repose sur trois principes :\n\nLe réseau est contrôlé et soumis à un mécanisme de contrôle d’admission.\nDes mécanismes de réservation de ressources sont nécessaires.\nIl offre un service garanti, comparable à celui d’un réseau à commutation de circuits, à l’aide du protocole RSVP (Resource Reservation Protocol).\n\n\nLe contrôle d’admission\nLes appels déjà en cours sont prioritaires : on n’interrompt jamais un appel en cours. Lorsque le réseau montre des signes de congestion, on contrôle plutôt les nouveaux appels qui veulent entrer, et on peut les refuser.\n\n\n\n\n\n\nNoteExemple de la téléphonie\n\n\n\nIl serait inacceptable que l’opérateur coupe votre appel au milieu d’une conversation. En revanche, entendre la tonalité « occupé » quand on essaie d’appeler est ennuyeux, mais acceptable. C’est le principe du contrôle d’admission : protéger les communications en cours en refusant, au besoin, les nouvelles.\n\n\nLe contrôle d’admission déclenche les réservations de ressources. Un appel peut par exemple demander une certaine bande passante en kb/s et un délai maximal de 200 ms, et le réseau doit réserver ces ressources avec RSVP.\n\n\nLa limite d’IntServ : la mise à l’échelle\nIntServ est très efficace pour chaque appel, mais il a deux défauts majeurs :\n\nLes ressources réservées sont perdues pour les autres. La bande passante réservée à un appel n’est plus disponible pour personne d’autre, ce qui aggrave la congestion à mesure que les appels s’accumulent.\nIl ne passe pas à l’échelle (scalability). Réserver des ressources pour un appel, puis pour un autre, fonctionne. Avec des centaines d’appels simultanés, il devient impossible de suivre toutes ces réservations : plus il y a d’appels, moins le service est efficace.\n\nIl fallait donc un système plus léger : c’est le rôle de DiffServ."
-  },
-  {
-    "objectID": "mgr820/qos.html#les-services-différenciés-diffserv",
-    "href": "mgr820/qos.html#les-services-différenciés-diffserv",
-    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
-    "section": "Les services différenciés (DiffServ)",
-    "text": "Les services différenciés (DiffServ)\nDiffServ élimine les contraintes d’IntServ : aucune réservation de ressources par appel. On n’identifie même pas le type de service (voix, vidéo, données). On identifie seulement son besoin : « J’ai besoin de telle bande passante et d’un délai minimal, donc j’appartiens à telle catégorie. »\n\nAu lieu de séparer les flux, DiffServ définit des classes de service dans lesquelles plusieurs flux sont agrégés.\nTous les flux d’une même classe reçoivent le même service.\nLes routeurs traitent des paquets et non des flux, et ne conservent aucun état par appel.\n\nComme on traite des groupes et non des appels individuels, la mise à l’échelle n’est plus un problème : un grand nombre d’appels simultanés est traité de la même façon. Le principe rappelle celui qu’on a vu avec MPLS.\n\nArchitecture : routeurs de bordure et routeurs de cœur\nDiffServ est une architecture définie par l’IETF. Elle repose sur deux types de routeurs :\n\nLes routeurs de bordure (à l’entrée du réseau) classifient chaque paquet, c’est-à-dire déterminent sa classe selon ses besoins, puis le marquent.\nLes routeurs de cœur se contentent de lire ce marquage pour acheminer le paquet. Ils ne le modifient pas.\n\n\n\nLe champ DSCP dans l’en-tête IP\nLe marquage utilise 6 bits de l’en-tête IPv4 (20 octets). Ces bits se trouvent dans l’octet Type of Service (ToS), le troisième champ de l’en-tête : ce sont les 6 premiers bits, appelés DSCP (Differentiated Services Code Point).\n\nAvec 6 bits, les valeurs vont de 0 à 63.\nLe DSCP reste compatible avec l’ancienne utilisation du champ ToS.\n\n\n\n\n\n\n\nTipLes 2 bits restants\n\n\n\nLe cours les présente comme non définis par DiffServ. Depuis la RFC 3168, ils servent à l’ECN (Explicit Congestion Notification).\n\n\n\n\nDu ToS d’origine au DSCP\nPremière génération (ToS d’origine) :\n\n3 bits de précédence indiquent si le paquet est prioritaire ;\n4 bits indiquent le critère important : D (délai), T (débit), R (fiabilité) ou C (coût). Un seul critère pouvait être choisi à la fois : si D valait 1, les autres valaient automatiquement 0 ;\nle dernier bit valait toujours 0.\n\nDeuxième génération (DiffServ) : on utilise les 6 premiers bits pour coder une classe. La valeur 0 correspond au Best Effort. D’autres valeurs (8, 16, 24, 32, etc.) correspondent à différentes classes.\n\n\nFonctionnement à l’entrée du réseau\n\nLes paquets arrivent au routeur de bordure.\nIl les classifie selon le type de trafic et leurs besoins.\nIl les marque avec le code DSCP de leur classe.\nAu besoin, un conditionnement du trafic s’applique : traffic shaping (lissage), traffic policing (limitation), ou les deux.\n\n\n\n\n\n\n\nImportantDiffServ classifie et marque, c’est tout\n\n\n\nLa gestion de la congestion (lissage, limitation, suppression de paquets, files d’attente) relève d’autres protocoles, étudiés dans une deuxième partie. Ces protocoles s’appuient sur le marquage DiffServ pour décider quels paquets passent en premier et lesquels supprimer."
-  },
-  {
-    "objectID": "mgr820/qos.html#les-classes-de-service-diffserv",
-    "href": "mgr820/qos.html#les-classes-de-service-diffserv",
-    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
-    "section": "Les classes de service DiffServ",
-    "text": "Les classes de service DiffServ\nChaque classe est définie selon les quatre paramètres de QoS (bande passante, délai, gigue, perte), puis associée à un code DSCP.\n\n\n\n\n\n\n\n\n\nClasse\nNiveau\nExemple de trafic\nDSCP\n\n\n\n\nEF (Expedited Forwarding)\nPremium (« platine »)\nVoix\n46\n\n\nAF (Assured Forwarding), « Or »\nPriorité élevée\nApplications critiques (ERP, Bourse)\n26\n\n\nAF, « Argent »\nPriorité moyenne\nTelnet, SMTP, transfert de fichiers\n18, 20\n\n\nAF, « Bronze »\nPriorité plus faible\nTrafic Web\n10\n\n\nBest Effort\nLe plus bas, aucune garantie\nTout le reste\n0\n\n\n\n\nEF est la classe la plus haute. Chaque datagramme de voix premium est marqué DSCP 46 dans le champ ToS, puis circule ainsi dans le réseau.\nBest Effort n’a aucune priorité : en cas de congestion, ce sont ces paquets qu’on supprime en premier.\n\n\nAssured Forwarding (AF)\nLe service AF offre une communication fiable, même en présence de congestion, mais il tolère une certaine dégradation de la qualité de service.\n\nIl comporte quatre sous-classes.\nChaque sous-classe a trois priorités de suppression : faible, moyenne et élevée.\nEn cas de congestion prolongée, on supprime des paquets en tenant compte de ces priorités. Cette suppression, ainsi que la gestion des files d’attente et la suppression aléatoire de paquets, est effectuée par d’autres mécanismes, en se basant sur le marquage."
-  },
-  {
-    "objectID": "mgr820/qos.html#le-contrat-de-niveau-de-service-sla",
-    "href": "mgr820/qos.html#le-contrat-de-niveau-de-service-sla",
-    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
-    "section": "Le contrat de niveau de service (SLA)",
-    "text": "Le contrat de niveau de service (SLA)\nLe SLA (Service Level Agreement) est le contrat conclu avec le fournisseur de services. Il décrit votre trafic et ses besoins, et le fournisseur s’en sert pour attribuer une priorité à votre trafic et le traiter en conséquence. Le SLA est défini par l’opérateur, selon les besoins du client.\n\n\n\n\n\n\nNoteExemple : données et téléphonie IP à la maison\n\n\n\nÀ la maison, le modem-routeur transporte tout le trafic de l’ordinateur, comme une vidéoconférence. Tant que la bande passante suffit et qu’il n’y a pas de congestion, tout passe bien.\nLe téléphone résidentiel en téléphonie IP utilise le même réseau IP, mais il entre par un port différent de celui des données. Il fait l’objet d’un service distinct, payé séparément. Il en va de même pour le cellulaire : son accès IP est séparé de celui des données de la maison.\nPourquoi un accès séparé ? À cause du marquage. L’accès identifie ce trafic comme de la voix et le marque dans une classe prioritaire. La voix obtient alors une latence très faible, par exemple au plus 150 ms de bout en bout partout dans le monde, sans pénaliser les données.\n\n\nMême pour l’accès Internet, il existe plusieurs classes, par exemple 3 Gb/s ou 400 Mb/s. C’est le SLA qui définit comment votre trafic sera traité."
-  },
-  {
-    "objectID": "mgr820/qos.html#questions-de-révision",
-    "href": "mgr820/qos.html#questions-de-révision",
-    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
-    "section": "Questions de révision",
-    "text": "Questions de révision\n1. Quelle est la différence fondamentale entre IntServ et DiffServ quant à l’unité de trafic traitée ?\n1. Pourquoi le contrôle d’admission refuse-t-il les nouveaux appels plutôt que d’interrompre les appels en cours ?\n1. Quel protocole IntServ utilise-t-il pour réserver les ressources, et pourquoi ce modèle ne passe-t-il pas à l’échelle ?\n1. Quel est le rôle des routeurs de bordure et celui des routeurs de cœur dans DiffServ ?\n1. Combien de bits occupe le DSCP, dans quel champ de l’en-tête IP se trouve-t-il, et combien de valeurs permet-il ?\n1. Quelle valeur DSCP est associée à la classe EF, et quel type de trafic utilise cette classe ?\n1. Combien de sous-classes et de priorités de suppression compte la classe AF ?\n1. DiffServ gère-t-il lui-même la suppression des paquets en cas de congestion ? Expliquez.\n1. Qu’est-ce qu’un SLA, et pourquoi la téléphonie IP résidentielle passe-t-elle par un accès distinct de celui des données ?\n\n\n\n  Progress\n  \n    \n  \n  100% completed (45 of 45 min)"
-  },
-  {
-    "objectID": "mgr820/avant-propos.html",
-    "href": "mgr820/avant-propos.html",
-    "title": "Avant-propos",
+    "objectID": "ele649/revision-chapitre03-csma.html#vidéo-de-révision",
+    "href": "ele649/revision-chapitre03-csma.html#vidéo-de-révision",
+    "title": "Révision du chapitre 3 : CSMA/CD et Ethernet",
     "section": "",
-    "text": "Les ouvrages consacrés aux réseaux de télécommunications occupent une place essentielle dans la formation des étudiants en génie, en informatique et en télécommunications, ainsi que dans le perfectionnement des professionnels appelés à concevoir, exploiter ou faire évoluer des infrastructures numériques complexes. Dans un domaine marqué par une évolution rapide des technologies, des architectures et des usages, la nécessité d’un exposé rigoureux, structuré et accessible demeure plus que jamais d’actualité.\nLe présent ouvrage répond à cette exigence avec une ambition claire : offrir une présentation ordonnée des fondements et des prolongements des réseaux modernes, en articulant les notions théoriques et les réalités de terrain. Le lecteur y trouvera une progression soigneusement construite, allant des concepts de base aux technologies plus avancées, dans une perspective à la fois pédagogique, analytique et appliquée.\nL’intérêt particulier de ce livre réside dans sa capacité à relier les principes fondamentaux aux environnements de communication contemporains. Les réseaux de données, les architectures IP, les mécanismes de transmission, les modèles de référence, les technologies d’opérateurs, les centres de données et les infrastructures virtualisées y sont abordés avec une volonté constante de clarté et de cohérence. Cette démarche permet non seulement d’acquérir des connaissances, mais aussi de développer une compréhension durable des logiques qui structurent les réseaux actuels.\nDestiné en priorité aux étudiants de niveau universitaire ou aux étudiants en formation d’ingénierie, cet ouvrage constitue également une ressource précieuse pour les praticiens souhaitant consolider leurs acquis ou actualiser leur expertise. Les explications, les exemples et les exercices ont été conçus pour favoriser l’appropriation progressive des notions étudiées et soutenir l’autonomie de l’apprentissage.\nOn appréciera enfin la qualité de l’approche retenue, qui allie précision terminologique, rigueur conceptuelle et souci constant de la transmission. En cela, cet ouvrage s’inscrit pleinement dans la tradition des manuels universitaires de référence : il ne se contente pas de décrire des technologies; il en éclaire les fondements, les relations et les enjeux.\nJe vous souhaite une lecture féconde et stimulante.\n\n\n\n  Progress\n  \n    \n  \n  6% completed (3 of 45 min)"
+    "text": "Cette capsule révise le protocole CSMA/CD (Carrier Sense Multiple Access with Collision Detection), la méthode d’accès au support de l’Ethernet d’origine. Les notes ci-dessous suivent l’ordre de la vidéo et refont chaque calcul pas à pas."
   },
   {
-    "objectID": "notes/first-note.html",
-    "href": "notes/first-note.html",
-    "title": "My First Note",
-    "section": "",
-    "text": "This is an example note. It shows the pieces you will use most often. Copy this file, rename it, and replace the words to write your own."
+    "objectID": "ele649/revision-chapitre03-csma.html#le-support-partagé",
+    "href": "ele649/revision-chapitre03-csma.html#le-support-partagé",
+    "title": "Révision du chapitre 3 : CSMA/CD et Ethernet",
+    "section": "1. Le support partagé",
+    "text": "1. Le support partagé\nL’Ethernet d’origine repose sur un bus : un seul câble, appelé segment, auquel toutes les stations sont reliées.\n\nLe support : en général un câble coaxial, parfois de la fibre optique pour aller plus vite ou plus loin.\nPas de boucle, donc pas de sens de circulation : le signal se diffuse dans les deux directions.\nSupport passif : le câble ne fait que transporter le signal.\nBande de base (baseband) : une seule fréquence est utilisée pour toutes les transmissions de toutes les stations.\nLe transceiver (transmetteur-récepteur) relie chaque station au câble.\nL’adresse MAC : chaque équipement a une adresse unique au monde.\n\nConséquences :\n\nUne seule trame à la fois peut circuler sur le câble. Il n’y a ni multiplexage ni full duplex : deux stations ne peuvent pas émettre en même temps.\nToutes les stations reçoivent chaque trame. Chacune lit l’adresse de destination : si c’est la sienne, elle copie la trame ; sinon, elle l’ignore."
   },
   {
-    "objectID": "notes/first-note.html#a-heading",
-    "href": "notes/first-note.html#a-heading",
-    "title": "My First Note",
-    "section": "A Heading",
-    "text": "A Heading\nText is written as plain sentences, just like an email. Leave a blank line between paragraphs.\nYou can make words bold or italic, and you can link to another page or to an outside website."
+    "objectID": "ele649/revision-chapitre03-csma.html#csma-puis-csmacd",
+    "href": "ele649/revision-chapitre03-csma.html#csma-puis-csmacd",
+    "title": "Révision du chapitre 3 : CSMA/CD et Ethernet",
+    "section": "2. CSMA puis CSMA/CD",
+    "text": "2. CSMA puis CSMA/CD\n\nCSMA : écouter avant d’émettre\nUne station qui veut émettre écoute d’abord le support (carrier sense, détection de porteuse) :\n\nsi le support est libre, elle émet ;\ns’il est occupé, elle attend qu’il se libère.\n\nMalgré cette écoute, deux stations peuvent trouver le support libre au même instant et émettre ensemble : c’est une collision. Les deux trames se superposent et deviennent inexploitables. Les stations concernées doivent alors réémettre après un délai aléatoire, pour avoir de bonnes chances de ne pas se retrouver en collision.\n\n\nCSMA/CD : écouter aussi pendant l’émission\nCSMA/CD est normalisé par l’IEEE 802.3. Il ajoute à CSMA la détection de collision (collision detection) :\n\nLa station continue d’écouter pendant toute son émission et vérifie que ce qu’elle entend est bien ce qu’elle transmet.\nSi elle détecte une collision, elle arrête sa trame et émet un signal de brouillage (jam). Toutes les stations savent alors que ce qui circule n’est pas une donnée valide, mais le résultat d’une collision.\nChaque station impliquée attend ensuite un délai calculé par l’algorithme de backoff avant de réessayer.\n\n\n\nL’algorithme complet\n1. Écouter le support.\n2. Pas de porteuse (support libre) : émettre la trame,\n   en continuant d'écouter.\n3. Collision détectée :\n     a. émettre le signal de brouillage ;\n     b. augmenter le compteur de tentatives n ;\n     c. si n &gt; 15 : abandonner et signaler un problème sur le lien ;\n     d. sinon : attendre un délai aléatoire (backoff) et revenir à l'étape 1.\n4. À la réception : vérifier la trame (longueur, FCS).\n   Une trame erronée est rejetée."
   },
   {
-    "objectID": "notes/first-note.html#a-list",
-    "href": "notes/first-note.html#a-list",
-    "title": "My First Note",
-    "section": "A List",
-    "text": "A List\n\nFirst point\nSecond point\nThird point"
+    "objectID": "ele649/revision-chapitre03-csma.html#le-backoff-exponentiel-binaire",
+    "href": "ele649/revision-chapitre03-csma.html#le-backoff-exponentiel-binaire",
+    "title": "Révision du chapitre 3 : CSMA/CD et Ethernet",
+    "section": "3. Le backoff exponentiel binaire",
+    "text": "3. Le backoff exponentiel binaire\nAprès une collision, chaque station tire au hasard un nombre r de tranches de temps (slot times) à attendre, avec :\n\\[\n0 \\le r \\le 2^k - 1, \\qquad k = \\min(n, 10)\n\\]\noù n est le nombre de collisions subies par cette trame. À 10 Mb/s, une tranche dure 51,2 µs (section 6).\n\n\n\n\n\n\n\n\n\nCollision n°\nk\nChoix possibles de r\nRisque de nouvelle collision (2 stations)\n\n\n\n\n1\n1\n0 ou 1\n1 chance sur 2 (50 %)\n\n\n2\n2\n0 à 3\n1 chance sur 4 (25 %)\n\n\n3\n3\n0 à 7\n1 chance sur 8\n\n\n…\n…\n…\n…\n\n\n10\n10\n0 à 1 023\n1 chance sur 1 024\n\n\n11 à 15\n10 (plafonné)\n0 à 1 023\n1 chance sur 1 024\n\n\n16\n—\nAbandon\n—\n\n\n\nLe compromis :\n\nà chaque collision, l’intervalle double, donc les stations ont moins de chances de choisir le même nombre ;\nen revanche, le temps d’attente moyen s’allonge. Avec 1 024 choix, une station peut attendre très longtemps.\n\nC’est pourquoi k est plafonné à 10, et la trame est abandonnée après 16 tentatives."
   },
   {
-    "objectID": "notes/first-note.html#math",
-    "href": "notes/first-note.html#math",
-    "title": "My First Note",
-    "section": "Math",
-    "text": "Math\nWrite math between dollar signs. Inline math looks like \\(E = mc^2\\) inside a sentence. A larger, centered formula uses two dollar signs:\n\\[\n\\int_{a}^{b} f(x)\\, dx = F(b) - F(a).\n\\]\nNo extra setup is needed. Math renders automatically."
+    "objectID": "ele649/revision-chapitre03-csma.html#la-trame-ethernet-802.3",
+    "href": "ele649/revision-chapitre03-csma.html#la-trame-ethernet-802.3",
+    "title": "Révision du chapitre 3 : CSMA/CD et Ethernet",
+    "section": "4. La trame Ethernet / 802.3",
+    "text": "4. La trame Ethernet / 802.3\n\n\n\n\n\n\n\n\nChamp\nTaille\nRôle\n\n\n\n\nPréambule\n7 octets\n10101010 répété : synchronise l’horloge du récepteur\n\n\nSFD (Start Frame Delimiter)\n1 octet\n10101011 : la synchronisation est finie, la trame commence\n\n\nAdresse destination\n6 octets\nAdresse MAC du destinataire\n\n\nAdresse source\n6 octets\nAdresse MAC de l’émetteur\n\n\nLongueur / Type\n2 octets\n802.3 : longueur des données. Ethernet II : type de protocole transporté\n\n\nDonnées (+ bourrage)\n46 à 1 500 octets\nContenu utile\n\n\nFCS (Frame Check Sequence)\n4 octets\nContrôle d’erreur (CRC)\n\n\n\n\nLes champs en détail\nPréambule et SFD. La transmission est synchrone : le récepteur doit caler son horloge sur celle de l’émetteur avant de lire les données. Les alternances 1010… du préambule servent à cette synchronisation. Le SFD se termine par 11 pour marquer le début de la trame.\nOrdre des bits. La trame est émise du premier octet du préambule jusqu’au FCS, et dans chaque octet, le bit de poids faible part en premier.\nLongueur ou type. C’est le champ qui distingue 802.3 d’Ethernet II :\n\nen 802.3, il donne la longueur des données (au plus 1 500) ;\nen Ethernet II, sa valeur dépasse 1 500 et indique le type de données transportées (par exemple 0x0800 pour IPv4).\n\nDonnées et bourrage. Les données font au moins 46 octets. Si elles sont plus courtes, on ajoute du bourrage (padding) jusqu’à 46.\nFCS. L’émetteur divise le contenu de la trame par un polynôme générateur (CRC-32) et place le reste de la division dans le FCS. Le récepteur refait le calcul : si le reste ne correspond pas, la trame contient une erreur et est rejetée.\n\n\nLes tailles à retenir\nEn-tête et FCS : 6 + 6 + 2 + 4 = 18 octets, ou 26 octets en comptant le préambule et le SFD.\n\n\n\n\n\n\n\n\n\nSans préambule ni SFD\nAvec préambule et SFD\n\n\n\n\nTrame minimale (46 octets de données)\n64 octets\n72 octets\n\n\nTrame maximale (1 500 octets de données)\n1 518 octets\n1 526 octets\n\n\n\n\n\nL’espace entre trames (IFG)\nEntre deux trames, le support doit rester silencieux pendant au moins 96 temps de bit : c’est l’IFG (Inter-Frame Gap). Ce silence laisse aux stations le temps de se préparer à recevoir la trame suivante, et donne à chacune une chance d’émettre à son tour.\n\n\n\nDébit\nDurée d’un bit\nIFG (96 bits)\n\n\n\n\n10 Mb/s\n0,1 µs\n9,6 µs\n\n\n100 Mb/s\n0,01 µs\n0,96 µs\n\n\n1 Gb/s\n1 ns\n96 ns"
   },
   {
-    "objectID": "notes/first-note.html#a-note-box",
-    "href": "notes/first-note.html#a-note-box",
-    "title": "My First Note",
-    "section": "A Note Box",
-    "text": "A Note Box\n\n\n\n\n\n\nNote\n\n\n\nUse a callout box like this to highlight a tip or an important remark."
+    "objectID": "ele649/revision-chapitre03-csma.html#ladresse-mac",
+    "href": "ele649/revision-chapitre03-csma.html#ladresse-mac",
+    "title": "Révision du chapitre 3 : CSMA/CD et Ethernet",
+    "section": "5. L’adresse MAC",
+    "text": "5. L’adresse MAC\nL’adresse MAC compte 48 bits (6 octets). On l’écrit en hexadécimal, par exemple 00:1A:2B:3C:4D:5E.\n\nLes 3 premiers octets identifient le fabricant. C’est l’OUI (Organizationally Unique Identifier), attribué par l’IEEE.\nLes 3 derniers octets sont attribués par le fabricant à chaque carte.\n\nChaque adresse est donc unique au monde.\nPour envoyer une trame à toutes les stations (diffusion), on utilise l’adresse FF:FF:FF:FF:FF:FF, c’est-à-dire tous les bits à 1."
   },
   {
-    "objectID": "notes/first-note.html#review-questions",
-    "href": "notes/first-note.html#review-questions",
-    "title": "My First Note",
-    "section": "Review Questions",
-    "text": "Review Questions\n1. How do you start a new note on this website?\n\n\n\n\n\n\nTipAnswer\n\n\n\n\n\nCopy this file, give it a new file name inside the notes/ folder, and change the title and text. It appears on the Notes page automatically after rendering.\n\n\n\n\n\n\n  Progress\n  \n    \n  \n  29% completed (5 of 17 min)"
+    "objectID": "ele649/revision-chapitre03-csma.html#collisions-taille-minimale-de-trame-et-longueur-du-segment",
+    "href": "ele649/revision-chapitre03-csma.html#collisions-taille-minimale-de-trame-et-longueur-du-segment",
+    "title": "Révision du chapitre 3 : CSMA/CD et Ethernet",
+    "section": "6. Collisions, taille minimale de trame et longueur du segment",
+    "text": "6. Collisions, taille minimale de trame et longueur du segment\n\nLe pire cas\nPrenons deux stations A et B, placées aux deux extrémités du segment. Notons τ le temps de propagation d’un bout à l’autre.\n\nA commence à émettre.\nJuste avant que le signal de A n’atteigne B, donc un peu avant τ, B trouve le support libre et émet à son tour.\nLes deux signaux se rencontrent près de B : il y a collision.\nLe bruit de la collision doit revenir jusqu’à A, ce qui prend encore environ τ.\n\nA n’apprend donc la collision qu’après environ 2τ, un aller-retour. Pour savoir que la collision concerne sa trame, A doit encore être en train d’émettre à ce moment-là. D’où la règle :\n\n\n\n\n\n\nImportantLa règle fondamentale\n\n\n\nLa durée d’émission de la plus petite trame doit être au moins égale au temps d’aller-retour sur le segment :\n\\[\n\\frac{L_{min}}{D} \\ge 2\\tau = \\frac{2\\,S}{V}\n\\]\navec D le débit, Lmin la trame minimale en bits, S la longueur du segment et V la vitesse de propagation.\nCe temps d’aller-retour s’appelle la tranche canal (slot time).\n\n\nDeux conséquences :\n\nune trame plus courte que 64 octets est forcément un fragment de collision, et toutes les stations la rejettent ;\nla trame maximale est limitée pour qu’un utilisateur n’accapare pas le support trop longtemps.\n\n\n\nExemple 1 : longueur maximale du segment\nOn donne :\n\ndébit D = 10 Mb/s ;\ntrame minimale Lmin = 64 octets = 512 bits ;\nvitesse de propagation V = 198 000 km/s = 1,98 × 108 m/s. C’est moins que la vitesse de la lumière, 300 000 km/s, à cause du câble.\n\nÉtape 1 : durée d’un bit. 1 / D = 1 / 107 = 0,1 µs.\nÉtape 2 : durée de la trame minimale, la tranche canal. T = 512 × 0,1 µs = 51,2 µs.\nÉtape 3 : longueur maximale. La trame doit couvrir un aller-retour, donc l’aller seul dure T / 2 = 25,6 µs :\n\\[\nS_{max} = V \\times \\frac{T}{2} = 1{,}98 \\times 10^{8} \\times 25{,}6 \\times 10^{-6} = 5\\,068{,}8 \\text{ m}\n\\]\nEn théorie, le segment peut donc atteindre environ 5 km. La norme 802.3 impose des longueurs bien plus courtes (2 500 m au maximum avec des répéteurs), pour tenir compte des délais des répéteurs et des transceivers.\n\n\nExemple 2 : le même calcul à l’envers\nOn part cette fois de la longueur S = 5 068,8 m et on retrouve la taille minimale de trame.\n\nTemps de propagation : τ = S / V = 5 068,8 / 1,98 × 108 = 25,6 µs.\nAller-retour : 2τ = 51,2 µs.\nNombre de bits émis pendant ce temps : 51,2 µs / 0,1 µs = 512 bits, soit 64 octets.\n\nOn retrouve bien la trame minimale de 64 octets."
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "Write a short paragraph about yourself here. Who you are, what you teach or research, and how people can reach you.\nTo edit this page, open about.qmd and change the words.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (2 of 2 min)"
+    "objectID": "ele649/revision-chapitre03-csma.html#le-débit-en-paquets-par-seconde",
+    "href": "ele649/revision-chapitre03-csma.html#le-débit-en-paquets-par-seconde",
+    "title": "Révision du chapitre 3 : CSMA/CD et Ethernet",
+    "section": "7. Le débit en paquets par seconde",
+    "text": "7. Le débit en paquets par seconde\nLe nombre maximal de trames par seconde (pps, paquets par seconde) est :\n\\[\n\\text{pps} = \\frac{1}{T_{trame} + T_{IFG}}\n\\]\noù Ttrame est la durée d’émission de la trame, préambule compris, et TIFG l’espace entre trames.\nAvec uniquement des trames minimales, à 10 Mb/s :\n\n72 octets = 576 bits, soit 57,6 µs ;\n57,6 + 9,6 = 67,2 µs ;\npps = 1 / 67,2 µs ≈ 14 880 trames par seconde.\n\nAvec uniquement des trames maximales, à 10 Mb/s :\n\n1 526 octets = 12 208 bits, soit 1 220,8 µs ;\n1 220,8 + 9,6 = 1 230,4 µs ;\npps = 1 / 1 230,4 µs ≈ 812 trames par seconde.\n\nLes petites trames donnent beaucoup plus de trames par seconde, mais transportent beaucoup moins de données utiles chacune."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Welcome",
-    "section": "",
-    "text": "Welcome to my website. This is the home page."
+    "objectID": "ele649/revision-chapitre03-csma.html#la-couche-physique-et-le-codage",
+    "href": "ele649/revision-chapitre03-csma.html#la-couche-physique-et-le-codage",
+    "title": "Révision du chapitre 3 : CSMA/CD et Ethernet",
+    "section": "8. La couche physique et le codage",
+    "text": "8. La couche physique et le codage\n\nCe que couvre la norme 802.3\nLa couche liaison (couche 2) se divise en deux sous-couches :\n\nla sous-couche LLC (Logical Link Control), décrite par l’IEEE 802.2 ;\nla sous-couche MAC, où se trouve CSMA/CD, décrite par l’IEEE 802.3.\n\nLa norme 802.3 couvre la sous-couche MAC et la couche physique.\n\n\nLe codage Manchester (10 Mb/s)\nÀ 10 Mb/s, on utilise le codage Manchester. Chaque bit comporte une transition au milieu du temps de bit :\n\n0 : transition du positif vers le négatif ;\n1 : transition du négatif vers le positif.\n\nQuand deux bits identiques se suivent, il faut aussi une transition au début du bit, pour revenir au bon niveau avant la transition du milieu. Grâce à cette transition systématique, le récepteur garde sa synchronisation, même sur une longue suite de 0 ou de 1.\nExemple : coder 0100011. Chaque bit est découpé en deux moitiés : H pour le niveau positif, B pour le niveau négatif.\nBits     :   0     1     0     0     0     1     1\nMoitiés  :  H B   B H   H B   H B   H B   B H   B H\nEntre deux 0 successifs, le signal finit en B et doit remonter en H au début du bit suivant. Même chose entre deux 1 : il finit en H et doit redescendre en B.\n\n\nLa nomenclature 10BASE-T\nUn nom comme 10BASE-T se lit en trois parties :\n\n10 : le débit, 10 Mb/s ;\nBASE : la transmission en bande de base, une seule fréquence ;\nT : le support, ici la paire torsadée (twisted pair).\n\nD’autres variantes indiquent d’autres supports : 10BASE5 (coaxial épais, 500 m), 10BASE2 (coaxial fin, environ 185 m), 10BASE-F (fibre)."
   },
   {
-    "objectID": "index.html#recent-notes",
-    "href": "index.html#recent-notes",
-    "title": "Welcome",
-    "section": "Recent Notes",
-    "text": "Recent Notes\nThe list below fills in automatically from the notes/ folder.\n\n\n\n\n\nNotes\n\n\n\nAll notes and articles.\n\n\n\n\n\n\n\n\n\n\nA Note With a Plot\n\n\n\nAn example note that runs a little Python to draw a chart. Copy this file when you want a page with a figure.\n\n\n\n\n\n\nJan 2, 2026\n\n\n\n\n\n\n\nMy First Note\n\n\n\nAn example page showing headings, lists, math, and a callout. Copy this file to start a new note.\n\n\n\n\n\n\nJan 1, 2026\n\n\n\n\n\nNo matching items"
+    "objectID": "ele649/revision-chapitre03-csma.html#fast-ethernet-100-mbs",
+    "href": "ele649/revision-chapitre03-csma.html#fast-ethernet-100-mbs",
+    "title": "Révision du chapitre 3 : CSMA/CD et Ethernet",
+    "section": "9. Fast Ethernet (100 Mb/s)",
+    "text": "9. Fast Ethernet (100 Mb/s)\nFast Ethernet est 10 fois plus rapide que l’Ethernet d’origine.\n\n\n\nParamètre\nValeur\n\n\n\n\nDébit\n100 Mb/s\n\n\nTranche canal\n5,12 µs (512 bits à 100 Mb/s)\n\n\nTopologie\nEn étoile\n\n\nTrame minimale\n64 octets\n\n\nTrame maximale\n1 518 octets\n\n\nIFG\n0,96 µs\n\n\n\nLes principales variantes :\n\n100BASE-TX : 2 paires torsadées, en duplex ;\n100BASE-T4 : 4 paires torsadées ;\n100BASE-FX : 2 fibres optiques.\n\n\nLe codage 4B/5B\nFast Ethernet ne code plus en Manchester mais en 4B/5B : chaque groupe de 4 bits de données est remplacé par un code de 5 bits.\nPourquoi ? Une longue suite de 0 ne produit aucune transition, et le récepteur perd la synchronisation de son horloge. Les codes de 5 bits sont choisis pour qu’il n’y ait jamais plus de 3 zéros consécutifs, même quand deux codes se suivent.\n\n\n\n\n\n\n\n\n\n\nDonnées (4 bits)\nCode (5 bits)\n\nDonnées (4 bits)\nCode (5 bits)\n\n\n\n\n0000\n11110\n\n1000\n10010\n\n\n0001\n01001\n\n1001\n10011\n\n\n0010\n10100\n\n1010\n10110\n\n\n0011\n10101\n\n1011\n10111\n\n\n0100\n01010\n\n1100\n11010\n\n\n0101\n01011\n\n1101\n11011\n\n\n0110\n01110\n\n1110\n11100\n\n\n0111\n01111\n\n1111\n11101\n\n\n\nPar exemple, 0000, qui n’a aucune transition, devient 11110."
   },
   {
-    "objectID": "notes/example-with-a-plot.html",
-    "href": "notes/example-with-a-plot.html",
-    "title": "A Note With a Plot",
-    "section": "",
-    "text": "This note is like the first example, but it also runs a small piece of Python to draw a chart. Copy this file when you want a page with a figure in it.\nFor the chart to appear, the private Python space must be installed. The setup-windows.ps1 script does that for you the first time."
+    "objectID": "ele649/revision-chapitre03-csma.html#gigabit-ethernet-1-000-mbs",
+    "href": "ele649/revision-chapitre03-csma.html#gigabit-ethernet-1-000-mbs",
+    "title": "Révision du chapitre 3 : CSMA/CD et Ethernet",
+    "section": "10. Gigabit Ethernet (1 000 Mb/s)",
+    "text": "10. Gigabit Ethernet (1 000 Mb/s)\nGigabit Ethernet a été normalisé en 1998 par l’IEEE 802.3z. Il utilise le codage 8B/10B, sur le même principe que le 4B/5B : 8 bits de données sont remplacés par un code de 10 bits. Il fonctionne sur fibre optique ou sur paires torsadées de catégorie 5e ou 6, à des distances plus courtes.\n\nLe problème de la longueur de segment\nÀ trame minimale égale (64 octets), chaque fois que le débit est multiplié par 10, la longueur maximale du segment est divisée par 10 : la trame est émise 10 fois plus vite, donc l’aller-retour doit être 10 fois plus court.\n\n\n\nDébit\nLongueur maximale (ordre de grandeur)\n\n\n\n\n10 Mb/s\n2 500 m\n\n\n100 Mb/s\n250 m\n\n\n1 Gb/s\n25 m, beaucoup trop court\n\n\n\n\n\nLa solution : l’extension de porteuse\nPlutôt que d’augmenter la taille minimale de la trame Ethernet, Gigabit Ethernet ajoute une extension (carrier extension) à la fin des trames trop courtes. La durée d’émission minimale passe à 512 octets (4 096 bits), ce qui ramène la longueur possible à environ 200 m.\n\n\n\n\n\n\nTipPour aller plus loin\n\n\n\nL’extension de porteuse ne sert qu’en mode semi-duplex (half duplex), où CSMA/CD s’applique. En pratique, Gigabit Ethernet fonctionne presque toujours en duplex intégral (full duplex) avec des commutateurs : il n’y a alors plus de collisions, et CSMA/CD n’est plus utilisé."
   },
   {
-    "objectID": "notes/example-with-a-plot.html#a-simple-chart",
-    "href": "notes/example-with-a-plot.html#a-simple-chart",
-    "title": "A Note With a Plot",
-    "section": "A Simple Chart",
-    "text": "A Simple Chart\nThe code below draws a sine wave. Change the numbers and the words, then render the site to see it update.\n\n%config InlineBackend.figure_formats = ['svg']\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 10, 200)\ny = np.sin(x)\n\nfig, ax = plt.subplots(figsize=(7, 4))\nax.plot(x, y, color=\"#22176F\", linewidth=2)\nax.set_title(\"A simple sine wave\", color=\"gray\")\nax.set_xlabel(\"x\")\nax.set_ylabel(\"sin(x)\")\nax.grid(linestyle=\"--\", alpha=0.4)\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nThe line that begins with #| is a setting for the code block. Here #| echo: true means the reader can see the Python code above the chart. If you would rather show only the chart and hide the code, change it to #| echo: false.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (17 of 17 min)"
-  },
-  {
-    "objectID": "notes/index.html",
-    "href": "notes/index.html",
-    "title": "Notes",
-    "section": "",
-    "text": "Every note in this folder appears below automatically, newest first. To add a new one, copy first-note.qmd, give it a new file name, and change the title and words inside. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\n\nA Note With a Plot\n\n\n\nAn example note that runs a little Python to draw a chart. Copy this file when you want a page with a figure.\n\n\n\n\n\n\nJan 2, 2026\n\n1 min\n\n\n\n\n\n\nMy First Note\n\n\n\nAn example page showing headings, lists, math, and a callout. Copy this file to start a new note.\n\n\n\n\n\n\nJan 1, 2026\n\n1 min\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "mgr820/index.html",
-    "href": "mgr820/index.html",
-    "title": "MGR820",
-    "section": "",
-    "text": "Every page in this folder appears below automatically, in order. To add a new one, create a new .qmd file in this folder with a title, description, date, order, and difficulty in the front matter. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\n\nAvant-propos\n\n\n\nAvant-propos du manuel sur les réseaux de télécommunications, présentant ses objectifs pédagogiques et son public visé.\n\n\n\n\n\n\nJul 13, 2026\n\n2 min\n\n\n\n\n\n\nRévision du chapitre 9 : le protocole IP\n\n\n\nAdressage IPv4 par classes, adresses spéciales et privées, sous-réseaux et masques, en-tête IP, fragmentation, CIDR, VLSM et introduction à IPv6.\n\n\n\n\n\n\nNov 20, 2026\n\n20 min\n\n\n\n\n\n\nQualité de service : IntServ, DiffServ et Best Effort\n\n\n\nLes trois modèles de qualité de service dans les réseaux IP, le contrôle d’admission, le marquage DSCP et les classes EF, AF et Best Effort.\n\n\n\n\n\n\nNov 20, 2026\n\n8 min\n\n\n\n\nNo matching items"
+    "objectID": "ele649/revision-chapitre03-csma.html#exercices-de-révision",
+    "href": "ele649/revision-chapitre03-csma.html#exercices-de-révision",
+    "title": "Révision du chapitre 3 : CSMA/CD et Ethernet",
+    "section": "Exercices de révision",
+    "text": "Exercices de révision\n1. Une trame vient de subir sa 3e collision. Entre quelles valeurs la station tire-t-elle son nombre de tranches d’attente, et quelle est l’attente maximale à 10 Mb/s ?\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\nk = 3, donc r est entre 0 et 23 − 1 = 7. L’attente maximale est 7 × 51,2 µs = 358,4 µs.\n\n\n\n2. Une station doit envoyer 20 octets de données. Combien d’octets de bourrage faut-il ajouter, et quelle est la taille de la trame sans préambule ?\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\nIl faut au moins 46 octets de données : 46 − 20 = 26 octets de bourrage. La trame fait 6 + 6 + 2 + 46 + 4 = 64 octets, la taille minimale.\n\n\n\n3. À 100 Mb/s, avec une trame minimale de 64 octets et une vitesse de propagation de 2 × 108 m/s, quelle est la longueur théorique maximale du segment ?\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\n\nT = 512 bits / 108 b/s = 5,12 µs.\nSmax = V × T / 2 = 2 × 108 × 2,56 × 10−6 = 512 m.\n\n\n\n\n4. Combien de trames minimales par seconde peut-on transmettre au maximum à 100 Mb/s ?\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\n\n72 octets = 576 bits, soit 5,76 µs à 100 Mb/s.\nAvec l’IFG : 5,76 + 0,96 = 6,72 µs.\npps = 1 / 6,72 µs ≈ 148 810 trames par seconde, soit 10 fois plus qu’à 10 Mb/s.\n\n\n\n\n5. Pourquoi une station qui émet une trame trop courte risque-t-elle de ne pas détecter une collision ?\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\nLe bruit de la collision peut mettre jusqu’à un aller-retour (2τ) pour revenir. Si la station a déjà fini d’émettre à ce moment-là, elle n’écoute plus sa propre transmission. Elle ne peut pas savoir que la collision concernait sa trame, et ne la réémet pas.\n\n\n\n6. Que signifient les 3 premiers octets d’une adresse MAC ? Quelle adresse sert à la diffusion ?\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\nIls identifient le fabricant (OUI). La diffusion utilise FF:FF:FF:FF:FF:FF.\n\n\n\n7. Codez 1100 en Manchester, avec la notation H (positif) et B (négatif) pour chaque moitié de bit.\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\nB H B H H B H B. Entre les deux 1, le signal redescend en B au début du deuxième bit. Entre les deux 0, il remonte en H au début du quatrième bit.\n\n\n\n8. Pourquoi Fast Ethernet utilise-t-il le codage 4B/5B ? Donnez le code de 0000.\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\nPour garantir qu’il n’y ait jamais plus de 3 zéros consécutifs. Une longue suite de 0 ne produit pas de transition, et le récepteur perdrait la synchronisation de son horloge. 0000 devient 11110.\n\n\n\n\n\n\n  Progress\n  \n    \n  \n  100% completed (24 of 24 min)"
   },
   {
     "objectID": "mgr820/revision-chapitre09-ip.html",
@@ -229,5 +173,152 @@
     "title": "Révision du chapitre 9 : le protocole IP",
     "section": "Exercices de révision",
     "text": "Exercices de révision\n1. Quelle est la classe de l’adresse 172.20.5.9 ? Est-ce une adresse publique ou privée ?\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\nLe premier octet, 172, est entre 128 et 191 (bits 10) : c’est une classe B. L’adresse est privée, car elle appartient à 172.16.0.0/12 (de 172.16 à 172.31).\n\n\n\n2. Combien d’hôtes peut-on adresser dans un réseau /26 ? Pourquoi pas 64 ?\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\n32 − 26 = 6 bits d’hôte, soit 26 = 64 combinaisons. On retire l’adresse du réseau (hôte tout à 0) et l’adresse de diffusion (hôte tout à 1) : 62 hôtes.\n\n\n\n3. Trouvez l’adresse du réseau, l’adresse de diffusion et le nombre d’hôtes pour 10.45.77.200/20.\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\n/20 : les 4 premiers bits du troisième octet font partie du réseau. 77 = 0100 1101, et 0100 0000 = 64.\n\nRéseau : 10.45.64.0\nDiffusion : 10.45.79.255 (64 + 15 = 79)\nHôtes : 212 − 2 = 4 094\n\n\n\n\n4. On veut découper 192.168.10.0/24 en sous-réseaux d’au moins 50 hôtes chacun. Quel masque utiliser, et combien de sous-réseaux obtient-on ?\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\nIl faut 2h − 2 ≥ 50, donc h = 6 (62 hôtes). On garde 6 bits d’hôte et on en emprunte 2 : masque 255.255.255.192 (/26), et 22 = 4 sous-réseaux : .0, .64, .128 et .192.\n\n\n\n5. Un datagramme transporte 1 400 octets de données sur un réseau dont la MTU est de 620 octets (en-tête de 20 octets). Donnez la longueur totale, le déplacement et le drapeau MF de chaque fragment.\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\n620 − 20 = 600 octets, et 600 est déjà un multiple de 8 (75 × 8). 1 400 = 2 × 600 + 200, donc 3 fragments.\n\n\n\nFragment\nDonnées\nLongueur totale\nDéplacement\nMF\n\n\n\n\n1\n600\n620\n0\n1\n\n\n2\n600\n620\n75\n1\n\n\n3\n200\n220\n150\n0\n\n\n\n\n\n\n6. À quoi sert le champ TTL, et que se passe-t-il quand il atteint 0 ?\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\nIl empêche un datagramme de circuler indéfiniment, par exemple à cause d’une boucle de routage. Chaque routeur le décrémente de 1. Quand il atteint 0, le routeur détruit le datagramme et prévient la source par un message ICMP.\n\n\n\n7. Un client a besoin de 3 000 adresses. Quel bloc CIDR lui attribuer, et combien d’adresses seront inutilisées ?\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\nLa plus petite puissance de 2 qui contient 3 000 est 4 096 = 212. Il faut 12 bits d’hôte, donc un /20. Il reste environ 1 096 adresses non utilisées, contre plus de 62 000 avec une classe B.\n\n\n\n8. Quel avantage VLSM apporte-t-il par rapport à un masque fixe pour un sous-réseau de 24 hôtes ?\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\nAvec un masque fixe /24, on attribue 254 adresses et on en perd 230. Avec VLSM, on choisit un /27 (30 hôtes) et on n’en perd que 6.\n\n\n\n9. Abrégez l’adresse IPv6 fe80:0000:0000:0000:0202:b3ff:fe1e:8329.\n\n\n\n\n\n\nNoteRéponse\n\n\n\n\n\nfe80::202:b3ff:fe1e:8329\n\n\n\n\n\n\n  Progress\n  \n    \n  \n  73% completed (33 of 45 min)"
+  },
+  {
+    "objectID": "mgr820/index.html",
+    "href": "mgr820/index.html",
+    "title": "MGR820",
+    "section": "",
+    "text": "Every page in this folder appears below automatically, in order. To add a new one, create a new .qmd file in this folder with a title, description, date, order, and difficulty in the front matter. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\n\nAvant-propos\n\n\n\nAvant-propos du manuel sur les réseaux de télécommunications, présentant ses objectifs pédagogiques et son public visé.\n\n\n\n\n\n\nJul 13, 2026\n\n2 min\n\n\n\n\n\n\nRévision du chapitre 9 : le protocole IP\n\n\n\nAdressage IPv4 par classes, adresses spéciales et privées, sous-réseaux et masques, en-tête IP, fragmentation, CIDR, VLSM et introduction à IPv6.\n\n\n\n\n\n\nNov 20, 2026\n\n20 min\n\n\n\n\n\n\nQualité de service : IntServ, DiffServ et Best Effort\n\n\n\nLes trois modèles de qualité de service dans les réseaux IP, le contrôle d’admission, le marquage DSCP et les classes EF, AF et Best Effort.\n\n\n\n\n\n\nNov 20, 2026\n\n8 min\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "notes/index.html",
+    "href": "notes/index.html",
+    "title": "Notes",
+    "section": "",
+    "text": "Every note in this folder appears below automatically, newest first. To add a new one, copy first-note.qmd, give it a new file name, and change the title and words inside. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\n\nA Note With a Plot\n\n\n\nAn example note that runs a little Python to draw a chart. Copy this file when you want a page with a figure.\n\n\n\n\n\n\nJan 2, 2026\n\n1 min\n\n\n\n\n\n\nMy First Note\n\n\n\nAn example page showing headings, lists, math, and a callout. Copy this file to start a new note.\n\n\n\n\n\n\nJan 1, 2026\n\n1 min\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "notes/example-with-a-plot.html",
+    "href": "notes/example-with-a-plot.html",
+    "title": "A Note With a Plot",
+    "section": "",
+    "text": "This note is like the first example, but it also runs a small piece of Python to draw a chart. Copy this file when you want a page with a figure in it.\nFor the chart to appear, the private Python space must be installed. The setup-windows.ps1 script does that for you the first time."
+  },
+  {
+    "objectID": "notes/example-with-a-plot.html#a-simple-chart",
+    "href": "notes/example-with-a-plot.html#a-simple-chart",
+    "title": "A Note With a Plot",
+    "section": "A Simple Chart",
+    "text": "A Simple Chart\nThe code below draws a sine wave. Change the numbers and the words, then render the site to see it update.\n\n%config InlineBackend.figure_formats = ['svg']\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 10, 200)\ny = np.sin(x)\n\nfig, ax = plt.subplots(figsize=(7, 4))\nax.plot(x, y, color=\"#22176F\", linewidth=2)\nax.set_title(\"A simple sine wave\", color=\"gray\")\nax.set_xlabel(\"x\")\nax.set_ylabel(\"sin(x)\")\nax.grid(linestyle=\"--\", alpha=0.4)\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nThe line that begins with #| is a setting for the code block. Here #| echo: true means the reader can see the Python code above the chart. If you would rather show only the chart and hide the code, change it to #| echo: false.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (17 of 17 min)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome",
+    "section": "",
+    "text": "Welcome to my website. This is the home page."
+  },
+  {
+    "objectID": "index.html#recent-notes",
+    "href": "index.html#recent-notes",
+    "title": "Welcome",
+    "section": "Recent Notes",
+    "text": "Recent Notes\nThe list below fills in automatically from the notes/ folder.\n\n\n\n\n\nNotes\n\n\n\nAll notes and articles.\n\n\n\n\n\n\n\n\n\n\nA Note With a Plot\n\n\n\nAn example note that runs a little Python to draw a chart. Copy this file when you want a page with a figure.\n\n\n\n\n\n\nJan 2, 2026\n\n\n\n\n\n\n\nMy First Note\n\n\n\nAn example page showing headings, lists, math, and a callout. Copy this file to start a new note.\n\n\n\n\n\n\nJan 1, 2026\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Write a short paragraph about yourself here. Who you are, what you teach or research, and how people can reach you.\nTo edit this page, open about.qmd and change the words.\n\n\n\n  Progress\n  \n    \n  \n  100% completed (2 of 2 min)"
+  },
+  {
+    "objectID": "notes/first-note.html",
+    "href": "notes/first-note.html",
+    "title": "My First Note",
+    "section": "",
+    "text": "This is an example note. It shows the pieces you will use most often. Copy this file, rename it, and replace the words to write your own."
+  },
+  {
+    "objectID": "notes/first-note.html#a-heading",
+    "href": "notes/first-note.html#a-heading",
+    "title": "My First Note",
+    "section": "A Heading",
+    "text": "A Heading\nText is written as plain sentences, just like an email. Leave a blank line between paragraphs.\nYou can make words bold or italic, and you can link to another page or to an outside website."
+  },
+  {
+    "objectID": "notes/first-note.html#a-list",
+    "href": "notes/first-note.html#a-list",
+    "title": "My First Note",
+    "section": "A List",
+    "text": "A List\n\nFirst point\nSecond point\nThird point"
+  },
+  {
+    "objectID": "notes/first-note.html#math",
+    "href": "notes/first-note.html#math",
+    "title": "My First Note",
+    "section": "Math",
+    "text": "Math\nWrite math between dollar signs. Inline math looks like \\(E = mc^2\\) inside a sentence. A larger, centered formula uses two dollar signs:\n\\[\n\\int_{a}^{b} f(x)\\, dx = F(b) - F(a).\n\\]\nNo extra setup is needed. Math renders automatically."
+  },
+  {
+    "objectID": "notes/first-note.html#a-note-box",
+    "href": "notes/first-note.html#a-note-box",
+    "title": "My First Note",
+    "section": "A Note Box",
+    "text": "A Note Box\n\n\n\n\n\n\nNote\n\n\n\nUse a callout box like this to highlight a tip or an important remark."
+  },
+  {
+    "objectID": "notes/first-note.html#review-questions",
+    "href": "notes/first-note.html#review-questions",
+    "title": "My First Note",
+    "section": "Review Questions",
+    "text": "Review Questions\n1. How do you start a new note on this website?\n\n\n\n\n\n\nTipAnswer\n\n\n\n\n\nCopy this file, give it a new file name inside the notes/ folder, and change the title and text. It appears on the Notes page automatically after rendering.\n\n\n\n\n\n\n  Progress\n  \n    \n  \n  29% completed (5 of 17 min)"
+  },
+  {
+    "objectID": "mgr820/avant-propos.html",
+    "href": "mgr820/avant-propos.html",
+    "title": "Avant-propos",
+    "section": "",
+    "text": "Les ouvrages consacrés aux réseaux de télécommunications occupent une place essentielle dans la formation des étudiants en génie, en informatique et en télécommunications, ainsi que dans le perfectionnement des professionnels appelés à concevoir, exploiter ou faire évoluer des infrastructures numériques complexes. Dans un domaine marqué par une évolution rapide des technologies, des architectures et des usages, la nécessité d’un exposé rigoureux, structuré et accessible demeure plus que jamais d’actualité.\nLe présent ouvrage répond à cette exigence avec une ambition claire : offrir une présentation ordonnée des fondements et des prolongements des réseaux modernes, en articulant les notions théoriques et les réalités de terrain. Le lecteur y trouvera une progression soigneusement construite, allant des concepts de base aux technologies plus avancées, dans une perspective à la fois pédagogique, analytique et appliquée.\nL’intérêt particulier de ce livre réside dans sa capacité à relier les principes fondamentaux aux environnements de communication contemporains. Les réseaux de données, les architectures IP, les mécanismes de transmission, les modèles de référence, les technologies d’opérateurs, les centres de données et les infrastructures virtualisées y sont abordés avec une volonté constante de clarté et de cohérence. Cette démarche permet non seulement d’acquérir des connaissances, mais aussi de développer une compréhension durable des logiques qui structurent les réseaux actuels.\nDestiné en priorité aux étudiants de niveau universitaire ou aux étudiants en formation d’ingénierie, cet ouvrage constitue également une ressource précieuse pour les praticiens souhaitant consolider leurs acquis ou actualiser leur expertise. Les explications, les exemples et les exercices ont été conçus pour favoriser l’appropriation progressive des notions étudiées et soutenir l’autonomie de l’apprentissage.\nOn appréciera enfin la qualité de l’approche retenue, qui allie précision terminologique, rigueur conceptuelle et souci constant de la transmission. En cela, cet ouvrage s’inscrit pleinement dans la tradition des manuels universitaires de référence : il ne se contente pas de décrire des technologies; il en éclaire les fondements, les relations et les enjeux.\nJe vous souhaite une lecture féconde et stimulante.\n\n\n\n  Progress\n  \n    \n  \n  6% completed (3 of 45 min)"
+  },
+  {
+    "objectID": "mgr820/qos.html#pourquoi-la-qualité-de-service",
+    "href": "mgr820/qos.html#pourquoi-la-qualité-de-service",
+    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
+    "section": "Pourquoi la qualité de service ?",
+    "text": "Pourquoi la qualité de service ?\nCertaines applications ont besoin de ressources précises du réseau. Ces besoins s’expriment selon quatre paramètres :\n\nla bande passante ;\nle délai (latence) ;\nla gigue (variation du délai) ;\nla perte de paquets.\n\nUn protocole de qualité de service (QoS) sert d’abord à reconnaître ces besoins, puis à les faire respecter. Il existe trois approches :\n\n\n\n\n\n\n\n\nModèle\nUnité traitée\nPrincipe\n\n\n\n\nIntServ (services intégrés)\nChaque flux, c’est-à-dire chaque appel\nRéservation de ressources par appel\n\n\nDiffServ (services différenciés)\nChaque classe de trafic\nTous les flux d’une même classe reçoivent le même traitement\n\n\nBest Effort\nAucune\nPas de QoS : les paquets passent quand ils peuvent, avec des délais, et sont supprimés au besoin\n\n\n\nIntServ et DiffServ sont deux protocoles distincts. C’est DiffServ qui a été retenu en pratique. Best Effort correspond simplement à l’absence de protocole de qualité de service."
+  },
+  {
+    "objectID": "mgr820/qos.html#les-services-intégrés-intserv",
+    "href": "mgr820/qos.html#les-services-intégrés-intserv",
+    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
+    "section": "Les services intégrés (IntServ)",
+    "text": "Les services intégrés (IntServ)\nIntServ traite chaque appel séparément et lui accorde exactement ce dont il a besoin. Le modèle repose sur trois principes :\n\nLe réseau est contrôlé et soumis à un mécanisme de contrôle d’admission.\nDes mécanismes de réservation de ressources sont nécessaires.\nIl offre un service garanti, comparable à celui d’un réseau à commutation de circuits, à l’aide du protocole RSVP (Resource Reservation Protocol).\n\n\nLe contrôle d’admission\nLes appels déjà en cours sont prioritaires : on n’interrompt jamais un appel en cours. Lorsque le réseau montre des signes de congestion, on contrôle plutôt les nouveaux appels qui veulent entrer, et on peut les refuser.\n\n\n\n\n\n\nNoteExemple de la téléphonie\n\n\n\nIl serait inacceptable que l’opérateur coupe votre appel au milieu d’une conversation. En revanche, entendre la tonalité « occupé » quand on essaie d’appeler est ennuyeux, mais acceptable. C’est le principe du contrôle d’admission : protéger les communications en cours en refusant, au besoin, les nouvelles.\n\n\nLe contrôle d’admission déclenche les réservations de ressources. Un appel peut par exemple demander une certaine bande passante en kb/s et un délai maximal de 200 ms, et le réseau doit réserver ces ressources avec RSVP.\n\n\nLa limite d’IntServ : la mise à l’échelle\nIntServ est très efficace pour chaque appel, mais il a deux défauts majeurs :\n\nLes ressources réservées sont perdues pour les autres. La bande passante réservée à un appel n’est plus disponible pour personne d’autre, ce qui aggrave la congestion à mesure que les appels s’accumulent.\nIl ne passe pas à l’échelle (scalability). Réserver des ressources pour un appel, puis pour un autre, fonctionne. Avec des centaines d’appels simultanés, il devient impossible de suivre toutes ces réservations : plus il y a d’appels, moins le service est efficace.\n\nIl fallait donc un système plus léger : c’est le rôle de DiffServ."
+  },
+  {
+    "objectID": "mgr820/qos.html#les-services-différenciés-diffserv",
+    "href": "mgr820/qos.html#les-services-différenciés-diffserv",
+    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
+    "section": "Les services différenciés (DiffServ)",
+    "text": "Les services différenciés (DiffServ)\nDiffServ élimine les contraintes d’IntServ : aucune réservation de ressources par appel. On n’identifie même pas le type de service (voix, vidéo, données). On identifie seulement son besoin : « J’ai besoin de telle bande passante et d’un délai minimal, donc j’appartiens à telle catégorie. »\n\nAu lieu de séparer les flux, DiffServ définit des classes de service dans lesquelles plusieurs flux sont agrégés.\nTous les flux d’une même classe reçoivent le même service.\nLes routeurs traitent des paquets et non des flux, et ne conservent aucun état par appel.\n\nComme on traite des groupes et non des appels individuels, la mise à l’échelle n’est plus un problème : un grand nombre d’appels simultanés est traité de la même façon. Le principe rappelle celui qu’on a vu avec MPLS.\n\nArchitecture : routeurs de bordure et routeurs de cœur\nDiffServ est une architecture définie par l’IETF. Elle repose sur deux types de routeurs :\n\nLes routeurs de bordure (à l’entrée du réseau) classifient chaque paquet, c’est-à-dire déterminent sa classe selon ses besoins, puis le marquent.\nLes routeurs de cœur se contentent de lire ce marquage pour acheminer le paquet. Ils ne le modifient pas.\n\n\n\nLe champ DSCP dans l’en-tête IP\nLe marquage utilise 6 bits de l’en-tête IPv4 (20 octets). Ces bits se trouvent dans l’octet Type of Service (ToS), le troisième champ de l’en-tête : ce sont les 6 premiers bits, appelés DSCP (Differentiated Services Code Point).\n\nAvec 6 bits, les valeurs vont de 0 à 63.\nLe DSCP reste compatible avec l’ancienne utilisation du champ ToS.\n\n\n\n\n\n\n\nTipLes 2 bits restants\n\n\n\nLe cours les présente comme non définis par DiffServ. Depuis la RFC 3168, ils servent à l’ECN (Explicit Congestion Notification).\n\n\n\n\nDu ToS d’origine au DSCP\nPremière génération (ToS d’origine) :\n\n3 bits de précédence indiquent si le paquet est prioritaire ;\n4 bits indiquent le critère important : D (délai), T (débit), R (fiabilité) ou C (coût). Un seul critère pouvait être choisi à la fois : si D valait 1, les autres valaient automatiquement 0 ;\nle dernier bit valait toujours 0.\n\nDeuxième génération (DiffServ) : on utilise les 6 premiers bits pour coder une classe. La valeur 0 correspond au Best Effort. D’autres valeurs (8, 16, 24, 32, etc.) correspondent à différentes classes.\n\n\nFonctionnement à l’entrée du réseau\n\nLes paquets arrivent au routeur de bordure.\nIl les classifie selon le type de trafic et leurs besoins.\nIl les marque avec le code DSCP de leur classe.\nAu besoin, un conditionnement du trafic s’applique : traffic shaping (lissage), traffic policing (limitation), ou les deux.\n\n\n\n\n\n\n\nImportantDiffServ classifie et marque, c’est tout\n\n\n\nLa gestion de la congestion (lissage, limitation, suppression de paquets, files d’attente) relève d’autres protocoles, étudiés dans une deuxième partie. Ces protocoles s’appuient sur le marquage DiffServ pour décider quels paquets passent en premier et lesquels supprimer."
+  },
+  {
+    "objectID": "mgr820/qos.html#les-classes-de-service-diffserv",
+    "href": "mgr820/qos.html#les-classes-de-service-diffserv",
+    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
+    "section": "Les classes de service DiffServ",
+    "text": "Les classes de service DiffServ\nChaque classe est définie selon les quatre paramètres de QoS (bande passante, délai, gigue, perte), puis associée à un code DSCP.\n\n\n\n\n\n\n\n\n\nClasse\nNiveau\nExemple de trafic\nDSCP\n\n\n\n\nEF (Expedited Forwarding)\nPremium (« platine »)\nVoix\n46\n\n\nAF (Assured Forwarding), « Or »\nPriorité élevée\nApplications critiques (ERP, Bourse)\n26\n\n\nAF, « Argent »\nPriorité moyenne\nTelnet, SMTP, transfert de fichiers\n18, 20\n\n\nAF, « Bronze »\nPriorité plus faible\nTrafic Web\n10\n\n\nBest Effort\nLe plus bas, aucune garantie\nTout le reste\n0\n\n\n\n\nEF est la classe la plus haute. Chaque datagramme de voix premium est marqué DSCP 46 dans le champ ToS, puis circule ainsi dans le réseau.\nBest Effort n’a aucune priorité : en cas de congestion, ce sont ces paquets qu’on supprime en premier.\n\n\nAssured Forwarding (AF)\nLe service AF offre une communication fiable, même en présence de congestion, mais il tolère une certaine dégradation de la qualité de service.\n\nIl comporte quatre sous-classes.\nChaque sous-classe a trois priorités de suppression : faible, moyenne et élevée.\nEn cas de congestion prolongée, on supprime des paquets en tenant compte de ces priorités. Cette suppression, ainsi que la gestion des files d’attente et la suppression aléatoire de paquets, est effectuée par d’autres mécanismes, en se basant sur le marquage."
+  },
+  {
+    "objectID": "mgr820/qos.html#le-contrat-de-niveau-de-service-sla",
+    "href": "mgr820/qos.html#le-contrat-de-niveau-de-service-sla",
+    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
+    "section": "Le contrat de niveau de service (SLA)",
+    "text": "Le contrat de niveau de service (SLA)\nLe SLA (Service Level Agreement) est le contrat conclu avec le fournisseur de services. Il décrit votre trafic et ses besoins, et le fournisseur s’en sert pour attribuer une priorité à votre trafic et le traiter en conséquence. Le SLA est défini par l’opérateur, selon les besoins du client.\n\n\n\n\n\n\nNoteExemple : données et téléphonie IP à la maison\n\n\n\nÀ la maison, le modem-routeur transporte tout le trafic de l’ordinateur, comme une vidéoconférence. Tant que la bande passante suffit et qu’il n’y a pas de congestion, tout passe bien.\nLe téléphone résidentiel en téléphonie IP utilise le même réseau IP, mais il entre par un port différent de celui des données. Il fait l’objet d’un service distinct, payé séparément. Il en va de même pour le cellulaire : son accès IP est séparé de celui des données de la maison.\nPourquoi un accès séparé ? À cause du marquage. L’accès identifie ce trafic comme de la voix et le marque dans une classe prioritaire. La voix obtient alors une latence très faible, par exemple au plus 150 ms de bout en bout partout dans le monde, sans pénaliser les données.\n\n\nMême pour l’accès Internet, il existe plusieurs classes, par exemple 3 Gb/s ou 400 Mb/s. C’est le SLA qui définit comment votre trafic sera traité."
+  },
+  {
+    "objectID": "mgr820/qos.html#questions-de-révision",
+    "href": "mgr820/qos.html#questions-de-révision",
+    "title": "Qualité de service : IntServ, DiffServ et Best Effort",
+    "section": "Questions de révision",
+    "text": "Questions de révision\n1. Quelle est la différence fondamentale entre IntServ et DiffServ quant à l’unité de trafic traitée ?\n1. Pourquoi le contrôle d’admission refuse-t-il les nouveaux appels plutôt que d’interrompre les appels en cours ?\n1. Quel protocole IntServ utilise-t-il pour réserver les ressources, et pourquoi ce modèle ne passe-t-il pas à l’échelle ?\n1. Quel est le rôle des routeurs de bordure et celui des routeurs de cœur dans DiffServ ?\n1. Combien de bits occupe le DSCP, dans quel champ de l’en-tête IP se trouve-t-il, et combien de valeurs permet-il ?\n1. Quelle valeur DSCP est associée à la classe EF, et quel type de trafic utilise cette classe ?\n1. Combien de sous-classes et de priorités de suppression compte la classe AF ?\n1. DiffServ gère-t-il lui-même la suppression des paquets en cas de congestion ? Expliquez.\n1. Qu’est-ce qu’un SLA, et pourquoi la téléphonie IP résidentielle passe-t-elle par un accès distinct de celui des données ?\n\n\n\n  Progress\n  \n    \n  \n  100% completed (45 of 45 min)"
+  },
+  {
+    "objectID": "ele649/index.html",
+    "href": "ele649/index.html",
+    "title": "ELE649",
+    "section": "",
+    "text": "Every page in this folder appears below automatically, in order. To add a new one, create a new .qmd file in this folder with a title, description, date, order, and difficulty in the front matter. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\n\nRévision du chapitre 3 : CSMA/CD et Ethernet\n\n\n\nAccès au support par CSMA/CD, algorithme de backoff, trame Ethernet, taille minimale de trame et longueur de segment, débit en paquets par seconde, codage Manchester, Fast Ethernet et Gigabit Ethernet.\n\n\n\n\n\n\nNov 20, 2026\n\n15 min\n\n\n\n\nNo matching items"
   }
 ]

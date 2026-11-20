@@ -1,14 +1,10 @@
 [
   {
-    "listing": "/ele649/index.html",
-    "items": []
-  },
-  {
-    "listing": "/index.html",
+    "listing": "/mgr820/index.html",
     "items": [
-      "/notes/index.html",
-      "/notes/example-with-a-plot.html",
-      "/notes/first-note.html"
+      "/mgr820/avant-propos.html",
+      "/mgr820/revision-chapitre09-ip.html",
+      "/mgr820/qos.html"
     ]
   },
   {
@@ -19,11 +15,17 @@
     ]
   },
   {
-    "listing": "/mgr820/index.html",
+    "listing": "/index.html",
     "items": [
-      "/mgr820/avant-propos.html",
-      "/mgr820/revision-chapitre09-ip.html",
-      "/mgr820/qos.html"
+      "/notes/index.html",
+      "/notes/example-with-a-plot.html",
+      "/notes/first-note.html"
+    ]
+  },
+  {
+    "listing": "/ele649/index.html",
+    "items": [
+      "/ele649/revision-chapitre03-csma.html"
     ]
   }
 ]

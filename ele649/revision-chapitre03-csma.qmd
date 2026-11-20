@@ -1,0 +1,500 @@
+---
+title: "Révision du chapitre 3 : CSMA/CD et Ethernet"
+order: 1
+difficulty: 2
+description: "Accès au support par CSMA/CD, algorithme de backoff, trame Ethernet, taille minimale de trame et longueur de segment, débit en paquets par seconde, codage Manchester, Fast Ethernet et Gigabit Ethernet."
+date: "2026-11-20"
+categories: [révision, ethernet, csma-cd]
+---
+
+## Vidéo de révision
+
+{{< video https://www.youtube.com/watch?v=UohqPObWUlY >}}
+
+Cette capsule révise le protocole **CSMA/CD** (*Carrier Sense Multiple
+Access with Collision Detection*), la méthode d'accès au support de
+l'Ethernet d'origine. Les notes ci-dessous suivent l'ordre de la vidéo et
+refont chaque calcul pas à pas.
+
+## 1. Le support partagé
+
+L'Ethernet d'origine repose sur un **bus** : un seul câble, appelé
+**segment**, auquel toutes les stations sont reliées.
+
+- **Le support** : en général un câble coaxial, parfois de la fibre
+  optique pour aller plus vite ou plus loin.
+- **Pas de boucle**, donc pas de sens de circulation : le signal se
+  **diffuse** dans les deux directions.
+- **Support passif** : le câble ne fait que transporter le signal.
+- **Bande de base** (*baseband*) : une **seule fréquence** est utilisée
+  pour toutes les transmissions de toutes les stations.
+- **Le transceiver** (transmetteur-récepteur) relie chaque station au
+  câble.
+- **L'adresse MAC** : chaque équipement a une adresse **unique au monde**.
+
+Conséquences :
+
+- **Une seule trame à la fois** peut circuler sur le câble. Il n'y a ni
+  multiplexage ni *full duplex* : deux stations ne peuvent pas émettre en
+  même temps.
+- **Toutes les stations reçoivent chaque trame.** Chacune lit l'adresse
+  de destination : si c'est la sienne, elle copie la trame ; sinon, elle
+  l'ignore.
+
+## 2. CSMA puis CSMA/CD
+
+### CSMA : écouter avant d'émettre
+
+Une station qui veut émettre **écoute d'abord le support**
+(*carrier sense*, détection de porteuse) :
+
+- si le support est **libre**, elle émet ;
+- s'il est **occupé**, elle attend qu'il se libère.
+
+Malgré cette écoute, deux stations peuvent trouver le support libre au
+même instant et émettre ensemble : c'est une **collision**. Les deux
+trames se superposent et deviennent **inexploitables**. Les stations
+concernées doivent alors réémettre après un **délai aléatoire**, pour
+avoir de bonnes chances de ne pas se retrouver en collision.
+
+### CSMA/CD : écouter aussi pendant l'émission
+
+CSMA/CD est normalisé par l'**IEEE 802.3**. Il ajoute à CSMA la
+**détection de collision** (*collision detection*) :
+
+1. La station **continue d'écouter pendant toute son émission** et
+   vérifie que ce qu'elle entend est bien ce qu'elle transmet.
+2. Si elle détecte une collision, elle arrête sa trame et émet un
+   **signal de brouillage** (*jam*). Toutes les stations savent alors que
+   ce qui circule n'est pas une donnée valide, mais le résultat d'une
+   collision.
+3. Chaque station impliquée attend ensuite un délai calculé par
+   l'**algorithme de backoff** avant de réessayer.
+
+### L'algorithme complet
+
+```
+1. Écouter le support.
+2. Pas de porteuse (support libre) : émettre la trame,
+   en continuant d'écouter.
+3. Collision détectée :
+     a. émettre le signal de brouillage ;
+     b. augmenter le compteur de tentatives n ;
+     c. si n > 15 : abandonner et signaler un problème sur le lien ;
+     d. sinon : attendre un délai aléatoire (backoff) et revenir à l'étape 1.
+4. À la réception : vérifier la trame (longueur, FCS).
+   Une trame erronée est rejetée.
+```
+
+## 3. Le backoff exponentiel binaire
+
+Après une collision, chaque station tire au hasard un nombre *r* de
+**tranches de temps** (*slot times*) à attendre, avec :
+
+$$
+0 \le r \le 2^k - 1, \qquad k = \min(n, 10)
+$$
+
+où *n* est le nombre de collisions subies par cette trame. À 10 Mb/s, une
+tranche dure **51,2 µs** (section 6).
+
+| Collision n° | *k* | Choix possibles de *r* | Risque de nouvelle collision (2 stations) |
+|---|---|---|---|
+| 1 | 1 | 0 ou 1 | 1 chance sur 2 (50 %) |
+| 2 | 2 | 0 à 3 | 1 chance sur 4 (25 %) |
+| 3 | 3 | 0 à 7 | 1 chance sur 8 |
+| … | … | … | … |
+| 10 | 10 | 0 à 1 023 | 1 chance sur 1 024 |
+| 11 à 15 | 10 (plafonné) | 0 à 1 023 | 1 chance sur 1 024 |
+| 16 | — | **Abandon** | — |
+
+Le compromis :
+
+- à chaque collision, l'intervalle **double**, donc les stations ont
+  **moins de chances** de choisir le même nombre ;
+- en revanche, le **temps d'attente moyen s'allonge**. Avec 1 024 choix,
+  une station peut attendre très longtemps.
+
+C'est pourquoi *k* est plafonné à 10, et la trame est abandonnée après
+16 tentatives.
+
+## 4. La trame Ethernet / 802.3
+
+| Champ | Taille | Rôle |
+|---|---|---|
+| **Préambule** | 7 octets | `10101010` répété : synchronise l'horloge du récepteur |
+| **SFD** (*Start Frame Delimiter*) | 1 octet | `10101011` : la synchronisation est finie, la trame commence |
+| **Adresse destination** | 6 octets | Adresse MAC du destinataire |
+| **Adresse source** | 6 octets | Adresse MAC de l'émetteur |
+| **Longueur / Type** | 2 octets | 802.3 : longueur des données. Ethernet II : type de protocole transporté |
+| **Données** (+ bourrage) | 46 à 1 500 octets | Contenu utile |
+| **FCS** (*Frame Check Sequence*) | 4 octets | Contrôle d'erreur (CRC) |
+
+### Les champs en détail
+
+**Préambule et SFD.** La transmission est **synchrone** : le récepteur
+doit caler son horloge sur celle de l'émetteur avant de lire les données.
+Les alternances `1010…` du préambule servent à cette synchronisation. Le
+SFD se termine par `11` pour marquer le début de la trame.
+
+**Ordre des bits.** La trame est émise du premier octet du préambule
+jusqu'au FCS, et dans chaque octet, le **bit de poids faible part en
+premier**.
+
+**Longueur ou type.** C'est le champ qui distingue 802.3 d'Ethernet II :
+
+- en **802.3**, il donne la **longueur** des données (au plus 1 500) ;
+- en **Ethernet II**, sa valeur dépasse 1 500 et indique le **type** de
+  données transportées (par exemple `0x0800` pour IPv4).
+
+**Données et bourrage.** Les données font **au moins 46 octets**. Si elles
+sont plus courtes, on ajoute du **bourrage** (*padding*) jusqu'à 46.
+
+**FCS.** L'émetteur divise le contenu de la trame par un **polynôme
+générateur** (CRC-32) et place le **reste** de la division dans le FCS. Le
+récepteur refait le calcul : si le reste ne correspond pas, la trame
+contient une erreur et est rejetée.
+
+### Les tailles à retenir
+
+En-tête et FCS : 6 + 6 + 2 + 4 = **18 octets**, ou **26 octets** en
+comptant le préambule et le SFD.
+
+| | Sans préambule ni SFD | Avec préambule et SFD |
+|---|---|---|
+| **Trame minimale** (46 octets de données) | **64 octets** | 72 octets |
+| **Trame maximale** (1 500 octets de données) | **1 518 octets** | 1 526 octets |
+
+### L'espace entre trames (IFG)
+
+Entre deux trames, le support doit rester **silencieux** pendant au moins
+**96 temps de bit** : c'est l'**IFG** (*Inter-Frame Gap*). Ce silence
+laisse aux stations le temps de se préparer à recevoir la trame suivante,
+et donne à chacune une chance d'émettre à son tour.
+
+| Débit | Durée d'un bit | IFG (96 bits) |
+|---|---|---|
+| 10 Mb/s | 0,1 µs | **9,6 µs** |
+| 100 Mb/s | 0,01 µs | **0,96 µs** |
+| 1 Gb/s | 1 ns | **96 ns** |
+
+## 5. L'adresse MAC
+
+L'adresse MAC compte **48 bits** (6 octets). On l'écrit en hexadécimal,
+par exemple `00:1A:2B:3C:4D:5E`.
+
+- Les **3 premiers octets** identifient le **fabricant**. C'est l'**OUI**
+  (*Organizationally Unique Identifier*), attribué par l'IEEE.
+- Les **3 derniers octets** sont attribués par le fabricant à chaque
+  carte.
+
+Chaque adresse est donc **unique au monde**.
+
+Pour envoyer une trame à **toutes les stations** (diffusion), on utilise
+l'adresse **`FF:FF:FF:FF:FF:FF`**, c'est-à-dire tous les bits à 1.
+
+## 6. Collisions, taille minimale de trame et longueur du segment
+
+### Le pire cas
+
+Prenons deux stations A et B, placées **aux deux extrémités** du segment.
+Notons τ le temps de propagation d'un bout à l'autre.
+
+1. A commence à émettre.
+2. Juste avant que le signal de A n'atteigne B, donc un peu avant τ, B
+   trouve le support libre et émet à son tour.
+3. Les deux signaux se rencontrent près de B : il y a collision.
+4. Le bruit de la collision doit revenir jusqu'à A, ce qui prend encore
+   environ τ.
+
+A n'apprend donc la collision qu'après environ **2τ, un aller-retour**.
+Pour savoir que la collision concerne **sa** trame, A doit **encore être
+en train d'émettre** à ce moment-là. D'où la règle :
+
+::: {.callout-important}
+## La règle fondamentale
+La durée d'émission de la plus petite trame doit être **au moins égale au
+temps d'aller-retour** sur le segment :
+
+$$
+\frac{L_{min}}{D} \ge 2\tau = \frac{2\,S}{V}
+$$
+
+avec *D* le débit, *L~min~* la trame minimale en bits, *S* la longueur du
+segment et *V* la vitesse de propagation.
+
+Ce temps d'aller-retour s'appelle la **tranche canal** (*slot time*).
+:::
+
+Deux conséquences :
+
+- une trame **plus courte que 64 octets** est forcément un **fragment de
+  collision**, et toutes les stations la rejettent ;
+- la **trame maximale** est limitée pour qu'un utilisateur
+  **n'accapare pas le support** trop longtemps.
+
+### Exemple 1 : longueur maximale du segment
+
+On donne :
+
+- débit *D* = 10 Mb/s ;
+- trame minimale *L~min~* = 64 octets = **512 bits** ;
+- vitesse de propagation *V* = 198 000 km/s = 1,98 × 10^8^ m/s. C'est
+  moins que la vitesse de la lumière, 300 000 km/s, à cause du câble.
+
+**Étape 1 : durée d'un bit.** 1 / *D* = 1 / 10^7^ = **0,1 µs**.
+
+**Étape 2 : durée de la trame minimale, la tranche canal.**
+*T* = 512 × 0,1 µs = **51,2 µs**.
+
+**Étape 3 : longueur maximale.** La trame doit couvrir un aller-retour,
+donc l'aller seul dure *T* / 2 = 25,6 µs :
+
+$$
+S_{max} = V \times \frac{T}{2} = 1{,}98 \times 10^{8} \times 25{,}6 \times 10^{-6} = 5\,068{,}8 \text{ m}
+$$
+
+En théorie, le segment peut donc atteindre environ **5 km**. La norme
+802.3 impose des longueurs bien plus courtes (2 500 m au maximum avec des
+répéteurs), pour tenir compte des délais des répéteurs et des
+transceivers.
+
+### Exemple 2 : le même calcul à l'envers
+
+On part cette fois de la longueur *S* = 5 068,8 m et on retrouve la taille
+minimale de trame.
+
+1. Temps de propagation : τ = *S* / *V* = 5 068,8 / 1,98 × 10^8^ =
+   **25,6 µs**.
+2. Aller-retour : 2τ = **51,2 µs**.
+3. Nombre de bits émis pendant ce temps : 51,2 µs / 0,1 µs = **512 bits**,
+   soit **64 octets**.
+
+On retrouve bien la trame minimale de 64 octets.
+
+## 7. Le débit en paquets par seconde
+
+Le nombre maximal de trames par seconde (*pps*, paquets par seconde) est :
+
+$$
+\text{pps} = \frac{1}{T_{trame} + T_{IFG}}
+$$
+
+où *T~trame~* est la durée d'émission de la trame, **préambule compris**,
+et *T~IFG~* l'espace entre trames.
+
+**Avec uniquement des trames minimales**, à 10 Mb/s :
+
+- 72 octets = 576 bits, soit 57,6 µs ;
+- 57,6 + 9,6 = 67,2 µs ;
+- pps = 1 / 67,2 µs ≈ **14 880 trames par seconde**.
+
+**Avec uniquement des trames maximales**, à 10 Mb/s :
+
+- 1 526 octets = 12 208 bits, soit 1 220,8 µs ;
+- 1 220,8 + 9,6 = 1 230,4 µs ;
+- pps = 1 / 1 230,4 µs ≈ **812 trames par seconde**.
+
+Les petites trames donnent beaucoup plus de trames par seconde, mais
+transportent beaucoup moins de données utiles chacune.
+
+## 8. La couche physique et le codage
+
+### Ce que couvre la norme 802.3
+
+La couche liaison (couche 2) se divise en deux sous-couches :
+
+- la sous-couche **LLC** (*Logical Link Control*), décrite par
+  l'**IEEE 802.2** ;
+- la sous-couche **MAC**, où se trouve CSMA/CD, décrite par l'**IEEE
+  802.3**.
+
+La norme 802.3 couvre la **sous-couche MAC** et la **couche physique**.
+
+### Le codage Manchester (10 Mb/s)
+
+À 10 Mb/s, on utilise le **codage Manchester**. Chaque bit comporte une
+**transition au milieu** du temps de bit :
+
+- **0** : transition du **positif vers le négatif** ;
+- **1** : transition du **négatif vers le positif**.
+
+Quand deux bits identiques se suivent, il faut aussi une transition **au
+début** du bit, pour revenir au bon niveau avant la transition du milieu.
+Grâce à cette transition systématique, le récepteur garde sa
+synchronisation, même sur une longue suite de 0 ou de 1.
+
+**Exemple : coder `0100011`.** Chaque bit est découpé en deux moitiés :
+**H** pour le niveau positif, **B** pour le niveau négatif.
+
+```
+Bits     :   0     1     0     0     0     1     1
+Moitiés  :  H B   B H   H B   H B   H B   B H   B H
+```
+
+Entre deux 0 successifs, le signal finit en B et doit remonter en H au
+début du bit suivant. Même chose entre deux 1 : il finit en H et doit
+redescendre en B.
+
+### La nomenclature 10BASE-T
+
+Un nom comme **10BASE-T** se lit en trois parties :
+
+- **10** : le débit, 10 Mb/s ;
+- **BASE** : la transmission en **bande de base**, une seule fréquence ;
+- **T** : le support, ici la **paire torsadée** (*twisted pair*).
+
+D'autres variantes indiquent d'autres supports : **10BASE5** (coaxial
+épais, 500 m), **10BASE2** (coaxial fin, environ 185 m), **10BASE-F**
+(fibre).
+
+## 9. Fast Ethernet (100 Mb/s)
+
+Fast Ethernet est **10 fois plus rapide** que l'Ethernet d'origine.
+
+| Paramètre | Valeur |
+|---|---|
+| Débit | 100 Mb/s |
+| Tranche canal | **5,12 µs** (512 bits à 100 Mb/s) |
+| Topologie | **En étoile** |
+| Trame minimale | 64 octets |
+| Trame maximale | 1 518 octets |
+| IFG | 0,96 µs |
+
+Les principales variantes :
+
+- **100BASE-TX** : 2 paires torsadées, en duplex ;
+- **100BASE-T4** : 4 paires torsadées ;
+- **100BASE-FX** : 2 fibres optiques.
+
+### Le codage 4B/5B
+
+Fast Ethernet ne code plus en Manchester mais en **4B/5B** : chaque groupe
+de **4 bits** de données est remplacé par un code de **5 bits**.
+
+**Pourquoi ?** Une longue suite de 0 ne produit aucune transition, et le
+récepteur perd la synchronisation de son horloge. Les codes de 5 bits
+sont choisis pour qu'il n'y ait **jamais plus de 3 zéros consécutifs**,
+même quand deux codes se suivent.
+
+| Données (4 bits) | Code (5 bits) | | Données (4 bits) | Code (5 bits) |
+|---|---|---|---|---|
+| 0000 | 11110 | | 1000 | 10010 |
+| 0001 | 01001 | | 1001 | 10011 |
+| 0010 | 10100 | | 1010 | 10110 |
+| 0011 | 10101 | | 1011 | 10111 |
+| 0100 | 01010 | | 1100 | 11010 |
+| 0101 | 01011 | | 1101 | 11011 |
+| 0110 | 01110 | | 1110 | 11100 |
+| 0111 | 01111 | | 1111 | 11101 |
+
+Par exemple, `0000`, qui n'a aucune transition, devient `11110`.
+
+## 10. Gigabit Ethernet (1 000 Mb/s)
+
+Gigabit Ethernet a été normalisé en **1998** par l'**IEEE 802.3z**. Il
+utilise le codage **8B/10B**, sur le même principe que le 4B/5B : 8 bits
+de données sont remplacés par un code de 10 bits. Il fonctionne sur fibre
+optique ou sur paires torsadées de catégorie 5e ou 6, à des distances
+plus courtes.
+
+### Le problème de la longueur de segment
+
+À trame minimale égale (64 octets), **chaque fois que le débit est
+multiplié par 10, la longueur maximale du segment est divisée par 10** :
+la trame est émise 10 fois plus vite, donc l'aller-retour doit être 10
+fois plus court.
+
+| Débit | Longueur maximale (ordre de grandeur) |
+|---|---|
+| 10 Mb/s | 2 500 m |
+| 100 Mb/s | 250 m |
+| 1 Gb/s | 25 m, beaucoup trop court |
+
+### La solution : l'extension de porteuse
+
+Plutôt que d'augmenter la taille minimale de la trame Ethernet, Gigabit
+Ethernet ajoute une **extension** (*carrier extension*) **à la fin** des
+trames trop courtes. La durée d'émission minimale passe à 512 octets
+(4 096 bits), ce qui ramène la longueur possible à environ **200 m**.
+
+::: {.callout-tip}
+## Pour aller plus loin
+L'extension de porteuse ne sert qu'en mode semi-duplex (*half duplex*),
+où CSMA/CD s'applique. En pratique, Gigabit Ethernet fonctionne presque
+toujours en **duplex intégral** (*full duplex*) avec des commutateurs : il
+n'y a alors plus de collisions, et CSMA/CD n'est plus utilisé.
+:::
+
+## Exercices de révision
+
+**1. Une trame vient de subir sa 3^e^ collision. Entre quelles valeurs la station tire-t-elle son nombre de tranches d'attente, et quelle est l'attente maximale à 10 Mb/s ?**
+
+::: {.callout-note collapse="true"}
+## Réponse
+*k* = 3, donc *r* est entre 0 et 2^3^ − 1 = **7**. L'attente maximale est
+7 × 51,2 µs = **358,4 µs**.
+:::
+
+**2. Une station doit envoyer 20 octets de données. Combien d'octets de bourrage faut-il ajouter, et quelle est la taille de la trame sans préambule ?**
+
+::: {.callout-note collapse="true"}
+## Réponse
+Il faut au moins 46 octets de données : 46 − 20 = **26 octets de
+bourrage**. La trame fait 6 + 6 + 2 + 46 + 4 = **64 octets**, la taille
+minimale.
+:::
+
+**3. À 100 Mb/s, avec une trame minimale de 64 octets et une vitesse de propagation de 2 × 10^8^ m/s, quelle est la longueur théorique maximale du segment ?**
+
+::: {.callout-note collapse="true"}
+## Réponse
+- *T* = 512 bits / 10^8^ b/s = 5,12 µs.
+- *S~max~* = *V* × *T* / 2 = 2 × 10^8^ × 2,56 × 10^−6^ = **512 m**.
+:::
+
+**4. Combien de trames minimales par seconde peut-on transmettre au maximum à 100 Mb/s ?**
+
+::: {.callout-note collapse="true"}
+## Réponse
+- 72 octets = 576 bits, soit 5,76 µs à 100 Mb/s.
+- Avec l'IFG : 5,76 + 0,96 = 6,72 µs.
+- pps = 1 / 6,72 µs ≈ **148 810 trames par seconde**, soit 10 fois plus
+  qu'à 10 Mb/s.
+:::
+
+**5. Pourquoi une station qui émet une trame trop courte risque-t-elle de ne pas détecter une collision ?**
+
+::: {.callout-note collapse="true"}
+## Réponse
+Le bruit de la collision peut mettre jusqu'à un aller-retour (2τ) pour
+revenir. Si la station a **déjà fini d'émettre** à ce moment-là, elle
+n'écoute plus sa propre transmission. Elle ne peut pas savoir que la
+collision concernait sa trame, et ne la réémet pas.
+:::
+
+**6. Que signifient les 3 premiers octets d'une adresse MAC ? Quelle adresse sert à la diffusion ?**
+
+::: {.callout-note collapse="true"}
+## Réponse
+Ils identifient le **fabricant** (OUI). La diffusion utilise
+**`FF:FF:FF:FF:FF:FF`**.
+:::
+
+**7. Codez `1100` en Manchester, avec la notation H (positif) et B (négatif) pour chaque moitié de bit.**
+
+::: {.callout-note collapse="true"}
+## Réponse
+`B H` `B H` `H B` `H B`. Entre les deux 1, le signal redescend en B au
+début du deuxième bit. Entre les deux 0, il remonte en H au début du
+quatrième bit.
+:::
+
+**8. Pourquoi Fast Ethernet utilise-t-il le codage 4B/5B ? Donnez le code de `0000`.**
+
+::: {.callout-note collapse="true"}
+## Réponse
+Pour garantir qu'il n'y ait jamais plus de 3 zéros consécutifs. Une
+longue suite de 0 ne produit pas de transition, et le récepteur perdrait
+la synchronisation de son horloge. `0000` devient **`11110`**.
+:::
