@@ -1191,3 +1191,22 @@ figcaption {
 }
 
 
+
+/* --- Video audio-language toggle (video-language.js) --- */
+.video-lang-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0 0.25rem;
+}
+
+.video-lang-label {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.video-lang-tip {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin: 0 0 1rem;
+}

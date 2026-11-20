@@ -19,6 +19,7 @@ project:
     - resume-reading.js
     - search-scope.js
     - review-numbering.js
+    - video-language.js
 
 website:
   # ---- CHANGE THESE TWO LINES TO YOUR OWN ----
@@ -58,6 +59,7 @@ format:
       - text: '<script src="/resume-reading.js"></script>'
       - text: '<script src="/search-scope.js"></script>'
       - text: '<script src="/review-numbering.js"></script>'
+      - text: '<script src="/video-language.js"></script>'
     toc: true
     code-fold: false
     code-tools: false
