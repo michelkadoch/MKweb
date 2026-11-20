@@ -1,8 +1,8 @@
 ---
-title: "Révision du chapitre 9 : IP"
+title: "Révision du chapitre 9 : le protocole IP"
 order: 3
-difficulty: 2
-description: "Vidéo de révision du chapitre 9 sur le protocole IP."
+difficulty: 3
+description: "Adressage IPv4 par classes, adresses spéciales et privées, sous-réseaux et masques, en-tête IP, fragmentation, CIDR, VLSM et introduction à IPv6."
 date: "2026-11-20"
 categories: [révision, ip]
 ---
@@ -10,3 +10,595 @@ categories: [révision, ip]
 ## Vidéo de révision
 
 {{< video https://youtu.be/xMowffb3r-w >}}
+
+Cette capsule révise le protocole IP (*Internet Protocol*). Les notes
+ci-dessous suivent l'ordre de la vidéo et refont chaque exemple pas à pas.
+
+::: {.callout-tip}
+## Conseil pour toute la matière
+Écrivez **toujours** vos adresses et vos masques **en binaire**. C'est la
+seule façon de voir exactement quels bits appartiennent au réseau, au
+sous-réseau et à l'hôte.
+:::
+
+## 1. IP et la couche réseau
+
+IP est le protocole de la **couche 3** du modèle OSI, la couche réseau. Il
+se situe au-dessus de la couche liaison (par exemple Ethernet 802.3 ou
+Wi-Fi 802.11). Un paquet IP s'appelle un **datagramme**. Il est
+**encapsulé** dans une trame de couche 2 pour traverser chaque lien.
+
+IP est spécifié dans la **RFC 791**. Ses fonctions principales sont :
+
+- **transporter les datagrammes** de la source à la destination ;
+- **router** : chaque routeur choisit le prochain saut d'après l'adresse
+  de destination ;
+- **fragmenter** : si un réseau traversé accepte des paquets plus petits
+  que le datagramme, celui-ci est découpé en morceaux (section 5).
+
+IP fonctionne **sans connexion** et sans garantie. Quand un routeur détecte
+une erreur dans un datagramme, il le **détruit** et envoie un message
+**ICMP** à la source pour l'en avertir.
+
+## 2. L'adresse IPv4
+
+Une adresse IPv4 compte **32 bits**, soit **4 octets**. On l'écrit en
+**notation décimale pointée** : chaque octet est converti en décimal, et
+les octets sont séparés par des points.
+
+::: {.callout-note}
+## Exemple
+`128.83.12.14` correspond en binaire à :
+
+`10000000 01010011 00001100 00001110`
+
+Lus d'un seul bloc, ces 32 bits valent 2 152 926 222. La notation pointée
+est évidemment plus pratique.
+:::
+
+L'adresse IP :
+
+- doit être **unique au monde** (sauf les adresses privées, section 3) ;
+- est **configurée par logiciel** ;
+- est associée à **une interface**, et non à une machine. Un routeur a
+  donc une adresse par interface.
+
+## 3. L'adressage par classes
+
+L'adressage d'origine reposait sur des **classes**. Il n'est plus utilisé
+tel quel, mais il faut le comprendre pour suivre l'évolution vers CIDR.
+
+Une adresse se divise en deux parties :
+
+- la partie **réseau** (*net-id*), qui identifie le réseau ;
+- la partie **hôte** (*host-id*), qui identifie l'interface dans ce
+  réseau.
+
+La classe se reconnaît aux **premiers bits du premier octet**. Elle
+détermine où se trouve la frontière entre réseau et hôte.
+
+| Classe | Premiers bits | 1^er^ octet | Bits réseau | Bits hôte | Nombre de réseaux | Hôtes par réseau | Usage |
+|---|---|---|---|---|---|---|---|
+| **A** | `0` | 0 à 127 | 7 | 24 | 2^7^ = 128 (126 utilisables) | 2^24^ − 2 = 16 777 214 | Très grands réseaux |
+| **B** | `10` | 128 à 191 | 14 | 16 | 2^14^ = 16 384 | 2^16^ − 2 = 65 534 | Réseaux moyens |
+| **C** | `110` | 192 à 223 | 21 | 8 | 2^21^ = 2 097 152 | 2^8^ − 2 = 254 | Petits réseaux |
+| **D** | `1110` | 224 à 239 | — | — | — | — | Multicast |
+| **E** | `1111` | 240 à 255 | — | — | — | — | Réservée (expérimentale) |
+
+Comment lire ce tableau, avec la classe B comme exemple : les deux
+premiers bits (`10`) servent à identifier la classe. Il reste 6 bits dans
+le premier octet et 8 bits dans le deuxième, soit **14 bits** pour le
+réseau. Les deux derniers octets (**16 bits**) servent aux hôtes.
+
+::: {.callout-important}
+## Pourquoi « − 2 » hôtes ?
+Dans chaque réseau, deux valeurs de la partie hôte sont réservées :
+
+- **tous les bits à 0** désignent le réseau lui-même (l'adresse réseau) ;
+- **tous les bits à 1** désignent la **diffusion** (*broadcast*) vers tous
+  les hôtes du réseau.
+
+Avec *h* bits d'hôte, on a donc **2^h^ − 2** adresses attribuables. Par
+exemple, en classe C : 2^8^ − 2 = 254.
+:::
+
+### Adresses spéciales
+
+| Adresse | Signification |
+|---|---|
+| `127.0.0.1` | **Bouclage** (*loopback*) : la machine s'adresse à elle-même |
+| Partie hôte à 0 | Le réseau lui-même, par exemple `128.81.0.0` |
+| Partie hôte à 1 | Diffusion à tous les hôtes du réseau, par exemple `128.81.255.255` |
+| `0.0.0.0` | Machine qui ne connaît pas encore son adresse (historiquement, les stations sans disque au démarrage) |
+
+### Adresses privées
+
+Trois plages sont réservées à l'usage **privé** :
+
+| Plage | Notation CIDR |
+|---|---|
+| 10.0.0.0 à 10.255.255.255 | `10.0.0.0/8` |
+| 172.16.0.0 à 172.31.255.255 | `172.16.0.0/12` |
+| 192.168.0.0 à 192.168.255.255 | `192.168.0.0/16` |
+
+Un routeur ne fait **jamais sortir sur Internet** un paquet destiné à une
+adresse privée : ces adresses ne sont reconnues qu'à l'intérieur du
+réseau local. Gros avantage : des milliers d'organisations peuvent
+réutiliser les mêmes adresses privées sans conflit, et on n'a pas besoin
+de les annoncer sur Internet.
+
+Pour qu'une machine en adresse privée accède quand même à Internet, on
+utilise la **NAT** (*Network Address Translation*), vue au prochain cours.
+
+### Un routeur relie des réseaux différents
+
+Chaque interface d'un routeur appartient à un **réseau différent**.
+
+::: {.callout-note}
+## Exemple
+Un routeur relie le réseau de classe B `128.81.0.0` et le réseau de classe
+C `192.1.2.0`.
+
+- Toutes les machines du côté `128.81.0.0` ont la **même partie réseau**,
+  `128.81`, et chacune a une **partie hôte unique**, par exemple
+  `128.81.0.5` ou `128.81.3.20`.
+- Du côté `192.1.2.0`, toutes partagent `192.1.2`, et seul le dernier
+  octet change : `192.1.2.1`, `192.1.2.7`, etc.
+:::
+
+## 4. Sous-réseaux et masques
+
+### Le principe
+
+On peut découper un réseau en entités plus petites, les **sous-réseaux**
+(*subnets*), en **empruntant des bits à la partie hôte**. On obtient ainsi
+trois parties : réseau, sous-réseau et hôte. Cela permet de mieux
+structurer un réseau, par exemple un sous-réseau par étage ou par service.
+
+- Tous les équipements d'un sous-réseau doivent utiliser le même masque.
+- Les sous-réseaux sont interconnectés **uniquement par des routeurs**.
+
+### Le masque
+
+Le **masque** est une valeur de 32 bits associée à l'adresse :
+
+- les bits à **1** marquent la partie **réseau**, sous-réseau compris ;
+- les bits à **0** marquent la partie **hôte**.
+
+On obtient l'adresse du réseau en faisant un **ET logique** bit à bit
+entre l'adresse et le masque.
+
+Par exemple, avec `180.27.0.0` et le masque `255.255.0.0`, les deux
+premiers octets (`180.27`) forment la partie réseau et les deux derniers
+la partie hôte. C'est le masque par défaut d'une classe B. Avec un masque
+plus long, le même réseau est découpé en sous-réseaux.
+
+### Exemple 1 : changer le masque d'une même adresse
+
+Prenons l'adresse `150.214.209.2`.
+
+**Avec le masque `255.255.255.0`** : les trois premiers octets sont la
+partie réseau.
+
+```
+Adresse : 10010110 . 11010110 . 11010001 . 00000010   (150.214.209.2)
+Masque  : 11111111 . 11111111 . 11111111 . 00000000   (255.255.255.0)
+Réseau  : 10010110 . 11010110 . 11010001 . 00000000   (150.214.209.0)
+```
+
+Il reste 8 bits d'hôte : 2^8^ − 2 = **254 hôtes**.
+
+**Avec le masque `255.255.248.0`** : 248 = `11111000`, donc seuls les 5
+premiers bits du troisième octet sont ajoutés à la partie réseau.
+
+```
+Adresse : 10010110 . 11010110 . 11010 001 . 00000010   (150.214.209.2)
+Masque  : 11111111 . 11111111 . 11111 000 . 00000000   (255.255.248.0)
+Réseau  : 10010110 . 11010110 . 11010 000 . 00000000   (150.214.208.0)
+```
+
+- Adresse du réseau : `150.214.208.0` (`11010000` = 208).
+- Bits d'hôte : 3 + 8 = **11**, soit 2^11^ − 2 = **2 046 hôtes**.
+- Adresse de diffusion : `150.214.215.255`.
+- Notre machine `150.214.209.2` est un hôte de ce réseau.
+
+### Exemple 2 : créer 8 sous-réseaux
+
+On a le réseau `192.168.1.0` avec le masque `255.255.255.0`, et on veut
+**8 sous-réseaux**.
+
+1. **Combien de bits emprunter ?** Avec 3 bits, on a 2^3^ = 8 valeurs (de
+   0 à 7), donc 8 sous-réseaux. On emprunte **3 bits** à la partie hôte.
+2. **Nouveau masque** : `11111111.11111111.11111111.111 00000`, soit
+   **`255.255.255.224`** (128 + 64 + 32 = 224).
+3. **Bits d'hôte restants** : 5, soit 2^5^ − 2 = **30 hôtes par
+   sous-réseau**.
+
+| Sous-réseau | Bits empruntés | Adresse du sous-réseau | Hôtes | Diffusion |
+|---|---|---|---|---|
+| 0 | `000` | 192.168.1.0 | .1 à .30 | .31 |
+| 1 | `001` | 192.168.1.32 | .33 à .62 | .63 |
+| 2 | `010` | 192.168.1.64 | .65 à .94 | .95 |
+| 3 | `011` | 192.168.1.96 | .97 à .126 | .127 |
+| 4 | `100` | 192.168.1.128 | .129 à .158 | .159 |
+| 5 | `101` | 192.168.1.160 | .161 à .190 | .191 |
+| 6 | `110` | 192.168.1.192 | .193 à .222 | .223 |
+| 7 | `111` | 192.168.1.224 | .225 à .254 | .255 |
+
+### Exemple 3 : au moins 12 stations par sous-réseau
+
+Le problème est inversé : on ne fixe pas le nombre de sous-réseaux, mais
+le **nombre de stations** dans chacun, soit au moins 12.
+
+1. Il faut *h* bits d'hôte tels que 2^h^ − 2 ≥ 12.
+   - *h* = 3 donne 8 − 2 = 6 : insuffisant.
+   - *h* = 4 donne 16 − 2 = **14** : suffisant.
+2. On garde donc **4 bits d'hôte**. Sur les 8 bits du dernier octet, il en
+   reste 4 pour le sous-réseau, soit 2^4^ = **16 sous-réseaux**.
+3. Masque : `255.255.255.240` (`11110000`).
+
+En répondant à la contrainte sur les stations, on a obtenu indirectement
+16 sous-réseaux de 14 hôtes chacun.
+
+## 5. L'en-tête IPv4
+
+L'en-tête compte **au minimum 20 octets**, plus un champ **Options**
+facultatif. Viennent ensuite les **données**, c'est-à-dire ce que la
+couche transport a remis à IP (un segment TCP, par exemple).
+
+| Champ | Taille | Rôle |
+|---|---|---|
+| **Version** | 4 bits | Version d'IP : 4 pour IPv4 |
+| **Longueur de l'en-tête** (IHL) | 4 bits | En mots de 32 bits : 5 correspond à 20 octets |
+| **Type de service** (ToS) | 8 bits | Qualité de service, aujourd'hui le champ DSCP (voir la page [QoS](qos.qmd)) |
+| **Longueur totale** | 16 bits | Taille du datagramme, en-tête compris (au plus 65 535 octets) |
+| **Identification** | 16 bits | Numéro commun à tous les fragments d'un même datagramme |
+| **Drapeaux** (*flags*) | 3 bits | Contrôle de la fragmentation |
+| **Déplacement du fragment** (*fragment offset*) | 13 bits | Position du fragment dans le datagramme d'origine, en unités de 8 octets |
+| **Durée de vie** (TTL) | 8 bits | Décrémentée par chaque routeur. À 0, le datagramme est détruit |
+| **Protocole** | 8 bits | Protocole transporté dans les données : 6 = TCP, 17 = UDP, 1 = ICMP |
+| **Somme de contrôle de l'en-tête** | 16 bits | Détecte les erreurs dans l'en-tête |
+| **Adresse source** | 32 bits | Adresse IP de l'émetteur |
+| **Adresse destination** | 32 bits | Adresse IP du destinataire |
+| **Options** | Variable | Sécurité, enregistrement de route, etc. |
+
+### Pourquoi la durée de vie (TTL) ?
+
+Si une adresse est erronée ou si les tables de routage forment une
+boucle, un datagramme pourrait circuler **indéfiniment** et les paquets
+s'accumuleraient dans le réseau. Chaque routeur diminue donc le TTL de 1,
+et le routeur qui le voit arriver à **0 détruit le datagramme**. Les
+valeurs initiales courantes sont 64 ou 32.
+
+### Les trois champs de fragmentation
+
+**Identification** : tous les fragments d'un même datagramme portent le
+**même numéro**, choisi par l'émetteur. C'est grâce à lui que la
+destination sait quels fragments vont ensemble.
+
+**Drapeaux** : on les lit dans l'ordre réservé, DF (*Don't Fragment*), MF
+(*More Fragments*).
+
+| Drapeaux | Signification |
+|---|---|
+| `001` | MF = 1 : d'**autres fragments suivent** |
+| `000` | MF = 0 : c'est le **dernier fragment** |
+| `010` | DF = 1 : **ne pas fragmenter**, le datagramme est entier |
+
+**Déplacement du fragment** : la position du morceau dans le datagramme
+d'origine, comme la place d'une pièce dans un **casse-tête**. IP
+fonctionnant sans connexion, les fragments peuvent arriver **dans le
+désordre**. Grâce au déplacement, la destination place chaque morceau au
+bon endroit, même si le troisième arrive avant le premier.
+
+## 6. La fragmentation
+
+### MTU et MTU du chemin
+
+Chaque réseau a une taille maximale de paquet, la **MTU** (*Maximum
+Transmission Unit*). Par exemple, 1 500 octets pour Ethernet. Quand un
+datagramme traverse plusieurs réseaux, la contrainte est la **plus petite
+MTU de tout le chemin**.
+
+Par exemple, sur un chemin dont les réseaux ont des MTU de 1 024, 512 et
+2 000 octets, la MTU du chemin est **512 octets**.
+
+Quand un datagramme est trop grand, il est découpé en fragments. Chacun
+est un datagramme complet, avec son propre en-tête. Les fragments sont
+**réassemblés à la destination finale**, qui remet ensuite les données
+d'origine à la couche transport.
+
+### Exemple résolu
+
+La couche transport remet à IP **2 000 octets de données**. Le réseau a
+une MTU de **512 octets**, et l'en-tête IP fait **20 octets** (sans
+options). Quelles valeurs prennent l'identification, la longueur totale,
+le déplacement et le drapeau MF de chaque fragment ?
+
+**Étape 1 : données par fragment.** La MTU inclut l'en-tête, donc il reste
+512 − 20 = 492 octets de données. Mais les données d'un fragment (sauf le
+dernier) doivent être un **multiple de 8 octets**, puisque le déplacement
+se compte en unités de 8. Le plus grand multiple de 8 inférieur ou égal à
+492 est **488** (61 × 8).
+
+**Étape 2 : nombre de fragments.** 2 000 = 4 × 488 + 48. On obtient donc
+**5 fragments** : quatre de 488 octets et un dernier de 48 octets.
+
+**Étape 3 : valeurs des champs.** On prend un numéro d'identification
+quelconque, par exemple 10, identique pour les cinq fragments.
+
+| Fragment | Identification | Données | Longueur totale | Déplacement | MF |
+|---|---|---|---|---|---|
+| 1 | 10 | 488 | 508 | 0 | 1 |
+| 2 | 10 | 488 | 508 | 61 | 1 |
+| 3 | 10 | 488 | 508 | 122 | 1 |
+| 4 | 10 | 488 | 508 | 183 | 1 |
+| 5 | 10 | 48 | 68 | 244 | 0 |
+
+- **Longueur totale** = données + 20 octets d'en-tête.
+- **Déplacement** = position en octets ÷ 8. Le fragment 2 commence à
+  l'octet 488, soit 488 ÷ 8 = 61. Le fragment 3 commence à 976, soit 122,
+  et ainsi de suite.
+- **MF** vaut 1 partout sauf pour le **dernier** fragment.
+
+Vérification : 4 × 488 + 48 = 2 000 octets.
+
+::: {.callout-note}
+## Dans une capture réelle
+Dans une trace de paquet (avec Wireshark, par exemple), on retrouve tous
+ces champs : version 4, longueur d'en-tête de 20 octets, drapeaux,
+TTL, protocole 6 (TCP), etc. Essayez d'ouvrir une capture et de
+reconnaître chaque champ.
+:::
+
+## 7. CIDR : l'adressage sans classes
+
+### Le problème des classes
+
+Avec la croissance d'Internet, il a fallu attribuer des millions
+d'adresses, et les classes gaspillaient énormément. Une organisation qui
+avait besoin de 800 adresses ne pouvait pas se contenter d'une classe C
+(254 hôtes). Elle recevait donc une classe B de 65 534 hôtes, et
+gaspillait plus de 64 000 adresses.
+
+### Le principe de CIDR
+
+**CIDR** (*Classless Inter-Domain Routing*) **oublie les classes** : A, B
+et C ne veulent plus rien dire. Seul le **masque** définit la partie
+réseau.
+
+On écrit le masque de façon abrégée avec une **barre oblique** suivie du
+nombre de bits à 1 :
+
+- `/9` : les 9 premiers bits sont la partie réseau, les 23 autres la
+  partie hôte ;
+- `/24` équivaut à `255.255.255.0` ;
+- `/22` équivaut à `255.255.252.0`.
+
+Nombre d'adresses dans un bloc `/n` : **2^32−n^**.
+
+::: {.callout-note}
+## Exemples
+- **`206.0.64.0/18`** : 32 − 18 = 14 bits d'hôte, soit 2^14^ = 16 384
+  adresses, l'équivalent de 64 réseaux `/24`.
+- **Le client qui veut 800 adresses** : on cherche la plus petite
+  puissance de 2 qui contient 800, soit 1 024 = 2^10^. Il faut 10 bits
+  d'hôte, donc un **`/22`**. On peut lui attribuer `206.0.68.0/22`, qui va
+  de `206.0.68.0` à `206.0.71.255`. Le gaspillage tombe à 224 adresses au
+  lieu de plus de 64 000.
+:::
+
+### Une attribution hiérarchique
+
+CIDR permet de découper les blocs **par niveaux**. Les routeurs
+d'Internet n'ont besoin de connaître que le bloc le plus large. Chaque
+niveau inférieur gère son propre découpage.
+
+```
+64.14.0.0/16                 ← seul bloc annoncé sur Internet
+├── 64.14.0.0/18             ← niveau 1 : 2 bits de plus = 4 sous-réseaux
+│   ├── 64.14.0.0/20         ← niveau 2 : 2 bits de plus = 4 sous-réseaux par /18
+│   ├── 64.14.16.0/20
+│   ├── 64.14.32.0/20
+│   └── 64.14.48.0/20
+├── 64.14.64.0/18
+│   ├── 64.14.64.0/20
+│   ├── 64.14.80.0/20
+│   ├── 64.14.96.0/20        ← contient 64.14.103.56
+│   └── 64.14.112.0/20
+├── 64.14.128.0/18
+└── 64.14.192.0/18
+```
+
+**Pour joindre `64.14.103.56`**, Internet ne regarde que le bloc
+`64.14.0.0/16` dans sa table de routage et envoie le paquet au routeur
+responsable. Ce routeur sait que l'adresse appartient à `64.14.64.0/18`
+(103 est entre 64 et 127), puis au sous-réseau `64.14.96.0/20`. En
+binaire, 103 = `0110 0111`, et les 4 premiers bits `0110` donnent 96.
+Chaque niveau ne connaît que ce qui se trouve directement sous lui.
+
+## 8. VLSM : des masques de longueur variable
+
+### Le problème du masque fixe
+
+Si tous les sous-réseaux d'un même niveau ont le **même masque**, on perd
+des adresses : certains sous-réseaux ont besoin de 200 hôtes, d'autres de
+seulement 2. Le **VLSM** (*Variable Length Subnet Mask*) permet de donner
+à chaque sous-réseau **son propre masque**, adapté à ses besoins.
+
+### Comparaison : masque fixe `/24` ou masque variable
+
+| Hôtes requis | Masque fixe `/24` (254 hôtes) : adresses perdues | Masque VLSM le plus proche | Hôtes disponibles | Adresses perdues |
+|---|---|---|---|---|
+| 150 | 104 | `/24` | 254 | 104 |
+| 90 | 164 | `/25` | 126 | 36 |
+| 24 | 230 | `/27` | 30 | 6 |
+| 2 | 252 | `/30` | 2 | 0 |
+
+Pour 150 hôtes, on ne peut pas faire mieux qu'un `/24`, même avec VLSM.
+Mais pour 24 hôtes, le `/27` ne perd que 6 adresses au lieu de 230.
+
+### Exemple de découpage VLSM
+
+Une organisation reçoit `140.10.0.0/16`. Internet ne voit que ce bloc. À
+l'interne, le routeur découpe :
+
+- **Niveau 1 : `/20`.** On emprunte 4 bits, ce qui donne 2^4^ = 16
+  sous-réseaux : `140.10.0.0/20`, `140.10.16.0/20`, `140.10.32.0/20`, etc.
+- **Niveau 2 : chaque `/20` choisit son propre masque.**
+  - Le sous-réseau `140.10.0.0/20` se découpe en **`/24`** : 4 bits de
+    plus, donc 16 sous-réseaux de 254 hôtes.
+  - Le sous-réseau `140.10.16.0/20` a besoin de beaucoup plus de
+    sous-réseaux, plus petits. Il se découpe en **`/26`** : 6 bits de
+    plus, donc 2^6^ = 64 sous-réseaux de 62 hôtes.
+- **Niveau 3 :** l'un des `/24` peut à son tour se découper en **`/27`** :
+  3 bits de plus, donc 8 sous-réseaux de 30 hôtes.
+
+Chaque branche est découpée selon ses besoins réels, et non selon une
+règle unique.
+
+## 9. IPv6
+
+### Pourquoi une nouvelle version ?
+
+L'espace IPv4 (2^32^, environ 4,3 milliards d'adresses) est **épuisé**.
+L'Internet des objets (IoT) exige à lui seul des milliards d'adresses
+supplémentaires. **IPv6** utilise des adresses de **128 bits**, soit
+2^128^ adresses.
+
+Son en-tête est **plus simple** que celui d'IPv4 et de taille fixe. Les
+fonctions facultatives passent dans des **en-têtes d'extension**.
+
+### L'en-tête IPv6
+
+| Champ | Rôle |
+|---|---|
+| **Version** | 6 |
+| **Classe de trafic** (*Traffic Class*) | Qualité de service, comme le ToS d'IPv4 |
+| **Étiquette de flux** (*Flow Label*) | Identifie un flux de paquets qui doit recevoir le même traitement |
+| **Longueur des données** (*Payload Length*) | Taille de ce qui suit l'en-tête |
+| **En-tête suivant** (*Next Header*) | Ce qui suit : un en-tête d'extension ou les données de la couche transport |
+| **Nombre de sauts** (*Hop Limit*) | Équivalent du TTL d'IPv4 |
+| **Adresses source et destination** | 128 bits chacune |
+
+### Écrire une adresse IPv6
+
+Une adresse IPv6 s'écrit en **hexadécimal**, en 8 groupes de 16 bits
+séparés par `:`. Comme elle est difficile à mémoriser, on utilise des
+noms de domaine (DNS). Deux règles permettent de la raccourcir :
+
+1. on supprime les **zéros en tête** de chaque groupe ;
+2. on remplace **une seule** suite de groupes nuls par `::`.
+
+```
+Complète   : 2001:0db8:0000:0000:0000:ff00:0042:8329
+Abrégée    : 2001:db8::ff00:42:8329
+```
+
+Le `::` ne peut apparaître **qu'une seule fois**. Sinon, on ne saurait pas
+combien de groupes nuls chaque `::` remplace.
+
+### Une adresse IPv4 dans une adresse IPv6
+
+Une adresse IPv4 peut être placée dans une adresse IPv6 : les 96 premiers
+bits sont à 0 et les 32 derniers contiennent l'adresse IPv4, écrite en
+notation pointée. Par exemple, `::192.168.1.1`.
+
+::: {.callout-tip}
+## Pour aller plus loin
+Cette forme dite « compatible » est aujourd'hui dépréciée. En pratique,
+on rencontre plutôt la forme « mappée » `::ffff:192.168.1.1`.
+:::
+
+La transition vers IPv6 prend du temps, et IPv4 et IPv6 **cohabitent**
+encore. Les mécanismes de cohabitation sont traités dans une autre
+partie du cours.
+
+## Exercices de révision
+
+**1. Quelle est la classe de l'adresse `172.20.5.9` ? Est-ce une adresse publique ou privée ?**
+
+::: {.callout-note collapse="true"}
+## Réponse
+Le premier octet, 172, est entre 128 et 191 (bits `10`) : c'est une
+**classe B**. L'adresse est **privée**, car elle appartient à
+`172.16.0.0/12` (de 172.16 à 172.31).
+:::
+
+**2. Combien d'hôtes peut-on adresser dans un réseau `/26` ? Pourquoi pas 64 ?**
+
+::: {.callout-note collapse="true"}
+## Réponse
+32 − 26 = 6 bits d'hôte, soit 2^6^ = 64 combinaisons. On retire l'adresse
+du réseau (hôte tout à 0) et l'adresse de diffusion (hôte tout à 1) :
+**62 hôtes**.
+:::
+
+**3. Trouvez l'adresse du réseau, l'adresse de diffusion et le nombre d'hôtes pour `10.45.77.200/20`.**
+
+::: {.callout-note collapse="true"}
+## Réponse
+`/20` : les 4 premiers bits du troisième octet font partie du réseau.
+77 = `0100 1101`, et `0100 0000` = 64.
+
+- Réseau : `10.45.64.0`
+- Diffusion : `10.45.79.255` (64 + 15 = 79)
+- Hôtes : 2^12^ − 2 = 4 094
+:::
+
+**4. On veut découper `192.168.10.0/24` en sous-réseaux d'au moins 50 hôtes chacun. Quel masque utiliser, et combien de sous-réseaux obtient-on ?**
+
+::: {.callout-note collapse="true"}
+## Réponse
+Il faut 2^h^ − 2 ≥ 50, donc *h* = 6 (62 hôtes). On garde 6 bits d'hôte et
+on en emprunte 2 : masque **`255.255.255.192`** (`/26`), et 2^2^ = **4
+sous-réseaux** : `.0`, `.64`, `.128` et `.192`.
+:::
+
+**5. Un datagramme transporte 1 400 octets de données sur un réseau dont la MTU est de 620 octets (en-tête de 20 octets). Donnez la longueur totale, le déplacement et le drapeau MF de chaque fragment.**
+
+::: {.callout-note collapse="true"}
+## Réponse
+620 − 20 = 600 octets, et 600 est déjà un multiple de 8 (75 × 8).
+1 400 = 2 × 600 + 200, donc 3 fragments.
+
+| Fragment | Données | Longueur totale | Déplacement | MF |
+|---|---|---|---|---|
+| 1 | 600 | 620 | 0 | 1 |
+| 2 | 600 | 620 | 75 | 1 |
+| 3 | 200 | 220 | 150 | 0 |
+:::
+
+**6. À quoi sert le champ TTL, et que se passe-t-il quand il atteint 0 ?**
+
+::: {.callout-note collapse="true"}
+## Réponse
+Il empêche un datagramme de circuler indéfiniment, par exemple à cause
+d'une boucle de routage. Chaque routeur le décrémente de 1. Quand il
+atteint 0, le routeur détruit le datagramme et prévient la source par un
+message ICMP.
+:::
+
+**7. Un client a besoin de 3 000 adresses. Quel bloc CIDR lui attribuer, et combien d'adresses seront inutilisées ?**
+
+::: {.callout-note collapse="true"}
+## Réponse
+La plus petite puissance de 2 qui contient 3 000 est 4 096 = 2^12^. Il
+faut 12 bits d'hôte, donc un **`/20`**. Il reste environ 1 096 adresses
+non utilisées, contre plus de 62 000 avec une classe B.
+:::
+
+**8. Quel avantage VLSM apporte-t-il par rapport à un masque fixe pour un sous-réseau de 24 hôtes ?**
+
+::: {.callout-note collapse="true"}
+## Réponse
+Avec un masque fixe `/24`, on attribue 254 adresses et on en perd 230.
+Avec VLSM, on choisit un `/27` (30 hôtes) et on n'en perd que 6.
+:::
+
+**9. Abrégez l'adresse IPv6 `fe80:0000:0000:0000:0202:b3ff:fe1e:8329`.**
+
+::: {.callout-note collapse="true"}
+## Réponse
+`fe80::202:b3ff:fe1e:8329`
+:::

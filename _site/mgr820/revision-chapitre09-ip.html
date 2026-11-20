@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2026-11-20">
-<meta name="description" content="Vidéo de révision du chapitre 9 sur le protocole IP.">
+<meta name="description" content="Adressage IPv4 par classes, adresses spéciales et privées, sous-réseaux et masques, en-tête IP, fragmentation, CIDR, VLSM et introduction à IPv6.">
 
-<title>Révision du chapitre 9 : IP – Michel Kadoch’s Notes</title>
+<title>Révision du chapitre 9 : le protocole IP – Michel Kadoch’s Notes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -79,11 +79,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="Révision du chapitre 9 : IP – Michel Kadoch’s Notes">
-<meta property="og:description" content="Vidéo de révision du chapitre 9 sur le protocole IP.">
+<meta property="og:title" content="Révision du chapitre 9 : le protocole IP – Michel Kadoch’s Notes">
+<meta property="og:description" content="Adressage IPv4 par classes, adresses spéciales et privées, sous-réseaux et masques, en-tête IP, fragmentation, CIDR, VLSM et introduction à IPv6.">
 <meta property="og:site_name" content="Michel Kadoch’s Notes">
-<meta name="twitter:title" content="Révision du chapitre 9 : IP – Michel Kadoch’s Notes">
-<meta name="twitter:description" content="Vidéo de révision du chapitre 9 sur le protocole IP.">
+<meta name="twitter:title" content="Révision du chapitre 9 : le protocole IP – Michel Kadoch’s Notes">
+<meta name="twitter:description" content="Adressage IPv4 par classes, adresses spéciales et privées, sous-réseaux et masques, en-tête IP, fragmentation, CIDR, VLSM et introduction à IPv6.">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -135,6 +135,52 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#vidéo-de-révision" id="toc-vidéo-de-révision" class="nav-link active" data-scroll-target="#vidéo-de-révision">Vidéo de révision</a></li>
+  <li><a href="#ip-et-la-couche-réseau" id="toc-ip-et-la-couche-réseau" class="nav-link" data-scroll-target="#ip-et-la-couche-réseau">1. IP et la couche réseau</a></li>
+  <li><a href="#ladresse-ipv4" id="toc-ladresse-ipv4" class="nav-link" data-scroll-target="#ladresse-ipv4">2. L’adresse IPv4</a></li>
+  <li><a href="#ladressage-par-classes" id="toc-ladressage-par-classes" class="nav-link" data-scroll-target="#ladressage-par-classes">3. L’adressage par classes</a>
+  <ul class="collapse">
+  <li><a href="#adresses-spéciales" id="toc-adresses-spéciales" class="nav-link" data-scroll-target="#adresses-spéciales">Adresses spéciales</a></li>
+  <li><a href="#adresses-privées" id="toc-adresses-privées" class="nav-link" data-scroll-target="#adresses-privées">Adresses privées</a></li>
+  <li><a href="#un-routeur-relie-des-réseaux-différents" id="toc-un-routeur-relie-des-réseaux-différents" class="nav-link" data-scroll-target="#un-routeur-relie-des-réseaux-différents">Un routeur relie des réseaux différents</a></li>
+  </ul></li>
+  <li><a href="#sous-réseaux-et-masques" id="toc-sous-réseaux-et-masques" class="nav-link" data-scroll-target="#sous-réseaux-et-masques">4. Sous-réseaux et masques</a>
+  <ul class="collapse">
+  <li><a href="#le-principe" id="toc-le-principe" class="nav-link" data-scroll-target="#le-principe">Le principe</a></li>
+  <li><a href="#le-masque" id="toc-le-masque" class="nav-link" data-scroll-target="#le-masque">Le masque</a></li>
+  <li><a href="#exemple-1-changer-le-masque-dune-même-adresse" id="toc-exemple-1-changer-le-masque-dune-même-adresse" class="nav-link" data-scroll-target="#exemple-1-changer-le-masque-dune-même-adresse">Exemple 1 : changer le masque d’une même adresse</a></li>
+  <li><a href="#exemple-2-créer-8-sous-réseaux" id="toc-exemple-2-créer-8-sous-réseaux" class="nav-link" data-scroll-target="#exemple-2-créer-8-sous-réseaux">Exemple 2 : créer 8 sous-réseaux</a></li>
+  <li><a href="#exemple-3-au-moins-12-stations-par-sous-réseau" id="toc-exemple-3-au-moins-12-stations-par-sous-réseau" class="nav-link" data-scroll-target="#exemple-3-au-moins-12-stations-par-sous-réseau">Exemple 3 : au moins 12 stations par sous-réseau</a></li>
+  </ul></li>
+  <li><a href="#len-tête-ipv4" id="toc-len-tête-ipv4" class="nav-link" data-scroll-target="#len-tête-ipv4">5. L’en-tête IPv4</a>
+  <ul class="collapse">
+  <li><a href="#pourquoi-la-durée-de-vie-ttl" id="toc-pourquoi-la-durée-de-vie-ttl" class="nav-link" data-scroll-target="#pourquoi-la-durée-de-vie-ttl">Pourquoi la durée de vie (TTL) ?</a></li>
+  <li><a href="#les-trois-champs-de-fragmentation" id="toc-les-trois-champs-de-fragmentation" class="nav-link" data-scroll-target="#les-trois-champs-de-fragmentation">Les trois champs de fragmentation</a></li>
+  </ul></li>
+  <li><a href="#la-fragmentation" id="toc-la-fragmentation" class="nav-link" data-scroll-target="#la-fragmentation">6. La fragmentation</a>
+  <ul class="collapse">
+  <li><a href="#mtu-et-mtu-du-chemin" id="toc-mtu-et-mtu-du-chemin" class="nav-link" data-scroll-target="#mtu-et-mtu-du-chemin">MTU et MTU du chemin</a></li>
+  <li><a href="#exemple-résolu" id="toc-exemple-résolu" class="nav-link" data-scroll-target="#exemple-résolu">Exemple résolu</a></li>
+  </ul></li>
+  <li><a href="#cidr-ladressage-sans-classes" id="toc-cidr-ladressage-sans-classes" class="nav-link" data-scroll-target="#cidr-ladressage-sans-classes">7. CIDR : l’adressage sans classes</a>
+  <ul class="collapse">
+  <li><a href="#le-problème-des-classes" id="toc-le-problème-des-classes" class="nav-link" data-scroll-target="#le-problème-des-classes">Le problème des classes</a></li>
+  <li><a href="#le-principe-de-cidr" id="toc-le-principe-de-cidr" class="nav-link" data-scroll-target="#le-principe-de-cidr">Le principe de CIDR</a></li>
+  <li><a href="#une-attribution-hiérarchique" id="toc-une-attribution-hiérarchique" class="nav-link" data-scroll-target="#une-attribution-hiérarchique">Une attribution hiérarchique</a></li>
+  </ul></li>
+  <li><a href="#vlsm-des-masques-de-longueur-variable" id="toc-vlsm-des-masques-de-longueur-variable" class="nav-link" data-scroll-target="#vlsm-des-masques-de-longueur-variable">8. VLSM : des masques de longueur variable</a>
+  <ul class="collapse">
+  <li><a href="#le-problème-du-masque-fixe" id="toc-le-problème-du-masque-fixe" class="nav-link" data-scroll-target="#le-problème-du-masque-fixe">Le problème du masque fixe</a></li>
+  <li><a href="#comparaison-masque-fixe-24-ou-masque-variable" id="toc-comparaison-masque-fixe-24-ou-masque-variable" class="nav-link" data-scroll-target="#comparaison-masque-fixe-24-ou-masque-variable">Comparaison : masque fixe <code>/24</code> ou masque variable</a></li>
+  <li><a href="#exemple-de-découpage-vlsm" id="toc-exemple-de-découpage-vlsm" class="nav-link" data-scroll-target="#exemple-de-découpage-vlsm">Exemple de découpage VLSM</a></li>
+  </ul></li>
+  <li><a href="#ipv6" id="toc-ipv6" class="nav-link" data-scroll-target="#ipv6">9. IPv6</a>
+  <ul class="collapse">
+  <li><a href="#pourquoi-une-nouvelle-version" id="toc-pourquoi-une-nouvelle-version" class="nav-link" data-scroll-target="#pourquoi-une-nouvelle-version">Pourquoi une nouvelle version ?</a></li>
+  <li><a href="#len-tête-ipv6" id="toc-len-tête-ipv6" class="nav-link" data-scroll-target="#len-tête-ipv6">L’en-tête IPv6</a></li>
+  <li><a href="#écrire-une-adresse-ipv6" id="toc-écrire-une-adresse-ipv6" class="nav-link" data-scroll-target="#écrire-une-adresse-ipv6">Écrire une adresse IPv6</a></li>
+  <li><a href="#une-adresse-ipv4-dans-une-adresse-ipv6" id="toc-une-adresse-ipv4-dans-une-adresse-ipv6" class="nav-link" data-scroll-target="#une-adresse-ipv4-dans-une-adresse-ipv6">Une adresse IPv4 dans une adresse IPv6</a></li>
+  </ul></li>
+  <li><a href="#exercices-de-révision" id="toc-exercices-de-révision" class="nav-link" data-scroll-target="#exercices-de-révision">Exercices de révision</a></li>
   </ul>
 </nav>
     </div>
@@ -147,7 +193,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Révision du chapitre 9 : IP</h1>
+<h1 class="title">Révision du chapitre 9 : le protocole IP</h1>
   <div class="quarto-categories">
     <div class="quarto-category">révision</div>
     <div class="quarto-category">ip</div>
@@ -156,7 +202,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div>
   <div class="description">
-    Vidéo de révision du chapitre 9 sur le protocole IP.
+    Adressage IPv4 par classes, adresses spéciales et privées, sous-réseaux et masques, en-tête IP, fragmentation, CIDR, VLSM et introduction à IPv6.
   </div>
 </div>
 
@@ -184,10 +230,10 @@ document.addEventListener("DOMContentLoaded", function () {
   var meta = document.querySelector(".quarto-title-meta");
   if (meta) {
     var div = document.createElement("div");
-    div.innerHTML = '<div class="quarto-title-meta-heading">Reading Time</div><div class="quarto-title-meta-contents"><p>~1 min read <span class="rt-info" style="cursor:help;opacity:0.6;font-size:0.85em;position:relative;">ⓘ<span class="rt-tooltip">Estimated based on 150 words/min reading speed, code complexity, math blocks, and interactive tools. Adjusted by difficulty level.</span></span></p></div>';
+    div.innerHTML = '<div class="quarto-title-meta-heading">Reading Time</div><div class="quarto-title-meta-contents"><p>~30 min read <span class="rt-info" style="cursor:help;opacity:0.6;font-size:0.85em;position:relative;">ⓘ<span class="rt-tooltip">Estimated based on 150 words/min reading speed, code complexity, math blocks, and interactive tools. Adjusted by difficulty level.</span></span></p></div>';
     meta.appendChild(div);
     var diffDiv = document.createElement("div");
-    diffDiv.innerHTML = '<div class="quarto-title-meta-heading">Difficulty</div><div class="quarto-title-meta-contents"><p><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#333;margin-right:3px;vertical-align:middle;"></span><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#333;margin-right:3px;vertical-align:middle;"></span><span style="display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid #333;margin-right:3px;vertical-align:middle;"></span><span style="display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid #333;margin-right:3px;vertical-align:middle;"></span><span style="display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid #333;margin-right:3px;vertical-align:middle;"></span></p></div>';
+    diffDiv.innerHTML = '<div class="quarto-title-meta-heading">Difficulty</div><div class="quarto-title-meta-contents"><p><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#333;margin-right:3px;vertical-align:middle;"></span><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#333;margin-right:3px;vertical-align:middle;"></span><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#333;margin-right:3px;vertical-align:middle;"></span><span style="display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid #333;margin-right:3px;vertical-align:middle;"></span><span style="display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid #333;margin-right:3px;vertical-align:middle;"></span></p></div>';
     meta.appendChild(diffDiv);
   }
 });
@@ -196,6 +242,993 @@ document.addEventListener("DOMContentLoaded", function () {
 <section id="vidéo-de-révision" class="level2">
 <h2 class="anchored" data-anchor-id="vidéo-de-révision">Vidéo de révision</h2>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/xMowffb3r-w" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>Cette capsule révise le protocole IP (<em>Internet Protocol</em>). Les notes ci-dessous suivent l’ordre de la vidéo et refont chaque exemple pas à pas.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Conseil pour toute la matière
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Écrivez <strong>toujours</strong> vos adresses et vos masques <strong>en binaire</strong>. C’est la seule façon de voir exactement quels bits appartiennent au réseau, au sous-réseau et à l’hôte.</p>
+</div>
+</div>
+</section>
+<section id="ip-et-la-couche-réseau" class="level2">
+<h2 class="anchored" data-anchor-id="ip-et-la-couche-réseau">1. IP et la couche réseau</h2>
+<p>IP est le protocole de la <strong>couche 3</strong> du modèle OSI, la couche réseau. Il se situe au-dessus de la couche liaison (par exemple Ethernet 802.3 ou Wi-Fi 802.11). Un paquet IP s’appelle un <strong>datagramme</strong>. Il est <strong>encapsulé</strong> dans une trame de couche 2 pour traverser chaque lien.</p>
+<p>IP est spécifié dans la <strong>RFC 791</strong>. Ses fonctions principales sont :</p>
+<ul>
+<li><strong>transporter les datagrammes</strong> de la source à la destination ;</li>
+<li><strong>router</strong> : chaque routeur choisit le prochain saut d’après l’adresse de destination ;</li>
+<li><strong>fragmenter</strong> : si un réseau traversé accepte des paquets plus petits que le datagramme, celui-ci est découpé en morceaux (section 5).</li>
+</ul>
+<p>IP fonctionne <strong>sans connexion</strong> et sans garantie. Quand un routeur détecte une erreur dans un datagramme, il le <strong>détruit</strong> et envoie un message <strong>ICMP</strong> à la source pour l’en avertir.</p>
+</section>
+<section id="ladresse-ipv4" class="level2">
+<h2 class="anchored" data-anchor-id="ladresse-ipv4">2. L’adresse IPv4</h2>
+<p>Une adresse IPv4 compte <strong>32 bits</strong>, soit <strong>4 octets</strong>. On l’écrit en <strong>notation décimale pointée</strong> : chaque octet est converti en décimal, et les octets sont séparés par des points.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exemple
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>128.83.12.14</code> correspond en binaire à :</p>
+<p><code>10000000 01010011 00001100 00001110</code></p>
+<p>Lus d’un seul bloc, ces 32 bits valent 2 152 926 222. La notation pointée est évidemment plus pratique.</p>
+</div>
+</div>
+<p>L’adresse IP :</p>
+<ul>
+<li>doit être <strong>unique au monde</strong> (sauf les adresses privées, section 3) ;</li>
+<li>est <strong>configurée par logiciel</strong> ;</li>
+<li>est associée à <strong>une interface</strong>, et non à une machine. Un routeur a donc une adresse par interface.</li>
+</ul>
+</section>
+<section id="ladressage-par-classes" class="level2">
+<h2 class="anchored" data-anchor-id="ladressage-par-classes">3. L’adressage par classes</h2>
+<p>L’adressage d’origine reposait sur des <strong>classes</strong>. Il n’est plus utilisé tel quel, mais il faut le comprendre pour suivre l’évolution vers CIDR.</p>
+<p>Une adresse se divise en deux parties :</p>
+<ul>
+<li>la partie <strong>réseau</strong> (<em>net-id</em>), qui identifie le réseau ;</li>
+<li>la partie <strong>hôte</strong> (<em>host-id</em>), qui identifie l’interface dans ce réseau.</li>
+</ul>
+<p>La classe se reconnaît aux <strong>premiers bits du premier octet</strong>. Elle détermine où se trouve la frontière entre réseau et hôte.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Classe</th>
+<th>Premiers bits</th>
+<th>1<sup>er</sup> octet</th>
+<th>Bits réseau</th>
+<th>Bits hôte</th>
+<th>Nombre de réseaux</th>
+<th>Hôtes par réseau</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>A</strong></td>
+<td><code>0</code></td>
+<td>0 à 127</td>
+<td>7</td>
+<td>24</td>
+<td>2<sup>7</sup> = 128 (126 utilisables)</td>
+<td>2<sup>24</sup> − 2 = 16 777 214</td>
+<td>Très grands réseaux</td>
+</tr>
+<tr class="even">
+<td><strong>B</strong></td>
+<td><code>10</code></td>
+<td>128 à 191</td>
+<td>14</td>
+<td>16</td>
+<td>2<sup>14</sup> = 16 384</td>
+<td>2<sup>16</sup> − 2 = 65 534</td>
+<td>Réseaux moyens</td>
+</tr>
+<tr class="odd">
+<td><strong>C</strong></td>
+<td><code>110</code></td>
+<td>192 à 223</td>
+<td>21</td>
+<td>8</td>
+<td>2<sup>21</sup> = 2 097 152</td>
+<td>2<sup>8</sup> − 2 = 254</td>
+<td>Petits réseaux</td>
+</tr>
+<tr class="even">
+<td><strong>D</strong></td>
+<td><code>1110</code></td>
+<td>224 à 239</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Multicast</td>
+</tr>
+<tr class="odd">
+<td><strong>E</strong></td>
+<td><code>1111</code></td>
+<td>240 à 255</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Réservée (expérimentale)</td>
+</tr>
+</tbody>
+</table>
+<p>Comment lire ce tableau, avec la classe B comme exemple : les deux premiers bits (<code>10</code>) servent à identifier la classe. Il reste 6 bits dans le premier octet et 8 bits dans le deuxième, soit <strong>14 bits</strong> pour le réseau. Les deux derniers octets (<strong>16 bits</strong>) servent aux hôtes.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Pourquoi « − 2 » hôtes ?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dans chaque réseau, deux valeurs de la partie hôte sont réservées :</p>
+<ul>
+<li><strong>tous les bits à 0</strong> désignent le réseau lui-même (l’adresse réseau) ;</li>
+<li><strong>tous les bits à 1</strong> désignent la <strong>diffusion</strong> (<em>broadcast</em>) vers tous les hôtes du réseau.</li>
+</ul>
+<p>Avec <em>h</em> bits d’hôte, on a donc <strong>2<sup>h</sup> − 2</strong> adresses attribuables. Par exemple, en classe C : 2<sup>8</sup> − 2 = 254.</p>
+</div>
+</div>
+<section id="adresses-spéciales" class="level3">
+<h3 class="anchored" data-anchor-id="adresses-spéciales">Adresses spéciales</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Adresse</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>127.0.0.1</code></td>
+<td><strong>Bouclage</strong> (<em>loopback</em>) : la machine s’adresse à elle-même</td>
+</tr>
+<tr class="even">
+<td>Partie hôte à 0</td>
+<td>Le réseau lui-même, par exemple <code>128.81.0.0</code></td>
+</tr>
+<tr class="odd">
+<td>Partie hôte à 1</td>
+<td>Diffusion à tous les hôtes du réseau, par exemple <code>128.81.255.255</code></td>
+</tr>
+<tr class="even">
+<td><code>0.0.0.0</code></td>
+<td>Machine qui ne connaît pas encore son adresse (historiquement, les stations sans disque au démarrage)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="adresses-privées" class="level3">
+<h3 class="anchored" data-anchor-id="adresses-privées">Adresses privées</h3>
+<p>Trois plages sont réservées à l’usage <strong>privé</strong> :</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Plage</th>
+<th>Notation CIDR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>10.0.0.0 à 10.255.255.255</td>
+<td><code>10.0.0.0/8</code></td>
+</tr>
+<tr class="even">
+<td>172.16.0.0 à 172.31.255.255</td>
+<td><code>172.16.0.0/12</code></td>
+</tr>
+<tr class="odd">
+<td>192.168.0.0 à 192.168.255.255</td>
+<td><code>192.168.0.0/16</code></td>
+</tr>
+</tbody>
+</table>
+<p>Un routeur ne fait <strong>jamais sortir sur Internet</strong> un paquet destiné à une adresse privée : ces adresses ne sont reconnues qu’à l’intérieur du réseau local. Gros avantage : des milliers d’organisations peuvent réutiliser les mêmes adresses privées sans conflit, et on n’a pas besoin de les annoncer sur Internet.</p>
+<p>Pour qu’une machine en adresse privée accède quand même à Internet, on utilise la <strong>NAT</strong> (<em>Network Address Translation</em>), vue au prochain cours.</p>
+</section>
+<section id="un-routeur-relie-des-réseaux-différents" class="level3">
+<h3 class="anchored" data-anchor-id="un-routeur-relie-des-réseaux-différents">Un routeur relie des réseaux différents</h3>
+<p>Chaque interface d’un routeur appartient à un <strong>réseau différent</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exemple
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un routeur relie le réseau de classe B <code>128.81.0.0</code> et le réseau de classe C <code>192.1.2.0</code>.</p>
+<ul>
+<li>Toutes les machines du côté <code>128.81.0.0</code> ont la <strong>même partie réseau</strong>, <code>128.81</code>, et chacune a une <strong>partie hôte unique</strong>, par exemple <code>128.81.0.5</code> ou <code>128.81.3.20</code>.</li>
+<li>Du côté <code>192.1.2.0</code>, toutes partagent <code>192.1.2</code>, et seul le dernier octet change : <code>192.1.2.1</code>, <code>192.1.2.7</code>, etc.</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="sous-réseaux-et-masques" class="level2">
+<h2 class="anchored" data-anchor-id="sous-réseaux-et-masques">4. Sous-réseaux et masques</h2>
+<section id="le-principe" class="level3">
+<h3 class="anchored" data-anchor-id="le-principe">Le principe</h3>
+<p>On peut découper un réseau en entités plus petites, les <strong>sous-réseaux</strong> (<em>subnets</em>), en <strong>empruntant des bits à la partie hôte</strong>. On obtient ainsi trois parties : réseau, sous-réseau et hôte. Cela permet de mieux structurer un réseau, par exemple un sous-réseau par étage ou par service.</p>
+<ul>
+<li>Tous les équipements d’un sous-réseau doivent utiliser le même masque.</li>
+<li>Les sous-réseaux sont interconnectés <strong>uniquement par des routeurs</strong>.</li>
+</ul>
+</section>
+<section id="le-masque" class="level3">
+<h3 class="anchored" data-anchor-id="le-masque">Le masque</h3>
+<p>Le <strong>masque</strong> est une valeur de 32 bits associée à l’adresse :</p>
+<ul>
+<li>les bits à <strong>1</strong> marquent la partie <strong>réseau</strong>, sous-réseau compris ;</li>
+<li>les bits à <strong>0</strong> marquent la partie <strong>hôte</strong>.</li>
+</ul>
+<p>On obtient l’adresse du réseau en faisant un <strong>ET logique</strong> bit à bit entre l’adresse et le masque.</p>
+<p>Par exemple, avec <code>180.27.0.0</code> et le masque <code>255.255.0.0</code>, les deux premiers octets (<code>180.27</code>) forment la partie réseau et les deux derniers la partie hôte. C’est le masque par défaut d’une classe B. Avec un masque plus long, le même réseau est découpé en sous-réseaux.</p>
+</section>
+<section id="exemple-1-changer-le-masque-dune-même-adresse" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-1-changer-le-masque-dune-même-adresse">Exemple 1 : changer le masque d’une même adresse</h3>
+<p>Prenons l’adresse <code>150.214.209.2</code>.</p>
+<p><strong>Avec le masque <code>255.255.255.0</code></strong> : les trois premiers octets sont la partie réseau.</p>
+<pre><code>Adresse : 10010110 . 11010110 . 11010001 . 00000010   (150.214.209.2)
+Masque  : 11111111 . 11111111 . 11111111 . 00000000   (255.255.255.0)
+Réseau  : 10010110 . 11010110 . 11010001 . 00000000   (150.214.209.0)</code></pre>
+<p>Il reste 8 bits d’hôte : 2<sup>8</sup> − 2 = <strong>254 hôtes</strong>.</p>
+<p><strong>Avec le masque <code>255.255.248.0</code></strong> : 248 = <code>11111000</code>, donc seuls les 5 premiers bits du troisième octet sont ajoutés à la partie réseau.</p>
+<pre><code>Adresse : 10010110 . 11010110 . 11010 001 . 00000010   (150.214.209.2)
+Masque  : 11111111 . 11111111 . 11111 000 . 00000000   (255.255.248.0)
+Réseau  : 10010110 . 11010110 . 11010 000 . 00000000   (150.214.208.0)</code></pre>
+<ul>
+<li>Adresse du réseau : <code>150.214.208.0</code> (<code>11010000</code> = 208).</li>
+<li>Bits d’hôte : 3 + 8 = <strong>11</strong>, soit 2<sup>11</sup> − 2 = <strong>2 046 hôtes</strong>.</li>
+<li>Adresse de diffusion : <code>150.214.215.255</code>.</li>
+<li>Notre machine <code>150.214.209.2</code> est un hôte de ce réseau.</li>
+</ul>
+</section>
+<section id="exemple-2-créer-8-sous-réseaux" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-2-créer-8-sous-réseaux">Exemple 2 : créer 8 sous-réseaux</h3>
+<p>On a le réseau <code>192.168.1.0</code> avec le masque <code>255.255.255.0</code>, et on veut <strong>8 sous-réseaux</strong>.</p>
+<ol type="1">
+<li><strong>Combien de bits emprunter ?</strong> Avec 3 bits, on a 2<sup>3</sup> = 8 valeurs (de 0 à 7), donc 8 sous-réseaux. On emprunte <strong>3 bits</strong> à la partie hôte.</li>
+<li><strong>Nouveau masque</strong> : <code>11111111.11111111.11111111.111 00000</code>, soit <strong><code>255.255.255.224</code></strong> (128 + 64 + 32 = 224).</li>
+<li><strong>Bits d’hôte restants</strong> : 5, soit 2<sup>5</sup> − 2 = <strong>30 hôtes par sous-réseau</strong>.</li>
+</ol>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Sous-réseau</th>
+<th>Bits empruntés</th>
+<th>Adresse du sous-réseau</th>
+<th>Hôtes</th>
+<th>Diffusion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td><code>000</code></td>
+<td>192.168.1.0</td>
+<td>.1 à .30</td>
+<td>.31</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td><code>001</code></td>
+<td>192.168.1.32</td>
+<td>.33 à .62</td>
+<td>.63</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td><code>010</code></td>
+<td>192.168.1.64</td>
+<td>.65 à .94</td>
+<td>.95</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td><code>011</code></td>
+<td>192.168.1.96</td>
+<td>.97 à .126</td>
+<td>.127</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td><code>100</code></td>
+<td>192.168.1.128</td>
+<td>.129 à .158</td>
+<td>.159</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td><code>101</code></td>
+<td>192.168.1.160</td>
+<td>.161 à .190</td>
+<td>.191</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td><code>110</code></td>
+<td>192.168.1.192</td>
+<td>.193 à .222</td>
+<td>.223</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td><code>111</code></td>
+<td>192.168.1.224</td>
+<td>.225 à .254</td>
+<td>.255</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="exemple-3-au-moins-12-stations-par-sous-réseau" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-3-au-moins-12-stations-par-sous-réseau">Exemple 3 : au moins 12 stations par sous-réseau</h3>
+<p>Le problème est inversé : on ne fixe pas le nombre de sous-réseaux, mais le <strong>nombre de stations</strong> dans chacun, soit au moins 12.</p>
+<ol type="1">
+<li>Il faut <em>h</em> bits d’hôte tels que 2<sup>h</sup> − 2 ≥ 12.
+<ul>
+<li><em>h</em> = 3 donne 8 − 2 = 6 : insuffisant.</li>
+<li><em>h</em> = 4 donne 16 − 2 = <strong>14</strong> : suffisant.</li>
+</ul></li>
+<li>On garde donc <strong>4 bits d’hôte</strong>. Sur les 8 bits du dernier octet, il en reste 4 pour le sous-réseau, soit 2<sup>4</sup> = <strong>16 sous-réseaux</strong>.</li>
+<li>Masque : <code>255.255.255.240</code> (<code>11110000</code>).</li>
+</ol>
+<p>En répondant à la contrainte sur les stations, on a obtenu indirectement 16 sous-réseaux de 14 hôtes chacun.</p>
+</section>
+</section>
+<section id="len-tête-ipv4" class="level2">
+<h2 class="anchored" data-anchor-id="len-tête-ipv4">5. L’en-tête IPv4</h2>
+<p>L’en-tête compte <strong>au minimum 20 octets</strong>, plus un champ <strong>Options</strong> facultatif. Viennent ensuite les <strong>données</strong>, c’est-à-dire ce que la couche transport a remis à IP (un segment TCP, par exemple).</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Champ</th>
+<th>Taille</th>
+<th>Rôle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Version</strong></td>
+<td>4 bits</td>
+<td>Version d’IP : 4 pour IPv4</td>
+</tr>
+<tr class="even">
+<td><strong>Longueur de l’en-tête</strong> (IHL)</td>
+<td>4 bits</td>
+<td>En mots de 32 bits : 5 correspond à 20 octets</td>
+</tr>
+<tr class="odd">
+<td><strong>Type de service</strong> (ToS)</td>
+<td>8 bits</td>
+<td>Qualité de service, aujourd’hui le champ DSCP (voir la page <a href="../mgr820/qos.html">QoS</a>)</td>
+</tr>
+<tr class="even">
+<td><strong>Longueur totale</strong></td>
+<td>16 bits</td>
+<td>Taille du datagramme, en-tête compris (au plus 65 535 octets)</td>
+</tr>
+<tr class="odd">
+<td><strong>Identification</strong></td>
+<td>16 bits</td>
+<td>Numéro commun à tous les fragments d’un même datagramme</td>
+</tr>
+<tr class="even">
+<td><strong>Drapeaux</strong> (<em>flags</em>)</td>
+<td>3 bits</td>
+<td>Contrôle de la fragmentation</td>
+</tr>
+<tr class="odd">
+<td><strong>Déplacement du fragment</strong> (<em>fragment offset</em>)</td>
+<td>13 bits</td>
+<td>Position du fragment dans le datagramme d’origine, en unités de 8 octets</td>
+</tr>
+<tr class="even">
+<td><strong>Durée de vie</strong> (TTL)</td>
+<td>8 bits</td>
+<td>Décrémentée par chaque routeur. À 0, le datagramme est détruit</td>
+</tr>
+<tr class="odd">
+<td><strong>Protocole</strong></td>
+<td>8 bits</td>
+<td>Protocole transporté dans les données : 6 = TCP, 17 = UDP, 1 = ICMP</td>
+</tr>
+<tr class="even">
+<td><strong>Somme de contrôle de l’en-tête</strong></td>
+<td>16 bits</td>
+<td>Détecte les erreurs dans l’en-tête</td>
+</tr>
+<tr class="odd">
+<td><strong>Adresse source</strong></td>
+<td>32 bits</td>
+<td>Adresse IP de l’émetteur</td>
+</tr>
+<tr class="even">
+<td><strong>Adresse destination</strong></td>
+<td>32 bits</td>
+<td>Adresse IP du destinataire</td>
+</tr>
+<tr class="odd">
+<td><strong>Options</strong></td>
+<td>Variable</td>
+<td>Sécurité, enregistrement de route, etc.</td>
+</tr>
+</tbody>
+</table>
+<section id="pourquoi-la-durée-de-vie-ttl" class="level3">
+<h3 class="anchored" data-anchor-id="pourquoi-la-durée-de-vie-ttl">Pourquoi la durée de vie (TTL) ?</h3>
+<p>Si une adresse est erronée ou si les tables de routage forment une boucle, un datagramme pourrait circuler <strong>indéfiniment</strong> et les paquets s’accumuleraient dans le réseau. Chaque routeur diminue donc le TTL de 1, et le routeur qui le voit arriver à <strong>0 détruit le datagramme</strong>. Les valeurs initiales courantes sont 64 ou 32.</p>
+</section>
+<section id="les-trois-champs-de-fragmentation" class="level3">
+<h3 class="anchored" data-anchor-id="les-trois-champs-de-fragmentation">Les trois champs de fragmentation</h3>
+<p><strong>Identification</strong> : tous les fragments d’un même datagramme portent le <strong>même numéro</strong>, choisi par l’émetteur. C’est grâce à lui que la destination sait quels fragments vont ensemble.</p>
+<p><strong>Drapeaux</strong> : on les lit dans l’ordre réservé, DF (<em>Don’t Fragment</em>), MF (<em>More Fragments</em>).</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Drapeaux</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>001</code></td>
+<td>MF = 1 : d’<strong>autres fragments suivent</strong></td>
+</tr>
+<tr class="even">
+<td><code>000</code></td>
+<td>MF = 0 : c’est le <strong>dernier fragment</strong></td>
+</tr>
+<tr class="odd">
+<td><code>010</code></td>
+<td>DF = 1 : <strong>ne pas fragmenter</strong>, le datagramme est entier</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Déplacement du fragment</strong> : la position du morceau dans le datagramme d’origine, comme la place d’une pièce dans un <strong>casse-tête</strong>. IP fonctionnant sans connexion, les fragments peuvent arriver <strong>dans le désordre</strong>. Grâce au déplacement, la destination place chaque morceau au bon endroit, même si le troisième arrive avant le premier.</p>
+</section>
+</section>
+<section id="la-fragmentation" class="level2">
+<h2 class="anchored" data-anchor-id="la-fragmentation">6. La fragmentation</h2>
+<section id="mtu-et-mtu-du-chemin" class="level3">
+<h3 class="anchored" data-anchor-id="mtu-et-mtu-du-chemin">MTU et MTU du chemin</h3>
+<p>Chaque réseau a une taille maximale de paquet, la <strong>MTU</strong> (<em>Maximum Transmission Unit</em>). Par exemple, 1 500 octets pour Ethernet. Quand un datagramme traverse plusieurs réseaux, la contrainte est la <strong>plus petite MTU de tout le chemin</strong>.</p>
+<p>Par exemple, sur un chemin dont les réseaux ont des MTU de 1 024, 512 et 2 000 octets, la MTU du chemin est <strong>512 octets</strong>.</p>
+<p>Quand un datagramme est trop grand, il est découpé en fragments. Chacun est un datagramme complet, avec son propre en-tête. Les fragments sont <strong>réassemblés à la destination finale</strong>, qui remet ensuite les données d’origine à la couche transport.</p>
+</section>
+<section id="exemple-résolu" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-résolu">Exemple résolu</h3>
+<p>La couche transport remet à IP <strong>2 000 octets de données</strong>. Le réseau a une MTU de <strong>512 octets</strong>, et l’en-tête IP fait <strong>20 octets</strong> (sans options). Quelles valeurs prennent l’identification, la longueur totale, le déplacement et le drapeau MF de chaque fragment ?</p>
+<p><strong>Étape 1 : données par fragment.</strong> La MTU inclut l’en-tête, donc il reste 512 − 20 = 492 octets de données. Mais les données d’un fragment (sauf le dernier) doivent être un <strong>multiple de 8 octets</strong>, puisque le déplacement se compte en unités de 8. Le plus grand multiple de 8 inférieur ou égal à 492 est <strong>488</strong> (61 × 8).</p>
+<p><strong>Étape 2 : nombre de fragments.</strong> 2 000 = 4 × 488 + 48. On obtient donc <strong>5 fragments</strong> : quatre de 488 octets et un dernier de 48 octets.</p>
+<p><strong>Étape 3 : valeurs des champs.</strong> On prend un numéro d’identification quelconque, par exemple 10, identique pour les cinq fragments.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Fragment</th>
+<th>Identification</th>
+<th>Données</th>
+<th>Longueur totale</th>
+<th>Déplacement</th>
+<th>MF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>10</td>
+<td>488</td>
+<td>508</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>10</td>
+<td>488</td>
+<td>508</td>
+<td>61</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>10</td>
+<td>488</td>
+<td>508</td>
+<td>122</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>10</td>
+<td>488</td>
+<td>508</td>
+<td>183</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>10</td>
+<td>48</td>
+<td>68</td>
+<td>244</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Longueur totale</strong> = données + 20 octets d’en-tête.</li>
+<li><strong>Déplacement</strong> = position en octets ÷ 8. Le fragment 2 commence à l’octet 488, soit 488 ÷ 8 = 61. Le fragment 3 commence à 976, soit 122, et ainsi de suite.</li>
+<li><strong>MF</strong> vaut 1 partout sauf pour le <strong>dernier</strong> fragment.</li>
+</ul>
+<p>Vérification : 4 × 488 + 48 = 2 000 octets.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Dans une capture réelle
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dans une trace de paquet (avec Wireshark, par exemple), on retrouve tous ces champs : version 4, longueur d’en-tête de 20 octets, drapeaux, TTL, protocole 6 (TCP), etc. Essayez d’ouvrir une capture et de reconnaître chaque champ.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="cidr-ladressage-sans-classes" class="level2">
+<h2 class="anchored" data-anchor-id="cidr-ladressage-sans-classes">7. CIDR : l’adressage sans classes</h2>
+<section id="le-problème-des-classes" class="level3">
+<h3 class="anchored" data-anchor-id="le-problème-des-classes">Le problème des classes</h3>
+<p>Avec la croissance d’Internet, il a fallu attribuer des millions d’adresses, et les classes gaspillaient énormément. Une organisation qui avait besoin de 800 adresses ne pouvait pas se contenter d’une classe C (254 hôtes). Elle recevait donc une classe B de 65 534 hôtes, et gaspillait plus de 64 000 adresses.</p>
+</section>
+<section id="le-principe-de-cidr" class="level3">
+<h3 class="anchored" data-anchor-id="le-principe-de-cidr">Le principe de CIDR</h3>
+<p><strong>CIDR</strong> (<em>Classless Inter-Domain Routing</em>) <strong>oublie les classes</strong> : A, B et C ne veulent plus rien dire. Seul le <strong>masque</strong> définit la partie réseau.</p>
+<p>On écrit le masque de façon abrégée avec une <strong>barre oblique</strong> suivie du nombre de bits à 1 :</p>
+<ul>
+<li><code>/9</code> : les 9 premiers bits sont la partie réseau, les 23 autres la partie hôte ;</li>
+<li><code>/24</code> équivaut à <code>255.255.255.0</code> ;</li>
+<li><code>/22</code> équivaut à <code>255.255.252.0</code>.</li>
+</ul>
+<p>Nombre d’adresses dans un bloc <code>/n</code> : <strong>2<sup>32−n</sup></strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exemples
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong><code>206.0.64.0/18</code></strong> : 32 − 18 = 14 bits d’hôte, soit 2<sup>14</sup> = 16 384 adresses, l’équivalent de 64 réseaux <code>/24</code>.</li>
+<li><strong>Le client qui veut 800 adresses</strong> : on cherche la plus petite puissance de 2 qui contient 800, soit 1 024 = 2<sup>10</sup>. Il faut 10 bits d’hôte, donc un <strong><code>/22</code></strong>. On peut lui attribuer <code>206.0.68.0/22</code>, qui va de <code>206.0.68.0</code> à <code>206.0.71.255</code>. Le gaspillage tombe à 224 adresses au lieu de plus de 64 000.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="une-attribution-hiérarchique" class="level3">
+<h3 class="anchored" data-anchor-id="une-attribution-hiérarchique">Une attribution hiérarchique</h3>
+<p>CIDR permet de découper les blocs <strong>par niveaux</strong>. Les routeurs d’Internet n’ont besoin de connaître que le bloc le plus large. Chaque niveau inférieur gère son propre découpage.</p>
+<pre><code>64.14.0.0/16                 ← seul bloc annoncé sur Internet
+├── 64.14.0.0/18             ← niveau 1 : 2 bits de plus = 4 sous-réseaux
+│   ├── 64.14.0.0/20         ← niveau 2 : 2 bits de plus = 4 sous-réseaux par /18
+│   ├── 64.14.16.0/20
+│   ├── 64.14.32.0/20
+│   └── 64.14.48.0/20
+├── 64.14.64.0/18
+│   ├── 64.14.64.0/20
+│   ├── 64.14.80.0/20
+│   ├── 64.14.96.0/20        ← contient 64.14.103.56
+│   └── 64.14.112.0/20
+├── 64.14.128.0/18
+└── 64.14.192.0/18</code></pre>
+<p><strong>Pour joindre <code>64.14.103.56</code></strong>, Internet ne regarde que le bloc <code>64.14.0.0/16</code> dans sa table de routage et envoie le paquet au routeur responsable. Ce routeur sait que l’adresse appartient à <code>64.14.64.0/18</code> (103 est entre 64 et 127), puis au sous-réseau <code>64.14.96.0/20</code>. En binaire, 103 = <code>0110 0111</code>, et les 4 premiers bits <code>0110</code> donnent 96. Chaque niveau ne connaît que ce qui se trouve directement sous lui.</p>
+</section>
+</section>
+<section id="vlsm-des-masques-de-longueur-variable" class="level2">
+<h2 class="anchored" data-anchor-id="vlsm-des-masques-de-longueur-variable">8. VLSM : des masques de longueur variable</h2>
+<section id="le-problème-du-masque-fixe" class="level3">
+<h3 class="anchored" data-anchor-id="le-problème-du-masque-fixe">Le problème du masque fixe</h3>
+<p>Si tous les sous-réseaux d’un même niveau ont le <strong>même masque</strong>, on perd des adresses : certains sous-réseaux ont besoin de 200 hôtes, d’autres de seulement 2. Le <strong>VLSM</strong> (<em>Variable Length Subnet Mask</em>) permet de donner à chaque sous-réseau <strong>son propre masque</strong>, adapté à ses besoins.</p>
+</section>
+<section id="comparaison-masque-fixe-24-ou-masque-variable" class="level3">
+<h3 class="anchored" data-anchor-id="comparaison-masque-fixe-24-ou-masque-variable">Comparaison : masque fixe <code>/24</code> ou masque variable</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Hôtes requis</th>
+<th>Masque fixe <code>/24</code> (254 hôtes) : adresses perdues</th>
+<th>Masque VLSM le plus proche</th>
+<th>Hôtes disponibles</th>
+<th>Adresses perdues</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>150</td>
+<td>104</td>
+<td><code>/24</code></td>
+<td>254</td>
+<td>104</td>
+</tr>
+<tr class="even">
+<td>90</td>
+<td>164</td>
+<td><code>/25</code></td>
+<td>126</td>
+<td>36</td>
+</tr>
+<tr class="odd">
+<td>24</td>
+<td>230</td>
+<td><code>/27</code></td>
+<td>30</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>252</td>
+<td><code>/30</code></td>
+<td>2</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Pour 150 hôtes, on ne peut pas faire mieux qu’un <code>/24</code>, même avec VLSM. Mais pour 24 hôtes, le <code>/27</code> ne perd que 6 adresses au lieu de 230.</p>
+</section>
+<section id="exemple-de-découpage-vlsm" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-de-découpage-vlsm">Exemple de découpage VLSM</h3>
+<p>Une organisation reçoit <code>140.10.0.0/16</code>. Internet ne voit que ce bloc. À l’interne, le routeur découpe :</p>
+<ul>
+<li><strong>Niveau 1 : <code>/20</code>.</strong> On emprunte 4 bits, ce qui donne 2<sup>4</sup> = 16 sous-réseaux : <code>140.10.0.0/20</code>, <code>140.10.16.0/20</code>, <code>140.10.32.0/20</code>, etc.</li>
+<li><strong>Niveau 2 : chaque <code>/20</code> choisit son propre masque.</strong>
+<ul>
+<li>Le sous-réseau <code>140.10.0.0/20</code> se découpe en <strong><code>/24</code></strong> : 4 bits de plus, donc 16 sous-réseaux de 254 hôtes.</li>
+<li>Le sous-réseau <code>140.10.16.0/20</code> a besoin de beaucoup plus de sous-réseaux, plus petits. Il se découpe en <strong><code>/26</code></strong> : 6 bits de plus, donc 2<sup>6</sup> = 64 sous-réseaux de 62 hôtes.</li>
+</ul></li>
+<li><strong>Niveau 3 :</strong> l’un des <code>/24</code> peut à son tour se découper en <strong><code>/27</code></strong> : 3 bits de plus, donc 8 sous-réseaux de 30 hôtes.</li>
+</ul>
+<p>Chaque branche est découpée selon ses besoins réels, et non selon une règle unique.</p>
+</section>
+</section>
+<section id="ipv6" class="level2">
+<h2 class="anchored" data-anchor-id="ipv6">9. IPv6</h2>
+<section id="pourquoi-une-nouvelle-version" class="level3">
+<h3 class="anchored" data-anchor-id="pourquoi-une-nouvelle-version">Pourquoi une nouvelle version ?</h3>
+<p>L’espace IPv4 (2<sup>32</sup>, environ 4,3 milliards d’adresses) est <strong>épuisé</strong>. L’Internet des objets (IoT) exige à lui seul des milliards d’adresses supplémentaires. <strong>IPv6</strong> utilise des adresses de <strong>128 bits</strong>, soit 2<sup>128</sup> adresses.</p>
+<p>Son en-tête est <strong>plus simple</strong> que celui d’IPv4 et de taille fixe. Les fonctions facultatives passent dans des <strong>en-têtes d’extension</strong>.</p>
+</section>
+<section id="len-tête-ipv6" class="level3">
+<h3 class="anchored" data-anchor-id="len-tête-ipv6">L’en-tête IPv6</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Champ</th>
+<th>Rôle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Version</strong></td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td><strong>Classe de trafic</strong> (<em>Traffic Class</em>)</td>
+<td>Qualité de service, comme le ToS d’IPv4</td>
+</tr>
+<tr class="odd">
+<td><strong>Étiquette de flux</strong> (<em>Flow Label</em>)</td>
+<td>Identifie un flux de paquets qui doit recevoir le même traitement</td>
+</tr>
+<tr class="even">
+<td><strong>Longueur des données</strong> (<em>Payload Length</em>)</td>
+<td>Taille de ce qui suit l’en-tête</td>
+</tr>
+<tr class="odd">
+<td><strong>En-tête suivant</strong> (<em>Next Header</em>)</td>
+<td>Ce qui suit : un en-tête d’extension ou les données de la couche transport</td>
+</tr>
+<tr class="even">
+<td><strong>Nombre de sauts</strong> (<em>Hop Limit</em>)</td>
+<td>Équivalent du TTL d’IPv4</td>
+</tr>
+<tr class="odd">
+<td><strong>Adresses source et destination</strong></td>
+<td>128 bits chacune</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="écrire-une-adresse-ipv6" class="level3">
+<h3 class="anchored" data-anchor-id="écrire-une-adresse-ipv6">Écrire une adresse IPv6</h3>
+<p>Une adresse IPv6 s’écrit en <strong>hexadécimal</strong>, en 8 groupes de 16 bits séparés par <code>:</code>. Comme elle est difficile à mémoriser, on utilise des noms de domaine (DNS). Deux règles permettent de la raccourcir :</p>
+<ol type="1">
+<li>on supprime les <strong>zéros en tête</strong> de chaque groupe ;</li>
+<li>on remplace <strong>une seule</strong> suite de groupes nuls par <code>::</code>.</li>
+</ol>
+<pre><code>Complète   : 2001:0db8:0000:0000:0000:ff00:0042:8329
+Abrégée    : 2001:db8::ff00:42:8329</code></pre>
+<p>Le <code>::</code> ne peut apparaître <strong>qu’une seule fois</strong>. Sinon, on ne saurait pas combien de groupes nuls chaque <code>::</code> remplace.</p>
+</section>
+<section id="une-adresse-ipv4-dans-une-adresse-ipv6" class="level3">
+<h3 class="anchored" data-anchor-id="une-adresse-ipv4-dans-une-adresse-ipv6">Une adresse IPv4 dans une adresse IPv6</h3>
+<p>Une adresse IPv4 peut être placée dans une adresse IPv6 : les 96 premiers bits sont à 0 et les 32 derniers contiennent l’adresse IPv4, écrite en notation pointée. Par exemple, <code>::192.168.1.1</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pour aller plus loin
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cette forme dite « compatible » est aujourd’hui dépréciée. En pratique, on rencontre plutôt la forme « mappée » <code>::ffff:192.168.1.1</code>.</p>
+</div>
+</div>
+<p>La transition vers IPv6 prend du temps, et IPv4 et IPv6 <strong>cohabitent</strong> encore. Les mécanismes de cohabitation sont traités dans une autre partie du cours.</p>
+</section>
+</section>
+<section id="exercices-de-révision" class="level2">
+<h2 class="anchored" data-anchor-id="exercices-de-révision">Exercices de révision</h2>
+<p><strong>1. Quelle est la classe de l’adresse <code>172.20.5.9</code> ? Est-ce une adresse publique ou privée ?</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Le premier octet, 172, est entre 128 et 191 (bits <code>10</code>) : c’est une <strong>classe B</strong>. L’adresse est <strong>privée</strong>, car elle appartient à <code>172.16.0.0/12</code> (de 172.16 à 172.31).</p>
+</div>
+</div>
+</div>
+<p><strong>2. Combien d’hôtes peut-on adresser dans un réseau <code>/26</code> ? Pourquoi pas 64 ?</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>32 − 26 = 6 bits d’hôte, soit 2<sup>6</sup> = 64 combinaisons. On retire l’adresse du réseau (hôte tout à 0) et l’adresse de diffusion (hôte tout à 1) : <strong>62 hôtes</strong>.</p>
+</div>
+</div>
+</div>
+<p><strong>3. Trouvez l’adresse du réseau, l’adresse de diffusion et le nombre d’hôtes pour <code>10.45.77.200/20</code>.</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>/20</code> : les 4 premiers bits du troisième octet font partie du réseau. 77 = <code>0100 1101</code>, et <code>0100 0000</code> = 64.</p>
+<ul>
+<li>Réseau : <code>10.45.64.0</code></li>
+<li>Diffusion : <code>10.45.79.255</code> (64 + 15 = 79)</li>
+<li>Hôtes : 2<sup>12</sup> − 2 = 4 094</li>
+</ul>
+</div>
+</div>
+</div>
+<p><strong>4. On veut découper <code>192.168.10.0/24</code> en sous-réseaux d’au moins 50 hôtes chacun. Quel masque utiliser, et combien de sous-réseaux obtient-on ?</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Il faut 2<sup>h</sup> − 2 ≥ 50, donc <em>h</em> = 6 (62 hôtes). On garde 6 bits d’hôte et on en emprunte 2 : masque <strong><code>255.255.255.192</code></strong> (<code>/26</code>), et 2<sup>2</sup> = <strong>4 sous-réseaux</strong> : <code>.0</code>, <code>.64</code>, <code>.128</code> et <code>.192</code>.</p>
+</div>
+</div>
+</div>
+<p><strong>5. Un datagramme transporte 1 400 octets de données sur un réseau dont la MTU est de 620 octets (en-tête de 20 octets). Donnez la longueur totale, le déplacement et le drapeau MF de chaque fragment.</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>620 − 20 = 600 octets, et 600 est déjà un multiple de 8 (75 × 8). 1 400 = 2 × 600 + 200, donc 3 fragments.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Fragment</th>
+<th>Données</th>
+<th>Longueur totale</th>
+<th>Déplacement</th>
+<th>MF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>600</td>
+<td>620</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>600</td>
+<td>620</td>
+<td>75</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>200</td>
+<td>220</td>
+<td>150</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p><strong>6. À quoi sert le champ TTL, et que se passe-t-il quand il atteint 0 ?</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Il empêche un datagramme de circuler indéfiniment, par exemple à cause d’une boucle de routage. Chaque routeur le décrémente de 1. Quand il atteint 0, le routeur détruit le datagramme et prévient la source par un message ICMP.</p>
+</div>
+</div>
+</div>
+<p><strong>7. Un client a besoin de 3 000 adresses. Quel bloc CIDR lui attribuer, et combien d’adresses seront inutilisées ?</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La plus petite puissance de 2 qui contient 3 000 est 4 096 = 2<sup>12</sup>. Il faut 12 bits d’hôte, donc un <strong><code>/20</code></strong>. Il reste environ 1 096 adresses non utilisées, contre plus de 62 000 avec une classe B.</p>
+</div>
+</div>
+</div>
+<p><strong>8. Quel avantage VLSM apporte-t-il par rapport à un masque fixe pour un sous-réseau de 24 hôtes ?</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Avec un masque fixe <code>/24</code>, on attribue 254 adresses et on en perd 230. Avec VLSM, on choisit un <code>/27</code> (30 hôtes) et on n’en perd que 6.</p>
+</div>
+</div>
+</div>
+<p><strong>9. Abrégez l’adresse IPv6 <code>fe80:0000:0000:0000:0202:b3ff:fe1e:8329</code>.</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>fe80::202:b3ff:fe1e:8329</code></p>
+</div>
+</div>
+</div>
 
 
 <div id="section-progress-widget" style="display:none; padding: 0.8em 1em; background: inherit; border-top: 1px solid var(--bs-border-color, #dee2e6); position: sticky; bottom: 0; z-index: 10;">
@@ -203,7 +1236,7 @@ document.addEventListener("DOMContentLoaded", function () {
   <div style="background: var(--bs-secondary-bg, #e9ecef); border-radius: 6px; height: 8px; width: 100%; overflow: hidden;">
     <div style="background: var(--bs-primary, #2c3e50); height: 100%; width: 100%; border-radius: 6px;"></div>
   </div>
-  <p style="font-size: 0.75em; color: var(--bs-tertiary-color, #adb5bd); margin: 0.3em 0 0 0;">100% completed (16 of 16 min)</p>
+  <p style="font-size: 0.75em; color: var(--bs-tertiary-color, #adb5bd); margin: 0.3em 0 0 0;">100% completed (45 of 45 min)</p>
 </div>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
