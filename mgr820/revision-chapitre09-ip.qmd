@@ -1,0 +1,12 @@
+---
+title: "Révision du chapitre 9 : IP"
+order: 3
+difficulty: 2
+description: "Vidéo de révision du chapitre 9 sur le protocole IP."
+date: "2026-11-20"
+categories: [révision, ip]
+---
+
+## Vidéo de révision
+
+{{< video https://youtu.be/xMowffb3r-w >}}
