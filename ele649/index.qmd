@@ -4,7 +4,7 @@ description: "Notes and materials for ELE649."
 listing:
   contents:
     - "*.qmd"
-    - "laboratoire/index.qmd"
+    - "!laboratoire/"
   type: default
   sort: "order"
   categories: true

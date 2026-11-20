@@ -35,8 +35,12 @@ website:
     left:
       - href: mgr820/index.qmd
         text: MGR820
-      - href: ele649/index.qmd
-        text: ELE649
+      - text: ELE649
+        menu:
+          - href: ele649/index.qmd
+            text: Cours
+          - href: ele649/laboratoire/index.qmd
+            text: Laboratoire
       - href: about.qmd
         text: About
     right: []

@@ -2,7 +2,7 @@
   {
     "objectID": "ele649/laboratoire/index.html",
     "href": "ele649/laboratoire/index.html",
-    "title": "Laboratoire",
+    "title": "ELE649 : Laboratoire",
     "section": "",
     "text": "Cette section regroupe les laboratoires du cours ELE649. Chaque laboratoire apparaît ci-dessous, dans l’ordre.\n\n\n\n\n\n\n\n\nNo matching items"
   },
@@ -11,7 +11,7 @@
     "href": "ele649/index.html",
     "title": "ELE649",
     "section": "",
-    "text": "Every page in this folder appears below automatically, in order. To add a new one, create a new .qmd file in this folder with a title, description, date, order, and difficulty in the front matter. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\n\nRévision du chapitre 3 : CSMA/CD et Ethernet\n\n\n\nAccès au support par CSMA/CD, algorithme de backoff, trame Ethernet, taille minimale de trame et longueur de segment, débit en paquets par seconde, codage Manchester, Fast Ethernet et Gigabit Ethernet.\n\n\n\n\n\n\nNov 20, 2026\n\n15 min\n\n\n\n\n\n\nLaboratoire\n\n\n\nÉnoncés, consignes et ressources des laboratoires du cours ELE649.\n\n\n\n\n\n1 min\n\n\n\n\nNo matching items"
+    "text": "Every page in this folder appears below automatically, in order. To add a new one, create a new .qmd file in this folder with a title, description, date, order, and difficulty in the front matter. It will show up here the next time the site is rendered.\n\n\n\n\n\n\n\n\n\nRévision du chapitre 3 : CSMA/CD et Ethernet\n\n\n\nAccès au support par CSMA/CD, algorithme de backoff, trame Ethernet, taille minimale de trame et longueur de segment, débit en paquets par seconde, codage Manchester, Fast Ethernet et Gigabit Ethernet.\n\n\n\n\n\n\nNov 20, 2026\n\n15 min\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "mgr820/qos.html#pourquoi-la-qualité-de-service",

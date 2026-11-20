@@ -1,6 +1,5 @@
 ---
-title: "Laboratoire"
-order: 100
+title: "ELE649 : Laboratoire"
 description: "Énoncés, consignes et ressources des laboratoires du cours ELE649."
 listing:
   contents: "*.qmd"
