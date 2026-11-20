@@ -2,7 +2,9 @@
 title: "ELE649"
 description: "Notes and materials for ELE649."
 listing:
-  contents: "*.qmd"
+  contents:
+    - "*.qmd"
+    - "laboratoire/index.qmd"
   type: default
   sort: "order"
   categories: true

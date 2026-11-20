@@ -1,17 +1,13 @@
 [
   {
-    "listing": "/mgr820/index.html",
-    "items": [
-      "/mgr820/avant-propos.html",
-      "/mgr820/revision-chapitre09-ip.html",
-      "/mgr820/qos.html"
-    ]
+    "listing": "/ele649/laboratoire/index.html",
+    "items": []
   },
   {
-    "listing": "/notes/index.html",
+    "listing": "/ele649/index.html",
     "items": [
-      "/notes/example-with-a-plot.html",
-      "/notes/first-note.html"
+      "/ele649/revision-chapitre03-csma.html",
+      "/ele649/laboratoire/index.html"
     ]
   },
   {
@@ -23,9 +19,18 @@
     ]
   },
   {
-    "listing": "/ele649/index.html",
+    "listing": "/notes/index.html",
     "items": [
-      "/ele649/revision-chapitre03-csma.html"
+      "/notes/example-with-a-plot.html",
+      "/notes/first-note.html"
+    ]
+  },
+  {
+    "listing": "/mgr820/index.html",
+    "items": [
+      "/mgr820/avant-propos.html",
+      "/mgr820/revision-chapitre09-ip.html",
+      "/mgr820/qos.html"
     ]
   }
 ]

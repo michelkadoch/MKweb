@@ -10,6 +10,7 @@ project:
     - "notes/*.qmd"
     - "mgr820/*.qmd"
     - "ele649/*.qmd"
+    - "ele649/laboratoire/*.qmd"
 
   # Client-side scripts served as static files (dark/light toggle, resume-reading,
   # scoped search, review-question renumbering). Same behaviour as the source site.

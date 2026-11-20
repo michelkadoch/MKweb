@@ -1,0 +1,14 @@
+---
+title: "Laboratoire"
+order: 100
+description: "Énoncés, consignes et ressources des laboratoires du cours ELE649."
+listing:
+  contents: "*.qmd"
+  type: default
+  sort: "order"
+  categories: true
+  fields: [title, description, date, reading-time]
+---
+
+Cette section regroupe les laboratoires du cours ELE649. Chaque
+laboratoire apparaît ci-dessous, dans l'ordre.
